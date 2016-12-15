@@ -8,16 +8,10 @@ namespace Shop\Basket\Event;
 
 
 use Shop\Basket\Basket;
-use Shop\Event\Event;
-use Shop\EventAggregate\EventAggregate;
 use Shop\UUID\UUID;
 
 class QuantityOfTheProductHasBeenChanged extends Event
 {
-    /**
-     * @var Basket
-     */
-    private $basket;
 
     /**
      * @var UUID
@@ -42,30 +36,6 @@ class QuantityOfTheProductHasBeenChanged extends Event
         $this->basket = $basket;
         $this->productId = $productId;
         $this->quantity = $quantity;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEventFamilyName(): string
-    {
-        return 'Basket';
-    }
-
-    /**
-     * @return EventAggregate
-     */
-    public function getEventAggregate(): EventAggregate
-    {
-        return $this->getBasket();
-    }
-
-    /**
-     * @return Basket
-     */
-    public function getBasket(): Basket
-    {
-        return $this->basket;
     }
 
     /**

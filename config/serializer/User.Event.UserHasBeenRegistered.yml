@@ -1,0 +1,6 @@
+Shop\User\Event\UserHasBeenRegistered:
+  properties:
+    passwordHash:
+      type: string
+    passwordSalt:
+      type: string

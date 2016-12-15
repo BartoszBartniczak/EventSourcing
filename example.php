@@ -15,29 +15,15 @@ use Shop\Basket\Command\Handler\ChangeQuantityOfTheProduct as ChangeQuantityOfTh
 use Shop\Basket\Command\Handler\CloseBasket as CloseBasketCommandHandler;
 use Shop\Basket\Command\Handler\RemoveProductFromTheBasket as RemoveProductFromTheBasketHandler;
 use Shop\Basket\Command\RemoveProductFromTheBasket;
-use Shop\Basket\Event\BasketHasBeenClosed as BasketHasBeenClosedEvent;
-use Shop\Basket\Event\BasketHasBeenCreated;
-use Shop\Basket\Event\ProductHasBeenAddedToTheBasket as ProductHasBeenAddedToTheBasketEvent;
-use Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket as ProductHasBeenRemovedFromTheBasketEvent;
-use Shop\Basket\Event\QuantityOfTheProductHasBeenChanged as QuantityOfTheProductHasBeenChangedEvent;
-use Shop\Basket\Event\Serializer\Handler\BasketHasBeenClosed as BasketHasBeenClosedSerializerHandler;
-use Shop\Basket\Event\Serializer\Handler\BasketHasBeenCreatedHandler as BasketHasBeenCreatedSerializerHandler;
-use Shop\Basket\Event\Serializer\Handler\ProductHasBeenAddedToTheBasket as ProductAddedToTheBasketSerializerHandler;
 use Shop\Basket\Repository\InMemoryRepository as BasketRepository;
 use Shop\Command\Bus\CommandBus;
 use Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use Shop\Email\Command\SendEmail as SendEmailCommand;
-use Shop\Email\Event\EmailHasBeenSent as EmailHasBeenSentEvent;
-use Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
-use Shop\Email\Event\Serializer\Handler\EmailHasBeenSent as EmailHasBeenSentSerializerHandler;
-use Shop\Email\Event\Serializer\Handler\EmailHasNotBeenSent as EmailHasNotBeenSentSerializerHandler;
 use Shop\Email\Sender\NullEmailSenderService;
 use Shop\Event\Repository\InMemoryEventRepository;
-use Shop\Event\Serializer\JSONSerializer;
+use Shop\Event\Serializer\JMSJsonSerializer;
 use Shop\Order\Command\CreateOrder as CreateOrderCommand;
 use Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
-use Shop\Order\Event\OrderHasBeenCreated as OrderHasBeenCreatedEvent;
-use Shop\Order\Event\Serializer\Handler\OrderHasBeenCreated as OrderHasBeenCreatedEventSerializerHandler;
 use Shop\Product\Product;
 use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
 use Shop\Product\Repository\Command\Handler\FindProductByName as FindProductByNameCommandHandler;
@@ -50,17 +36,6 @@ use Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserCommandHandler;
 use Shop\User\Command\LogInUser as LogInUserCommand;
 use Shop\User\Command\LogOutUser as LogOutUserCommand;
 use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
-use Shop\User\Event\ActivationTokenHasBeenGenerated as ActivationTokenHasBeenGeneratedEvent;
-use Shop\User\Event\Serializer\Handler\ActivationTokenHasBeenGenerated as ActivationTokenHasBeenGeneratedSerializerHandler;
-use Shop\User\Event\Serializer\Handler\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEventSerializerHandler;
-use Shop\User\Event\Serializer\Handler\UserAccountHasBeenActivated as AttemptOfActivatingUserAccountSerializerHandler;
-use Shop\User\Event\Serializer\Handler\UserHasBeenLoggedIn as UserHasBeenLoggedInEventSerializerHandler;
-use Shop\User\Event\Serializer\Handler\UserHasBeenLoggedOut as UserHasBeenLoggedOutEventSerializerHandler;
-use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEvent;
-use Shop\User\Event\UserAccountHasBeenActivated as AttemptOfActivatingUserAccountEvent;
-use Shop\User\Event\UserHasBeenLoggedIn as UserHasBeenLoggedInEvent;
-use Shop\User\Event\UserHasBeenLoggedOut as UserHasBeenLoggedOutEvent;
-use Shop\User\Event\UserHasBeenRegistered as UserHasBeenRegisteredEvent;
 use Shop\User\Repository\InMemoryUserRepository as InMemoryUserRepository;
 use Shop\UUID\RamseyGenerator;
 
@@ -73,21 +48,10 @@ $whoops->register();
 $uuidGenerator = new RamseyGenerator();
 $emailSenderService = new NullEmailSenderService(true);
 
-$serializer = new JSONSerializer();
-$serializer->registerHandler(BasketHasBeenCreated::class, new BasketHasBeenCreatedSerializerHandler());
-$serializer->registerHandler(ProductHasBeenAddedToTheBasketEvent::class, new ProductAddedToTheBasketSerializerHandler());
-$serializer->registerHandler(QuantityOfTheProductHasBeenChangedEvent::class, new \Shop\Basket\Event\Serializer\Handler\QuantityOfTheProductHasBeenChanged());
-$serializer->registerHandler(ProductHasBeenRemovedFromTheBasketEvent::class, new \Shop\Basket\Event\Serializer\Handler\ProductHasBeenRemovedFromTheBasket());
-$serializer->registerHandler(UserHasBeenRegisteredEvent::class, new \Shop\User\Event\Serializer\Handler\UserHasBeenRegistered());
-$serializer->registerHandler(ActivationTokenHasBeenGeneratedEvent::class, new ActivationTokenHasBeenGeneratedSerializerHandler());
-$serializer->registerHandler(EmailHasBeenSentEvent::class, new EmailHasBeenSentSerializerHandler());
-$serializer->registerHandler(EmailHasNotBeenSentEvent::class, new EmailHasNotBeenSentSerializerHandler());
-$serializer->registerHandler(AttemptOfActivatingUserAccountEvent::class, new AttemptOfActivatingUserAccountSerializerHandler());
-$serializer->registerHandler(UnsuccessfulAttemptOfActivatingUserAccountEvent::class, new UnsuccessfulAttemptOfActivatingUserAccountEventSerializerHandler());
-$serializer->registerHandler(UserHasBeenLoggedInEvent::class, new UserHasBeenLoggedInEventSerializerHandler());
-$serializer->registerHandler(UserHasBeenLoggedOutEvent::class, new UserHasBeenLoggedOutEventSerializerHandler());
-$serializer->registerHandler(OrderHasBeenCreatedEvent::class, new OrderHasBeenCreatedEventSerializerHandler());
-$serializer->registerHandler(BasketHasBeenClosedEvent::class, new BasketHasBeenClosedSerializerHandler());
+$jmsSerializer = JMS\Serializer\SerializerBuilder::create()
+    ->addMetadataDir(__DIR__ . '/config/serializer', "Shop")
+    ->build();
+$serializer = new JMSJsonSerializer($jmsSerializer);
 
 $eventRepository = new InMemoryEventRepository($serializer);
 

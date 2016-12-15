@@ -1,0 +1,4 @@
+Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket:
+  properties:
+    productId:
+      type: Shop\UUID\UUID

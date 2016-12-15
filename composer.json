@@ -12,7 +12,8 @@
   "require": {
     "ramsey/uuid": "3.*",
     "psr/log": "^1.0",
-    "jms/serializer": "^1.4"
+    "jms/serializer": "1.*",
+    "symfony/yaml": "3.*"
   },
   "require-dev": {
     "filp/whoops": "*",

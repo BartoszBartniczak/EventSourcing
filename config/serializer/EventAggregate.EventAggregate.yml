@@ -1,0 +1,8 @@
+Shop\EventAggregate\EventAggregate:
+  properties:
+    commitedEvents:
+      expose: false
+      exclude: true
+    uncommitedEvents:
+      expose: false
+      exclude: true

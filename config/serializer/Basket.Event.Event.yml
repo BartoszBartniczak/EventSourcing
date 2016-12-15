@@ -1,0 +1,4 @@
+Shop\Basket\Event\Event:
+  properties:
+    basket:
+      type: Shop\Basket\Basket

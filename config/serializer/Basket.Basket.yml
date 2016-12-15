@@ -1,0 +1,12 @@
+Shop\Basket\Basket:
+  properties:
+    id:
+      type: Shop\Basket\Id
+    products:
+      exclude: true
+      expose: false
+    ownerEmail:
+      type: string
+    open:
+      exclude: true
+      expose: false

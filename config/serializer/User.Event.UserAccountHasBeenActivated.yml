@@ -1,0 +1,4 @@
+Shop\User\Event\UserAccountHasBeenActivated:
+  properties:
+    activationToken:
+      type: string

@@ -1,0 +1,4 @@
+Shop\UUID\UUID:
+  properties:
+    uuid:
+      type: string

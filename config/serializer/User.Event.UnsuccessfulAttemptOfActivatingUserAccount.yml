@@ -1,0 +1,6 @@
+Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount:
+  properties:
+    activationToken:
+      type: string
+    message:
+      type: string

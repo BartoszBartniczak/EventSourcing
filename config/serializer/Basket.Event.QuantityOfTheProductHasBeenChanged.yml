@@ -1,0 +1,6 @@
+Shop\Basket\Event\QuantityOfTheProductHasBeenChanged:
+  properties:
+    productId:
+      type: Shop\UUID\UUID
+    quantity:
+      type: float

@@ -1,0 +1,6 @@
+Shop\Basket\Event\ProductHasBeenAddedToTheBasket:
+  properties:
+    product:
+      type: Shop\Product\Product
+    quantity:
+      type: float

@@ -8,18 +8,12 @@ namespace Shop\Basket\Event;
 
 
 use Shop\Basket\Basket;
-use Shop\Event\Event;
 use Shop\EventAggregate\EventAggregate;
 use Shop\Product\Product;
 use Shop\UUID\UUID;
 
 class ProductHasBeenAddedToTheBasket extends Event
 {
-    /**
-     * @var Basket
-     */
-    private $basket;
-
     /**
      * @var Product
      */
@@ -41,7 +35,7 @@ class ProductHasBeenAddedToTheBasket extends Event
     public function __construct(UUID $eventId, \DateTime $eventDateTime, Basket $basket, Product $product, float $quantity)
     {
         parent::__construct($eventId, $eventDateTime);
-        $this->basket = $basket;
+        $this->setBasket($basket);
         $this->product = $product;
         $this->quantity = $quantity;
     }
@@ -67,17 +61,5 @@ class ProductHasBeenAddedToTheBasket extends Event
         return $this->getBasket();
     }
 
-    /**
-     * @return Basket
-     */
-    public function getBasket(): Basket
-    {
-        return $this->basket;
-    }
-
-    public function getEventFamilyName(): string
-    {
-        return 'Basket';
-    }
 
 }

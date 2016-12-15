@@ -1,0 +1,3 @@
+Shop\Email\Event\Event:
+  properties:
+    email: Shop\Email\Email

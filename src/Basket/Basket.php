@@ -164,7 +164,7 @@ class Basket extends EventAggregate
      */
     public function handleProductHasBeenRemovedFromTheBasket(ProductHasBeenRemovedFromTheBasket $event)
     {
-        $this->remove($event->getProductUuid());
+        $this->remove($event->getProductId());
     }
 
     /**

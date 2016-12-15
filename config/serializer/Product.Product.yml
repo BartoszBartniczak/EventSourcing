@@ -1,0 +1,6 @@
+Shop\Product\Product:
+  properties:
+    id:
+      type: Shop\UUID\UUID
+    name:
+      type: string

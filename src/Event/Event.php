@@ -15,7 +15,7 @@ abstract class Event
     /**
      * @var UUID
      */
-    protected $uuid;
+    protected $eventId;
 
     /**
      * @var \DateTime
@@ -29,16 +29,16 @@ abstract class Event
      */
     public function __construct(UUID $eventId, \DateTime $dateTime)
     {
-        $this->uuid = $eventId;
+        $this->eventId = $eventId;
         $this->dateTime = $dateTime;
     }
 
     /**
      * @return UUID
      */
-    final public function getUuid(): UUID
+    final public function getEventId(): UUID
     {
-        return $this->uuid;
+        return $this->eventId;
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class Event
      */
     final public function getName(): string
     {
-        return (new \ReflectionClass($this))->getShortName();
+        return get_class($this);
     }
 
     /**

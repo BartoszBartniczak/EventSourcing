@@ -15,7 +15,7 @@ class Product
     /**
      * @var UUID
      */
-    private $uuid;
+    private $id;
 
     /**
      * @var string
@@ -24,12 +24,12 @@ class Product
 
     /**
      * Product constructor.
-     * @param UUID $uuid
+     * @param UUID $id
      * @param string $name
      */
-    public function __construct(UUID $uuid, string $name)
+    public function __construct(UUID $id, string $name)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
         $this->name = $name;
     }
 
@@ -38,7 +38,7 @@ class Product
      */
     public function getId(): UUID
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     /**
