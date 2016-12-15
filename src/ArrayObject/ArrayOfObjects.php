@@ -10,13 +10,8 @@ namespace Shop\ArrayObject;
  * Class ArrayOfElements can contain only objects of given type
  * @package Shop\ArrayObject
  */
-class ArrayOfElements extends \ArrayObject
+class ArrayOfObjects extends \ArrayObject\ArrayOfObjects
 {
-
-    /**
-     * @var string
-     */
-    private $className;
 
     /**
      * ArrayOfElements constructor.
@@ -24,8 +19,7 @@ class ArrayOfElements extends \ArrayObject
      */
     public function __construct(string $className)
     {
-        parent::__construct();
-        $this->className = $className;
+        parent::__construct($className);
     }
 
     /**

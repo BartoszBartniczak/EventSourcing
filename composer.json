@@ -13,7 +13,8 @@
     "ramsey/uuid": "3.*",
     "psr/log": "^1.0",
     "jms/serializer": "1.*",
-    "symfony/yaml": "3.*"
+    "symfony/yaml": "3.*",
+    "bartoszbartniczak/array-object": "1.*"
   },
   "require-dev": {
     "filp/whoops": "*",

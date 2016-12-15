@@ -7,9 +7,9 @@
 namespace Shop\Command;
 
 
-use Shop\ArrayObject\ArrayOfElements;
+use Shop\ArrayObject\ArrayOfObjects;
 
-class CommandList extends ArrayOfElements
+class CommandList extends ArrayOfObjects
 {
 
     /**

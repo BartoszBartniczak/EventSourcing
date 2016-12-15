@@ -24,11 +24,11 @@ class FindProductByName extends CommandHandler
 
         try {
             $product = $command->getProductRepository()->findByName($command->getProductName());
+            return $product;
         } catch (CannotFindProductException $cannotFindProductException) {
             /* @TODO ProductHasNotBeenFoundEvent */
         }
 
-        return $product;
     }
 
 }
