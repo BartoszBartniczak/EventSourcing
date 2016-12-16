@@ -14,15 +14,21 @@
     "psr/log": "^1.0",
     "jms/serializer": "1.*",
     "symfony/yaml": "3.*",
-    "bartoszbartniczak/array-object": "1.*"
+    "bartoszbartniczak/array-object": "^1.0"
   },
   "require-dev": {
     "filp/whoops": "*",
-    "symfony/var-dumper": "*"
+    "symfony/var-dumper": "*",
+    "phpunit/phpunit": "5.*"
   },
   "autoload": {
     "psr-4": {
       "Shop\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Shop:\\": "tests/unit-tests/"
     }
   }
 }

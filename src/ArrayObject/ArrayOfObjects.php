@@ -10,16 +10,17 @@ namespace Shop\ArrayObject;
  * Class ArrayOfElements can contain only objects of given type
  * @package Shop\ArrayObject
  */
-class ArrayOfObjects extends \ArrayObject\ArrayOfObjects
+class ArrayOfObjects extends \BartoszBartniczak\ArrayObject\ArrayOfObjects
 {
 
     /**
      * ArrayOfElements constructor.
      * @param string $className
+     * @param array|null $items
      */
-    public function __construct(string $className)
+    public function __construct(string $className, array $items = null)
     {
-        parent::__construct($className);
+        parent::__construct($className, $items);
     }
 
     /**
@@ -45,5 +46,37 @@ class ArrayOfObjects extends \ArrayObject\ArrayOfObjects
         $this->exchangeArray($arrayCopy);
         return $element;
     }
+
+    /**
+     * @param ArrayOfObjects $arrayOfObjects
+     */
+    public function merge(ArrayOfObjects $arrayOfObjects)
+    {
+        $arrayCopy = $this->getArrayCopy();
+        $arrayToMerge = $arrayOfObjects->getArrayCopy();
+        $this->exchangeArray(array_merge($arrayCopy, $arrayToMerge));
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isNotEmpty(): bool
+    {
+        return $this->count() > 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function throwExceptionIfObjectIsNotInstanceOfTheClass($object)
+    {
+        if (!$object instanceof $this->className) {
+            throw new InvalidArgumentException(
+                sprintf("Instance of '\%s' expected. '\%s' given.", $this->getClassName(), get_class($object))
+            );
+        }
+    }
+
 
 }

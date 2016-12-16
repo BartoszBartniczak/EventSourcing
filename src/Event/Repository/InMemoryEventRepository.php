@@ -37,19 +37,19 @@ class InMemoryEventRepository implements EventRepository
         $this->eventSerializer = $serializer;
     }
 
-    public function save(EventAggregate $eventAggregate)
+    public function saveEventAggregate(EventAggregate $eventAggregate)
     {
-        $this->saveEventStream($eventAggregate->getUncommitedEvents());
+        $this->saveEventStream($eventAggregate->getUncommittedEvents());
     }
 
-    protected function saveEventStream(EventStream $stream)
+    public function saveEventStream(EventStream $stream)
     {
         foreach ($stream as $event) {
             $this->saveEvent($event);
         }
     }
 
-    protected function saveEvent(Event $event)
+    public function saveEvent(Event $event)
     {
         self::$memory[$event->getEventFamilyName()][] = $this->eventSerializer->serialize($event);
     }

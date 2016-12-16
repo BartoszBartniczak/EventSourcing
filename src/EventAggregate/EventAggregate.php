@@ -19,20 +19,20 @@ abstract class EventAggregate
     /**
      * @var EventStream
      */
-    protected $commitedEvents;
+    protected $committedEvents;
 
     /**
      * @var EventStream
      */
-    protected $uncommitedEvents;
+    protected $uncommittedEvents;
 
     /**
      * EventAggregate constructor.
      */
     public function __construct()
     {
-        $this->commitedEvents = new EventStream();
-        $this->uncommitedEvents = new EventStream();
+        $this->committedEvents = new EventStream();
+        $this->uncommittedEvents = new EventStream();
     }
 
     final public function applyEventStream(EventStream $stream): EventAggregate
@@ -46,7 +46,7 @@ abstract class EventAggregate
     final public function apply(Event $event): EventAggregate
     {
         $this->handle($event);
-        $this->uncommitedEvents[] = $event;
+        $this->uncommittedEvents[] = $event;
         return $this;
     }
 
@@ -76,20 +76,20 @@ abstract class EventAggregate
 
     final public function commit()
     {
-        foreach ($this->getUncommitedEvents() as $event) {
-            $this->getCommitedEvents()[] = $event;
+        foreach ($this->getUncommittedEvents() as $event) {
+            $this->getCommittedEvents()[] = $event;
         }
-        $this->uncommitedEvents = new EventStream();
+        $this->uncommittedEvents = new EventStream();
     }
 
-    final public function getUncommitedEvents(): EventStream
+    final public function getUncommittedEvents(): EventStream
     {
-        return $this->uncommitedEvents;
+        return $this->uncommittedEvents;
     }
 
-    final public function getCommitedEvents(): EventStream
+    final public function getCommittedEvents(): EventStream
     {
-        return $this->commitedEvents;
+        return $this->committedEvents;
     }
 
 }

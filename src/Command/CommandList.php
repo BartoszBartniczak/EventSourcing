@@ -13,11 +13,12 @@ class CommandList extends ArrayOfObjects
 {
 
     /**
-     * @return bool
+     * CommandList constructor.
+     * @param array|null $items
      */
-    public function isNotEmpty(): bool
+    public function __construct(array $items = null)
     {
-        return $this->count() > 0;
+        parent::__construct(Command::class, $items);
     }
 
 }

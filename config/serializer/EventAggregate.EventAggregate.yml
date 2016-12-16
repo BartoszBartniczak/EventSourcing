@@ -1,8 +1,8 @@
 Shop\EventAggregate\EventAggregate:
   properties:
-    commitedEvents:
+    committedEvents:
       expose: false
       exclude: true
-    uncommitedEvents:
+    uncommittedEvents:
       expose: false
       exclude: true

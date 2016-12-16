@@ -22,17 +22,32 @@ This is an example online shop.
 12. User removes bread from the basket
 13. User logs out
 14. User logs in
-15. User creates the Order
-16. Basket is closed
-17. Send email with the order
+15. User tries to find a non-existent product called 'Cookies'
+16. User creates the Order
+17. Basket is closed
+18. Send email with the order
 
 ### System capabilities
 1. Command can cause the series of command executes. E.g. CloseOrderCommand calls CloseBasketCommand and SendEmailCommand.
 2. We want to know what products users searched for and found none.
 
 ### TODO
-1. Emission the events
+1. Seperate the modules:
+    1. Command Bus
+    2. Event Sourcing
+    3. JMSSerializer
+    4. Example
 2. Unit tests
-2. Behave tests
+2. Behat tests
+
+### Tests
+
+#### Unit Tests
+
+To run unit tests run command:
+```bash
+php vendor/phpunit/phpunit/phpunit --configuration tests/unit-tests/configuration.xml
+```
+
 
 

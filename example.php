@@ -20,6 +20,7 @@ use Shop\Command\Bus\CommandBus;
 use Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use Shop\Email\Command\SendEmail as SendEmailCommand;
 use Shop\Email\Sender\NullEmailSenderService;
+use Shop\Event\Bus\SimpleEventBus;
 use Shop\Event\Repository\InMemoryEventRepository;
 use Shop\Event\Serializer\JMSJsonSerializer;
 use Shop\Order\Command\CreateOrder as CreateOrderCommand;
@@ -55,7 +56,9 @@ $serializer = new JMSJsonSerializer($jmsSerializer);
 
 $eventRepository = new InMemoryEventRepository($serializer);
 
-$commandBus = new CommandBus($uuidGenerator, $eventRepository);
+$eventBus = new SimpleEventBus();
+
+$commandBus = new CommandBus($uuidGenerator, $eventRepository, $eventBus);
 $commandBus->registerHandler(CreateNewBasketCommand::class, new \Shop\Basket\Command\Handler\CreateNewBasket($uuidGenerator));
 $commandBus->registerHandler(AddProductToTheBasketCommand::class, new AddProductToTheBasketHandler($uuidGenerator));
 $commandBus->registerHandler(ChangeQuantityOfTheProduct::class, new ChangeQuantityOfTheProductHandler($uuidGenerator));
@@ -137,6 +140,14 @@ $commandBus->handle($logOutUserCommand);
 
 $logInUserCommand = new LogInUserCommand('user@user.com', 'password', $hashGenerator, $userRepository);
 $commandBus->handle($logInUserCommand);
+
+try {
+    $findProductByNameCommand = new FindProductByNameCommand($user, 'Cookies', $productRepository);
+    $commandBus->handle($findProductByNameCommand);
+} catch (\Shop\Command\Bus\CannotHandleTheCommandException $cannotHandleTheCommandException) {
+    dump("Display the error message", $cannotHandleTheCommandException);
+}
+
 
 $createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new \Shop\Email\Email($uuidGenerator->generate()));
 $commandBus->handle($createOrderCommand);

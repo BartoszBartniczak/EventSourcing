@@ -7,7 +7,19 @@
 namespace Shop\EventAggregate;
 
 
-class EventStream extends \ArrayObject
+use Shop\ArrayObject\ArrayOfObjects;
+use Shop\Event\Event;
+
+class EventStream extends ArrayOfObjects
 {
+
+    /**
+     * EventStream constructor.
+     * @param array|null $items
+     */
+    public function __construct(array $items = null)
+    {
+        parent::__construct(Event::class, $items);
+    }
 
 }

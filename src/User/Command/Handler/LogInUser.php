@@ -31,7 +31,7 @@ class LogInUser extends CommandHandler
                 $command->getUserEmail()
             ));
         } else {
-            /* @todo Unsuccessful Attempt Of Log In Event */
+            /* @todo UnsuccessfulAttemptOfLogInEvent */
             throw new \InvalidArgumentException();
         }
 
