@@ -7,7 +7,7 @@
 namespace Shop\User\Event;
 
 
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class UnsuccessfulAttemptOfActivatingUserAccount extends Event
 {
@@ -25,7 +25,7 @@ class UnsuccessfulAttemptOfActivatingUserAccount extends Event
     /**
      * @inheritDoc
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime, string $userEmail, string $activationToken, string $message)
+    public function __construct(Id $eventId, \DateTime $dateTime, string $userEmail, string $activationToken, string $message)
     {
         parent::__construct($eventId, $dateTime, $userEmail);
         $this->activationToken = $activationToken;

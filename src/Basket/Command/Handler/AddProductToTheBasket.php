@@ -22,7 +22,12 @@ class AddProductToTheBasket extends CommandHandler
         /* @var $command \Shop\Basket\Command\AddProductToTheBasket */
 
         $command->getBasket()->apply(
-            new ProductHasBeenAddedToTheBasket($this->uuidGenerator->generate(), new \DateTime(), $command->getBasket(), $command->getProduct(), $command->getQuantity())
+            new ProductHasBeenAddedToTheBasket(
+                $this->generateEventId(),
+                $this->generateDateTime(),
+                $command->getBasket(),
+                $command->getProduct(),
+                $command->getQuantity())
         );
 
         return $command->getBasket();

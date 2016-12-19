@@ -36,9 +36,10 @@ This is an example online shop.
     1. Command Bus
     2. Event Sourcing
     3. JMSSerializer
+    4. DBAL
     4. Example
 2. Unit tests
-2. Behat tests
+3. Behat tests
 
 ### Tests
 

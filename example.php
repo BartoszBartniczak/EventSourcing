@@ -19,6 +19,7 @@ use Shop\Basket\Repository\InMemoryRepository as BasketRepository;
 use Shop\Command\Bus\CommandBus;
 use Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use Shop\Email\Command\SendEmail as SendEmailCommand;
+use Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
 use Shop\Email\Sender\NullEmailSenderService;
 use Shop\Event\Bus\SimpleEventBus;
 use Shop\Event\Repository\InMemoryEventRepository;
@@ -28,6 +29,7 @@ use Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
 use Shop\Product\Product;
 use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
 use Shop\Product\Repository\Command\Handler\FindProductByName as FindProductByNameCommandHandler;
+use Shop\Product\Repository\Event\ProductHasNotBeenFound as ProductHasNotBeenFoundEvent;
 use Shop\Product\Repository\InMemoryRepository as InMemoryProductRepository;
 use Shop\User\Command\ActivateUser as ActivateUserCommand;
 use Shop\User\Command\Handler\ActivateUser as ActivateUserCommandHandler;
@@ -57,6 +59,12 @@ $serializer = new JMSJsonSerializer($jmsSerializer);
 $eventRepository = new InMemoryEventRepository($serializer);
 
 $eventBus = new SimpleEventBus();
+$eventBus->registerHandler(EmailHasNotBeenSentEvent::class, function (EmailHasNotBeenSentEvent $emailHasNotBeenSent) {
+    // in real application you would like to try to resend email in here
+});
+$eventBus->registerHandler(ProductHasNotBeenFoundEvent::class, function (ProductHasNotBeenFoundEvent $productHasNotBeenFound) {
+    // you can do something in here, E.g send email to product manager
+});
 
 $commandBus = new CommandBus($uuidGenerator, $eventRepository, $eventBus);
 $commandBus->registerHandler(CreateNewBasketCommand::class, new \Shop\Basket\Command\Handler\CreateNewBasket($uuidGenerator));
@@ -72,8 +80,8 @@ $commandBus->registerHandler(LogOutUserCommand::class, new LogOutUserCommandHand
 $commandBus->registerHandler(CreateOrderCommand::class, new CreateOrderCommandHandler($uuidGenerator));
 $commandBus->registerHandler(CloseBasketCommand::class, new CloseBasketCommandHandler($uuidGenerator));
 
-$basketRepository = new BasketRepository($serializer);
-$userRepository = new InMemoryUserRepository($serializer);
+$basketRepository = new BasketRepository($eventRepository);
+$userRepository = new InMemoryUserRepository($eventRepository);
 
 $hashGenerator = new \Shop\Password\HashGenerator();
 
@@ -153,7 +161,7 @@ $createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSend
 $commandBus->handle($createOrderCommand);
 
 ///** Recreating the basket */
-dump(InMemoryEventRepository::$memory);
+dump($eventRepository);
 $user = $userRepository->findUserByEmail('user@user.com');
 $basket = $basketRepository->findLastBasketByUserEmail($user->getEmail());
 dump($user);

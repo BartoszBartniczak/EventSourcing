@@ -8,12 +8,10 @@ namespace Shop\User\Command;
 
 
 use Shop\Command\Command;
-use Shop\Email\Email;
 use Shop\Email\Sender\Service as EmailSenderService;
 use Shop\Generator\ActivationTokenGenerator;
 use Shop\Password\HashGenerator;
 use Shop\Password\SaltGenerator;
-use Shop\User\User;
 use Shop\UUID\Generator as UUIDGenerator;
 
 class RegisterNewUser implements Command
@@ -30,11 +28,6 @@ class RegisterNewUser implements Command
     private $userEmail;
 
     /**
-     * @var User
-     */
-    private $user;
-
-    /**
      * @var string
      */
     private $userPassword;
@@ -48,16 +41,6 @@ class RegisterNewUser implements Command
      * @var ActivationTokenGenerator;
      */
     private $activationTokenGenerator;
-
-    /**
-     * @var Email
-     */
-    private $email;
-
-    /**
-     * @var bool
-     */
-    private $emailSent;
 
     /**
      * @var UUIDGenerator

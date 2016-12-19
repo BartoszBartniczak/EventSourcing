@@ -8,6 +8,7 @@ namespace Shop\Basket\Event;
 
 
 use Shop\Basket\Basket;
+use Shop\Event\Id;
 use Shop\UUID\UUID;
 
 class QuantityOfTheProductHasBeenChanged extends Event
@@ -25,11 +26,13 @@ class QuantityOfTheProductHasBeenChanged extends Event
 
     /**
      * QuantityOfTheProductHasBeenChanged constructor.
+     * @param Id $eventId
+     * @param \DateTime $dateTime
      * @param Basket $basket
      * @param UUID $productId
      * @param float $quantity
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime, Basket $basket, UUID $productId, float $quantity)
+    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, UUID $productId, float $quantity)
     {
         parent::__construct($eventId, $dateTime);
 

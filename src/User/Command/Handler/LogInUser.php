@@ -26,8 +26,8 @@ class LogInUser extends CommandHandler
 
         if ($loginStatus === true) {
             $user->apply(new UserHasBeenLoggedIn(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $command->getUserEmail()
             ));
         } else {

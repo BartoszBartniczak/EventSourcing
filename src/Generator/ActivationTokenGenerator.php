@@ -9,6 +9,10 @@ namespace Shop\Generator;
 
 class ActivationTokenGenerator implements Generator
 {
+    public function __construct()
+    {
+    }
+
     public function generate()
     {
         return uniqid();

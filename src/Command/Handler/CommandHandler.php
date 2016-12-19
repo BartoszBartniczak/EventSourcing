@@ -10,6 +10,7 @@ namespace Shop\Command\Handler;
 use Shop\Command\Command;
 use Shop\Command\CommandList;
 use Shop\Event\Event;
+use Shop\Event\Id;
 use Shop\EventAggregate\EventAggregate;
 use Shop\EventAggregate\EventStream;
 use Shop\UUID\Generator as UUIDGenerator;
@@ -80,6 +81,22 @@ abstract class CommandHandler
     protected function addAdditionalEvent(Event $event)
     {
         $this->additionalEvents[] = $event;
+    }
+
+    /**
+     * @return Id
+     */
+    protected function generateEventId(): Id
+    {
+        return new Id($this->uuidGenerator->generate()->toNative());
+    }
+
+    /**
+     * @return \DateTime
+     */
+    protected function generateDateTime(): \DateTime
+    {
+        return new \DateTime();
     }
 
 }

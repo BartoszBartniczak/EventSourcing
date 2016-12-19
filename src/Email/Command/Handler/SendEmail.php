@@ -43,14 +43,14 @@ class SendEmail extends CommandHandler
 
         if ($this->isSent()) {
             $this->email->apply(new EmailHasBeenSent(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $this->getEmail()
             ));
         } else {
             $this->email->apply(new EmailHasNotBeenSent(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $this->getEmail(),
                 $this->getException()->getMessage()
             ));

@@ -29,8 +29,8 @@ class FindProductByName extends CommandHandler
         } catch (CannotFindProductException $cannotFindProductException) {
             $this->addAdditionalEvent(
                 new ProductHasNotBeenFound(
-                    $this->uuidGenerator->generate(),
-                    new \DateTime(),
+                    $this->generateEventId(),
+                    $this->generateDateTime(),
                     $command->getProductName(),
                     $command->getUser()->getEmail()
                 )

@@ -33,11 +33,10 @@ class RegisterNewUser extends CommandHandler
         $salt = $command->getSaltGenerator()->generate();
         $this->user = new User($command->getUserEmail(), $command->getHashGenerator()->hash($command->getUserPassword(), $salt), $salt);
         $activationToken = $command->getActivationTokenGenerator()->generate();
-        $email = new Email($command->getUuidGenerator()->generate());
         $this->user->apply(
             new UserHasBeenRegistered(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $this->user->getEmail(),
                 $this->user->getPasswordHash(),
                 $this->user->getPasswordSalt()
@@ -45,8 +44,8 @@ class RegisterNewUser extends CommandHandler
         );
 
         $this->user->apply(new ActivationTokenHasBeenGenerated(
-            $this->uuidGenerator->generate(),
-            new \DateTime(),
+            $this->generateEventId(),
+            $this->generateDateTime(),
             $this->user->getEmail(),
             $activationToken
         ));

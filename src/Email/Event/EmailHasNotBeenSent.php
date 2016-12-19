@@ -8,7 +8,7 @@ namespace Shop\Email\Event;
 
 
 use Shop\Email\Email;
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class EmailHasNotBeenSent extends Event
 {
@@ -17,7 +17,7 @@ class EmailHasNotBeenSent extends Event
      */
     protected $errorMessage;
 
-    public function __construct(UUID $eventId, \DateTime $dateTime, Email $email, string $errorMessage)
+    public function __construct(Id $eventId, \DateTime $dateTime, Email $email, string $errorMessage)
     {
         parent::__construct($eventId, $dateTime);
         $this->email = $email;

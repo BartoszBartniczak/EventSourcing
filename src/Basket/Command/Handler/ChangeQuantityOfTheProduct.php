@@ -22,7 +22,12 @@ class ChangeQuantityOfTheProduct extends CommandHandler
         /* @var $command \Shop\Basket\Command\ChangeQuantityOfTheProduct */
 
         $command->getBasket()->apply(
-            new QuantityOfTheProductHasBeenChanged($this->uuidGenerator->generate(), new \DateTime(), $command->getBasket(), $command->getProductId(), $command->getQuantity())
+            new QuantityOfTheProductHasBeenChanged(
+                $this->generateEventId(),
+                $this->generateDateTime(),
+                $command->getBasket(),
+                $command->getProductId(),
+                $command->getQuantity())
         );
 
         return $command->getBasket();

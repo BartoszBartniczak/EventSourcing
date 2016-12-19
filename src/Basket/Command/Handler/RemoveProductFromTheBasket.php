@@ -21,7 +21,11 @@ class RemoveProductFromTheBasket extends CommandHandler
     {
         /* @var $command \Shop\Basket\Command\RemoveProductFromTheBasket */
         $command->getBasket()->apply(
-            new ProductHasBeenRemovedFromTheBasket($this->uuidGenerator->generate(), new \DateTime(), $command->getBasket(), $command->getProductId())
+            new ProductHasBeenRemovedFromTheBasket(
+                $this->generateEventId(),
+                $this->generateDateTime(),
+                $command->getBasket(),
+                $command->getProductId())
         );
 
         return $command->getBasket();

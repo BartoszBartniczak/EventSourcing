@@ -7,8 +7,8 @@
 namespace Shop\Order\Event;
 
 use Shop\Basket\Id as BasketId;
+use Shop\Event\Id;
 use Shop\Order\Id as OrderId;
-use Shop\UUID\UUID;
 
 
 class OrderHasBeenCreated extends Event
@@ -31,13 +31,13 @@ class OrderHasBeenCreated extends Event
 
     /**
      * OrderHasBeenCreated constructor.
-     * @param UUID $eventId
+     * @param Id $eventId
      * @param \DateTime $dateTime
      * @param OrderId $orderId
      * @param BasketId $basketId
      * @param array $positions
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime, OrderId $orderId, BasketId $basketId, array $positions)
+    public function __construct(Id $eventId, \DateTime $dateTime, OrderId $orderId, BasketId $basketId, array $positions)
     {
         parent::__construct($eventId, $dateTime);
         $this->orderId = $orderId;

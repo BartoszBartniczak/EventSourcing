@@ -7,6 +7,8 @@
 namespace Shop\Password;
 
 
+use Ramsey\Uuid\Uuid;
+
 final class SaltGenerator
 {
 
@@ -15,7 +17,7 @@ final class SaltGenerator
      */
     public function generate(): string
     {
-        return uniqid();
+        return Uuid::uuid4();
     }
 
 }

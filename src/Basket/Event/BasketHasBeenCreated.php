@@ -8,18 +8,18 @@ namespace Shop\Basket\Event;
 
 
 use Shop\Basket\Basket;
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class BasketHasBeenCreated extends Event
 {
 
     /**
      * BasketHasBeenCreatedEvent constructor.
-     * @param UUID $eventId
+     * @param Id $eventId
      * @param \DateTime $dateTime
      * @param Basket $basket
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime, Basket $basket)
+    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket)
     {
         parent::__construct($eventId, $dateTime);
         $this->setBasket($basket);

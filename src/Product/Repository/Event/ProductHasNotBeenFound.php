@@ -8,7 +8,7 @@ namespace Shop\Product\Repository\Event;
 
 
 use Shop\Event\Event;
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class ProductHasNotBeenFound extends Event
 {
@@ -24,12 +24,12 @@ class ProductHasNotBeenFound extends Event
 
     /**
      * ProductHasNotBeenFoundEvent constructor.
-     * @param UUID $eventId
+     * @param Id $eventId
      * @param \DateTime $dateTime
      * @param string $productName
      * @param string $userEmail
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime, string $productName, string $userEmail)
+    public function __construct(Id $eventId, \DateTime $dateTime, string $productName, string $userEmail)
     {
         parent::__construct($eventId, $dateTime);
         $this->productName = $productName;

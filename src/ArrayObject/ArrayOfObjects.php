@@ -67,6 +67,19 @@ class ArrayOfObjects extends \BartoszBartniczak\ArrayObject\ArrayOfObjects
     }
 
     /**
+     * Iterates over each value in the array passing them to the callback function.
+     * If the callback function returns true, the current value from array is returned into the result ArrayOfObjects. Array keys are preserved.
+     * @param callable $callback
+     * @return ArrayOfObjects
+     */
+    public function filter(callable $callback): ArrayOfObjects
+    {
+        $arrayCopy = $this->getArrayCopy();
+        $filteredData = array_filter($arrayCopy, $callback);
+        return new ArrayOfObjects($this->getClassName(), $filteredData);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function throwExceptionIfObjectIsNotInstanceOfTheClass($object)

@@ -22,8 +22,8 @@ class CloseBasket extends CommandHandler
         $command->getBasket()
             ->apply(
                 new BasketHasBeenClosed(
-                    $this->uuidGenerator->generate(),
-                    new \DateTime(),
+                    $this->generateEventId(),
+                    $this->generateDateTime(),
                     $command->getBasket()
                 )
             );

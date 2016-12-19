@@ -4,11 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command;
+namespace Shop\Event;
 
 
-class NullCommand implements Command
+use Shop\UUID\UUID;
+
+class Id extends UUID
 {
-
 
 }

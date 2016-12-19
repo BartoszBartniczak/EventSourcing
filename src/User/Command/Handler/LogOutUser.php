@@ -21,8 +21,8 @@ class LogOutUser extends CommandHandler
         /* @var $command \Shop\User\Command\LogOutUser */
         $command->getUser()->apply(
             new UserHasBeenLoggedOutEvent(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $command->getUser()->getEmail()
             )
         );

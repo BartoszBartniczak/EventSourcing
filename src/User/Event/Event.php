@@ -7,8 +7,8 @@
 namespace Shop\User\Event;
 
 use Shop\Event\Event as BasicEvent;
+use Shop\Event\Id;
 use Shop\User\User;
-use Shop\UUID\UUID;
 
 
 abstract class Event extends BasicEvent
@@ -20,7 +20,7 @@ abstract class Event extends BasicEvent
      */
     protected $userEmail;
 
-    public function __construct(UUID $eventId, \DateTime $dateTime, string $userEmail)
+    public function __construct(Id $eventId, \DateTime $dateTime, string $userEmail)
     {
         parent::__construct($eventId, $dateTime);
         $this->userEmail = $userEmail;

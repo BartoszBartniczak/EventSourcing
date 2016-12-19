@@ -12,38 +12,49 @@ use Shop\User\User;
 final class HashGenerator
 {
 
-    public function __construct()
+    /**
+     * @param $password
+     * @param $salt
+     * @param int $algorithm
+     * @param int $cost
+     * @return string
+     */
+    public function hash(string $password, string $salt = '', int $algorithm = PASSWORD_DEFAULT, int $cost = 10): string
     {
 
+        $params = ['cost' => $cost];
+        if (strlen($salt) > 0) {
+            $params['salt'] = $salt;
+        }
+
+        return password_hash($password, $algorithm, $params);
     }
 
-    public function hash($password, $salt)
-    {
-        return password_hash($password . $salt, PASSWORD_DEFAULT);
-    }
 
     public function verifyUserPassword(string $password, User $user): bool
     {
-        return password_verify($password . $user->getPasswordSalt(), $user->getPasswordHash());
+        return password_verify($password, $user->getPasswordHash());
     }
 
     /**
      * @param string $hash
+     * @param int $algorithm
+     * @param int $cost
      * @return bool
      */
-    public function needsRehash(string $hash): bool
+    public function needsRehash(string $hash, int $algorithm = PASSWORD_DEFAULT, $cost = 10): bool
     {
-        $hashInfo = $this->hashInfo($hash);
-        return password_needs_rehash($hash, $hashInfo['algo']);
+        return password_needs_rehash($hash, $algorithm, ['cost' => 10]);
     }
 
     /**
      * @param string $hash
-     * @return array
+     * @return HashInfo
      */
-    private function hashInfo(string $hash): array
+    public function hashInfo(string $hash): HashInfo
     {
-        return password_get_info($hash);
+        $info = password_get_info($hash);
+        return new HashInfo($info['algo'], $info['algoName'], $info['options']['cost'], $info['options']['salt']??'');
     }
 
 }

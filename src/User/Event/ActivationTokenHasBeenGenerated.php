@@ -7,7 +7,7 @@
 namespace Shop\User\Event;
 
 
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class ActivationTokenHasBeenGenerated extends Event
 {
@@ -17,7 +17,7 @@ class ActivationTokenHasBeenGenerated extends Event
      */
     private $activationToken;
 
-    public function __construct(UUID $eventId, \DateTime $dateTime, string $userEmail, string $activationToken)
+    public function __construct(Id $eventId, \DateTime $dateTime, string $userEmail, string $activationToken)
     {
         parent::__construct($eventId, $dateTime, $userEmail);
         $this->activationToken = $activationToken;

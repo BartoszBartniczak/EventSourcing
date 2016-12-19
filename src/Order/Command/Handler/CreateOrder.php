@@ -32,8 +32,8 @@ class CreateOrder extends CommandHandler
 
         $order->apply(
             new OrderHasBeenCreated(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $order->getOrderId(),
                 $order->getBasketId(),
                 $order->getPositions()

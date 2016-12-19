@@ -7,12 +7,21 @@
 namespace Shop\Event\Bus;
 
 
-use Shop\Email\Event\EmailHasNotBeenSent;
 use Shop\Event\Event;
 use Shop\EventAggregate\EventStream;
 
 class SimpleEventBus implements EventBus
 {
+
+    /**
+     * @var array
+     */
+    private $handlers;
+
+    public function __construct()
+    {
+        $this->handlers = [];
+    }
 
     public function emmit(EventStream $eventStream)
     {
@@ -21,42 +30,40 @@ class SimpleEventBus implements EventBus
         }
     }
 
-    private function handle(Event $event)
+    protected function handle(Event $event)
     {
         try {
             $method = $this->findHandleMethod($event);
-            $this->$method($event);
         } catch (\InvalidArgumentException $invalidArgumentException) {
-            //do nothing
+            return;
         }
-
+        $method($event);
     }
 
     /**
      * @param Event $event
-     * @return string
+     * @return callable
      * @throws \InvalidArgumentException
      */
-    private function findHandleMethod(Event $event): string
+    private function findHandleMethod(Event $event): callable
     {
 
-        $methods = [
-            EmailHasNotBeenSent::class => 'handleEmailHasNotBeenSent'
-        ];
-
         $className = get_class($event);
-        if (isset($methods[$className])) {
-            return $methods[$className];
+        if (isset($this->handlers[$className])) {
+            return $this->handlers[$className];
         } else {
             throw new \InvalidArgumentException();
         }
 
     }
 
-    private function handleEmailHasNotBeenSent(EmailHasNotBeenSent $emailHasNotBeenSent)
+    /**
+     * @param string $className
+     * @param callable $callback
+     */
+    public function registerHandler(string $className, callable $callback)
     {
-        //in real application you would like to try to resend email
+        $this->handlers[$className] = $callback;
     }
-
 
 }

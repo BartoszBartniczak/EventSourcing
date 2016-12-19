@@ -7,13 +7,11 @@
 namespace Shop\Event;
 
 
-use Shop\UUID\UUID;
-
 abstract class Event
 {
 
     /**
-     * @var UUID
+     * @var Id
      */
     protected $eventId;
 
@@ -24,19 +22,19 @@ abstract class Event
 
     /**
      * Event constructor.
-     * @param UUID $eventId
+     * @param Id $eventId
      * @param \DateTime $dateTime
      */
-    public function __construct(UUID $eventId, \DateTime $dateTime)
+    public function __construct(Id $eventId, \DateTime $dateTime)
     {
         $this->eventId = $eventId;
         $this->dateTime = $dateTime;
     }
 
     /**
-     * @return UUID
+     * @return Id
      */
-    final public function getEventId(): UUID
+    final public function getEventId(): Id
     {
         return $this->eventId;
     }

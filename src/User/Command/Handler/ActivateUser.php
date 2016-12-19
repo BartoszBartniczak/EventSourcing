@@ -63,15 +63,15 @@ class ActivateUser extends CommandHandler
 
         if ($this->isTokenValid) {
             $this->user->apply(new UserAccountHasBeenActivatedEvent(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $this->userEmail,
                 $this->activationToken
             ));
         } else {
             $this->user->apply(new UnsuccessfulAttemptOfActivatingUserAccountEvent(
-                    $this->uuidGenerator->generate(),
-                    new \DateTime(),
+                    $this->generateEventId(),
+                    $this->generateDateTime(),
                     $this->userEmail,
                     $this->activationToken,
                     $this->errorMessage

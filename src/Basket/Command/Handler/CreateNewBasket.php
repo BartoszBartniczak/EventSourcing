@@ -30,8 +30,8 @@ class CreateNewBasket extends CommandHandler
 
         $basket->apply(
             new BasketHasBeenCreated(
-                $this->uuidGenerator->generate(),
-                new \DateTime(),
+                $this->generateEventId(),
+                $this->generateDateTime(),
                 $basket
             )
         );

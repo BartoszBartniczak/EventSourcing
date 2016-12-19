@@ -16,4 +16,11 @@ interface Serializer
 
     public function deserialize($data): Event;
 
+    /**
+     * The key naming strategy can be different every time. This function converts property name to property key.
+     * @param string $propertyName
+     * @return string
+     */
+    public function getPropertyKey(string $propertyName): string;
+
 }

@@ -7,9 +7,7 @@
 namespace Shop\EventAggregate;
 
 
-use Shop\Event\Dispatcher\Dispatcher as EventDispatcher;
 use Shop\Event\Event;
-use Shop\Event\Handler\EventHandler;
 
 abstract class EventAggregate
 {

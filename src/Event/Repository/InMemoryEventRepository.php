@@ -7,6 +7,7 @@
 namespace Shop\Event\Repository;
 
 
+use Shop\ArrayObject\ArrayObject;
 use Shop\Event\Event;
 use Shop\Event\Serializer\Serializer as EventSerializer;
 use Shop\EventAggregate\EventAggregate;
@@ -15,9 +16,9 @@ use Shop\EventAggregate\EventStream;
 class InMemoryEventRepository implements EventRepository
 {
     /**
-     * @var array
+     * @var ArrayObject
      */
-    public static $memory;
+    protected $memory;
 
     /**
      * @var EventSerializer
@@ -30,10 +31,7 @@ class InMemoryEventRepository implements EventRepository
      */
     public function __construct(EventSerializer $serializer)
     {
-        if (!is_array(self::$memory)) {
-            self::$memory = [];
-        }
-
+        $this->memory = new ArrayObject();
         $this->eventSerializer = $serializer;
     }
 
@@ -51,26 +49,67 @@ class InMemoryEventRepository implements EventRepository
 
     public function saveEvent(Event $event)
     {
-        self::$memory[$event->getEventFamilyName()][] = $this->eventSerializer->serialize($event);
-    }
-
-    public function find(string $eventFamily, string $objectId): EventStream
-    {
-        return new EventStream($this->deserializeEvents(self::$memory[$eventFamily]));
+        $serializedData = $this->eventSerializer->serialize($event);
+        $this->memory[] = $serializedData;
     }
 
     /**
-     * @param array $serializedEvents
-     * @return Event[]
+     * @param string|null $eventFamily Family name filter. If null, returns all events
+     * @param array|null $parameters Additional parameters used for searching. In case of InMemoryEventRepository class the parameters array should be like: [$key=>$callback]. The $key is just a key, it does not affect on results and does not has to be set. The $callback is a function which is used to filter data, using ArrayObject::filter method. NOTICE: Data passed to the function is serialized event. You can use Serializer to deserialize the object or use the json_decode method to treat the event as array.
+     * @return EventStream
+     * @throws \UnexpectedValueException when json array does not contain eventFamilyName property
+     * @throws \UnexpectedValueException if the $callback in $parameters array is not a function
      */
-    private function deserializeEvents(array $serializedEvents): array
+    public function find(string $eventFamily = null, array $parameters = null): EventStream
+    {
+        if (!is_array($parameters)) {
+            $parameters = [];
+        }
+
+        if (!empty($eventFamily)) {
+            $filteredData = $this->memory->filter(
+                function ($serializedEvent) use ($eventFamily) {
+                    $eventArray = json_decode($serializedEvent, true);
+                    if (!isset($eventArray[$this->eventSerializer->getPropertyKey('eventFamilyName')])) {
+                        throw new \UnexpectedValueException('Event data expected.');
+                    }
+                    return $eventArray[$this->eventSerializer->getPropertyKey('eventFamilyName')] === $eventFamily;
+                }
+            );
+        } else {
+            $filteredData = $this->memory;
+        }
+
+        foreach ($parameters as $filter) {
+            if (!is_callable($filter)) {
+                throw new \UnexpectedValueException('$callback have to be function!');
+            } else {
+                $filteredData = $filteredData->filter($filter);
+            }
+        }
+
+        return $this->deserializeEvents($filteredData);
+    }
+
+    /**
+     * @param ArrayObject $serializedEvents
+     * @return EventStream
+     */
+    private function deserializeEvents(ArrayObject $serializedEvents): EventStream
     {
         $events = [];
         foreach ($serializedEvents as $serializedEvent) {
             $events[] = $this->eventSerializer->deserialize($serializedEvent);
         }
-        return $events;
+        return new EventStream($events);
     }
 
+    /**
+     * @return EventSerializer
+     */
+    public function getEventSerializer(): EventSerializer
+    {
+        return $this->eventSerializer;
+    }
 
 }

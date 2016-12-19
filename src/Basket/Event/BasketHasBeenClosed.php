@@ -8,12 +8,12 @@ namespace Shop\Basket\Event;
 
 
 use Shop\Basket\Basket;
-use Shop\UUID\UUID;
+use Shop\Event\Id;
 
 class BasketHasBeenClosed extends Event
 {
 
-    public function __construct(UUID $eventId, \DateTime $dateTime, Basket $basket)
+    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket)
     {
         parent::__construct($eventId, $dateTime);
         $this->basket = $basket;
