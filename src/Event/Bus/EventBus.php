@@ -7,7 +7,7 @@
 namespace Shop\Event\Bus;
 
 
-use Shop\EventAggregate\EventStream;
+use Shop\Event\EventStream;
 
 /**
  * EventBus processes all the Events from the System.

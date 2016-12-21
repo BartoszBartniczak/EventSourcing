@@ -33,11 +33,6 @@ class RegisterNewUser implements Command
     private $userPassword;
 
     /**
-     * @var string
-     */
-    private $activationToken;
-
-    /**
      * @var ActivationTokenGenerator;
      */
     private $activationTokenGenerator;
@@ -76,14 +71,6 @@ class RegisterNewUser implements Command
         $this->saltGenerator = $saltGenerator;
         $this->userPassword = $userPassword;
         $this->hashGenerator = $hashGenerator;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActivationToken(): string
-    {
-        return $this->activationToken;
     }
 
     /**

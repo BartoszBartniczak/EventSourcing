@@ -7,6 +7,7 @@
 namespace Shop\User;
 
 
+use Shop\ArrayObject\ArrayObject;
 use Shop\EventAggregate\EventAggregate;
 use Shop\User\Event\ActivationTokenHasBeenGenerated;
 use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
@@ -45,9 +46,14 @@ class User extends EventAggregate
     private $passwordSalt;
 
     /**
-     * @var array
+     * @var ArrayObject
      */
     private $loginDates;
+
+    /**
+     * @var int
+     */
+    private $unsuccessfulAttemptsOfActivatingUserAccount;
 
     /**
      * User constructor.
@@ -58,11 +64,14 @@ class User extends EventAggregate
     public function __construct(string $email, string $passwordHash, string $passwordSalt)
     {
         parent::__construct();
+
         $this->email = $email;
-        $this->active = false;
         $this->passwordHash = $passwordHash;
         $this->passwordSalt = $passwordSalt;
-        $this->loginDates = [];
+
+        $this->active = false;
+        $this->loginDates = new ArrayObject();
+        $this->unsuccessfulAttemptsOfActivatingUserAccount = 0;
     }
 
     public function isActive(): bool
@@ -102,6 +111,25 @@ class User extends EventAggregate
         return $this->email;
     }
 
+    /**
+     * @return array
+     */
+    public function getLoginDates(): ArrayObject
+    {
+        return $this->loginDates;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnsuccessfulAttemptsOfActivatingUserAccount(): int
+    {
+        return $this->unsuccessfulAttemptsOfActivatingUserAccount;
+    }
+
+    /**
+     * @param UserHasBeenRegistered $event
+     */
     protected function handleUserHasBeenRegistered(UserHasBeenRegistered $event)
     {
         $this->email = $event->getUserEmail();
@@ -109,46 +137,57 @@ class User extends EventAggregate
         $this->passwordSalt = $event->getPasswordSalt();
     }
 
+    /**
+     * @param ActivationTokenHasBeenGenerated $event
+     */
     protected function handleActivationTokenHasBeenGenerated(ActivationTokenHasBeenGenerated $event)
     {
         $this->changeActivationToken($event->getActivationToken());
     }
 
-    private function changeActivationToken($newToken)
+    /**
+     * @param string $newToken
+     */
+    private function changeActivationToken(string $newToken)
     {
         $this->activationToken = $newToken;
     }
 
-
+    /**
+     * @param UserAccountHasBeenActivated $event
+     */
     protected function handleUserAccountHasBeenActivated(UserAccountHasBeenActivated $event)
     {
         $this->activate();
     }
 
+    /**
+     * @return void
+     */
     private function activate()
     {
         $this->active = true;
     }
 
+    /**
+     * @param UnsuccessfulAttemptOfActivatingUserAccount $event
+     */
     protected function handleUnsuccessfulAttemptOfActivatingUserAccount(UnsuccessfulAttemptOfActivatingUserAccount $event)
     {
-
+        $this->unsuccessfulAttemptsOfActivatingUserAccount++;
     }
 
+    /**
+     * @param UserHasBeenLoggedIn $event
+     */
     protected function handleUserHasBeenLoggedIn(UserHasBeenLoggedIn $event)
     {
-        $this->loginDates[] = $event->getDateTime()->format('Y-m-d H:i:s');
+        $this->loginDates[] = $event->getDateTime();
     }
 
     protected function handleUserHasBeenLoggedOut(UserHasBeenLoggedOut $event)
     {
 
     }
-
-    private function deactivate()
-    {
-        $this->active = false;
-    }
-
 
 }

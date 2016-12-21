@@ -37,7 +37,8 @@ This is an example online shop.
     2. Event Sourcing
     3. JMSSerializer
     4. DBAL
-    4. Example
+    5. Example
+    6. ExceptionTestCase
 2. Unit tests
 3. Behat tests
 

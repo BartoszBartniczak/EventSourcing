@@ -8,7 +8,7 @@ namespace Shop\Event\Bus;
 
 
 use Shop\Event\Event;
-use Shop\EventAggregate\EventStream;
+use Shop\Event\EventStream;
 
 class SimpleEventBus implements EventBus
 {

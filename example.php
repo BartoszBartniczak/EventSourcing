@@ -39,6 +39,7 @@ use Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserCommandHandler;
 use Shop\User\Command\LogInUser as LogInUserCommand;
 use Shop\User\Command\LogOutUser as LogOutUserCommand;
 use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
+use Shop\User\Factory\Factory as UserFactory;
 use Shop\User\Repository\InMemoryUserRepository as InMemoryUserRepository;
 use Shop\UUID\RamseyGenerator;
 
@@ -81,7 +82,8 @@ $commandBus->registerHandler(CreateOrderCommand::class, new CreateOrderCommandHa
 $commandBus->registerHandler(CloseBasketCommand::class, new CloseBasketCommandHandler($uuidGenerator));
 
 $basketRepository = new BasketRepository($eventRepository);
-$userRepository = new InMemoryUserRepository($eventRepository);
+$userFactory = new UserFactory();
+$userRepository = new InMemoryUserRepository($eventRepository, $userFactory);
 
 $hashGenerator = new \Shop\Password\HashGenerator();
 

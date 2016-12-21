@@ -4,11 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\EventAggregate;
+namespace Shop\Event;
 
 
 use Shop\ArrayObject\ArrayOfObjects;
-use Shop\Event\Event;
 
 class EventStream extends ArrayOfObjects
 {

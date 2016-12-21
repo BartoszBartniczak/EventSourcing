@@ -8,6 +8,7 @@ namespace Shop\EventAggregate;
 
 
 use Shop\Event\Event;
+use Shop\Event\EventStream;
 
 abstract class EventAggregate
 {
@@ -35,8 +36,12 @@ abstract class EventAggregate
 
     final public function applyEventStream(EventStream $stream): EventAggregate
     {
-        foreach ($stream as $event) {
-            $this->apply($event);
+        if (!$stream->isEmpty()) {
+            foreach ($stream as $event) {
+                if ($event instanceof \Shop\User\Event\Event) {
+                }
+                $this->apply($event);
+            }
         }
         return $this;
     }
@@ -53,7 +58,7 @@ abstract class EventAggregate
      * @return void
      * @throws CannotHandleTheEventException
      */
-    final protected function handle(Event $event)
+    final private function handle(Event $event)
     {
         $handleMethodName = $this->findHandleMethod($event);
         if (method_exists($this, $handleMethodName)) {
@@ -64,7 +69,11 @@ abstract class EventAggregate
         throw new CannotHandleTheEventException(sprintf("Method '%s' does not exists.", $handleMethodName));
     }
 
-    final protected function findHandleMethod(Event $event): string
+    /**
+     * @param Event $event
+     * @return string
+     */
+    protected function findHandleMethod(Event $event): string
     {
         $className = get_class($event);
         $separator = self::NAMESPACE_SEPARATOR;

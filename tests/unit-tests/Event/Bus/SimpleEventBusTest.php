@@ -8,8 +8,8 @@ namespace Shop\Event\Bus;
 
 
 use Shop\Event\Event;
+use Shop\Event\EventStream;
 use Shop\Event\Id;
-use Shop\EventAggregate\EventStream;
 
 class DummyEvent extends Event
 {

@@ -10,9 +10,9 @@ namespace Shop\Command\Handler;
 use Shop\Command\Command;
 use Shop\Command\CommandList;
 use Shop\Event\Event;
+use Shop\Event\EventStream;
 use Shop\Event\Id;
 use Shop\EventAggregate\EventAggregate;
-use Shop\EventAggregate\EventStream;
 use Shop\UUID\Generator as UUIDGenerator;
 
 abstract class CommandHandler
@@ -30,7 +30,7 @@ abstract class CommandHandler
 
     /**
      * Additional events are not connected with EventAggregate. Although they are emitted to EventBus.
-     * @var  EventStream
+     * @var  \Shop\Event\EventStream
      */
     private $additionalEvents;
 

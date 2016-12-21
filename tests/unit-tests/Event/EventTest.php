@@ -7,7 +7,9 @@
 namespace Shop\Event;
 
 
-class EventTest extends \PHPUnit_Framework_TestCase
+use Shop\EventTestCase;
+
+class EventTest extends EventTestCase
 {
 
     /**
@@ -18,20 +20,18 @@ class EventTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetters()
     {
-        $eventId = new Id(uniqid());
-        $dateTime = new \DateTime();
 
         $event = $this->getMockBuilder(Event::class)
             ->setConstructorArgs([
-                $eventId,
-                $dateTime
+                $this->generateEventId(),
+                $this->generateDateTime()
             ])
             ->setMockClassName('EventMock')
             ->getMockForAbstractClass();
         /* @var $event \Shop\Event\Event */
 
-        $this->assertSame($eventId, $event->getEventId());
-        $this->assertSame($dateTime, $event->getDateTime());
+        $this->assertSameEventIdAsGenerated($event);
+        $this->assertSameDateTimeAsGenerated($event);
         $this->assertEquals('EventMock', $event->getName());
     }
 

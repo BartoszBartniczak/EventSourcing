@@ -8,9 +8,9 @@ namespace Shop\Event\Repository;
 
 
 use Shop\Event\Event;
+use Shop\Event\EventStream;
 use Shop\Event\Serializer\Serializer;
 use Shop\EventAggregate\EventAggregate;
-use Shop\EventAggregate\EventStream;
 
 
 class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase

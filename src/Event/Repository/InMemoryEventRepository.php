@@ -9,9 +9,9 @@ namespace Shop\Event\Repository;
 
 use Shop\ArrayObject\ArrayObject;
 use Shop\Event\Event;
+use Shop\Event\EventStream;
 use Shop\Event\Serializer\Serializer as EventSerializer;
 use Shop\EventAggregate\EventAggregate;
-use Shop\EventAggregate\EventStream;
 
 class InMemoryEventRepository implements EventRepository
 {

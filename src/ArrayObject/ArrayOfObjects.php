@@ -57,6 +57,13 @@ class ArrayOfObjects extends \BartoszBartniczak\ArrayObject\ArrayOfObjects
         $this->exchangeArray(array_merge($arrayCopy, $arrayToMerge));
     }
 
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return !$this->isNotEmpty();
+    }
 
     /**
      * @return bool

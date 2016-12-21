@@ -11,9 +11,9 @@ use Shop\Command\Command;
 use Shop\Command\Handler\CommandHandler;
 use Shop\Command\Handler\Exception as HandlerException;
 use Shop\Event\Bus\EventBus;
+use Shop\Event\EventStream;
 use Shop\Event\Repository\EventRepository;
 use Shop\EventAggregate\EventAggregate;
-use Shop\EventAggregate\EventStream;
 use Shop\UUID\Generator as UUIDGenerator;
 use Shop\UUID\UUID;
 

@@ -34,7 +34,7 @@ abstract class Event
     /**
      * @return Id
      */
-    final public function getEventId(): Id
+    public function getEventId(): Id
     {
         return $this->eventId;
     }
@@ -42,7 +42,7 @@ abstract class Event
     /**
      * @return \DateTime
      */
-    final public function getDateTime(): \DateTime
+    public function getDateTime(): \DateTime
     {
         return $this->dateTime;
     }
@@ -50,7 +50,7 @@ abstract class Event
     /**
      * @return string
      */
-    final public function getName(): string
+    public function getName(): string
     {
         return get_class($this);
     }

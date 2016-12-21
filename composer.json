@@ -28,7 +28,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Shop:\\": "tests/unit-tests/"
+      "Shop\\": "tests/unit-tests/"
     }
   }
 }
