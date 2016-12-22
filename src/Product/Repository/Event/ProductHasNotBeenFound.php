@@ -6,8 +6,6 @@
 
 namespace Shop\Product\Repository\Event;
 
-
-use Shop\Event\Event;
 use Shop\Event\Id;
 
 class ProductHasNotBeenFound extends Event
@@ -34,15 +32,6 @@ class ProductHasNotBeenFound extends Event
         parent::__construct($eventId, $dateTime);
         $this->productName = $productName;
         $this->userEmail = $userEmail;
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getEventFamilyName(): string
-    {
-        return 'ProductRepository';
     }
 
     /**

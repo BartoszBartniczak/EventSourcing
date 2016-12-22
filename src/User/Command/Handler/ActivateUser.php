@@ -9,10 +9,10 @@ namespace Shop\User\Command\Handler;
 
 use Shop\Command\Command;
 use Shop\Command\Handler\CommandHandler;
-use Shop\EventAggregate\EventAggregate;
 use Shop\User\Command\ActivateUser as ActivateUserCommand;
 use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEvent;
 use Shop\User\Event\UserAccountHasBeenActivated as UserAccountHasBeenActivatedEvent;
+use Shop\User\Repository\CannotFindUserException;
 use Shop\User\Repository\UserRepository;
 use Shop\User\User;
 
@@ -50,16 +50,17 @@ class ActivateUser extends CommandHandler
 
     /**
      * @param Command|ActivateUserCommand $command
-     * @return EventAggregate
+     * @return User
+     * @throws CannotFindUserException
      */
-    public function handle(Command $command): EventAggregate
+    public function handle(Command $command): User
     {
         $this->userEmail = $command->getUserEmail();
         $this->activationToken = $command->getActivationToken();
         $this->userRepository = $command->getUserRepository();
         $this->user = $this->userRepository->findUserByEmail($this->userEmail);
 
-        $this->validateToken();
+        $this->tokenValidation();
 
         if ($this->isTokenValid) {
             $this->user->apply(new UserAccountHasBeenActivatedEvent(
@@ -82,15 +83,13 @@ class ActivateUser extends CommandHandler
         return $this->user;
     }
 
-    private function validateToken()
+    private function tokenValidation()
     {
-
-
         if ($this->user->isActive() === false && $this->user->getActivationToken() === $this->activationToken) {
             $this->isTokenValid = true;
         } elseif ($this->user->isActive()) {
             $this->isTokenValid = false;
-            $this->errorMessage = 'User has been already activated';
+            $this->errorMessage = 'User has been already activated.';
         } else {
             $this->isTokenValid = false;
             $this->errorMessage = 'Invalid activation token.';

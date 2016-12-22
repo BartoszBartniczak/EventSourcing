@@ -39,7 +39,7 @@ class InMemoryRepository implements Repository
     public function findById(UUID $productId): Product
     {
         if (!isset($this->productsStoredById[$productId->toNative()])) {
-            throw new CannotFindProductException();
+            throw new CannotFindProductException(sprintf("There is no product with ID '%s' in repository.", $productId->toNative()));
         }
 
         return $this->productsStoredById[$productId->toNative()];
@@ -51,7 +51,7 @@ class InMemoryRepository implements Repository
     public function findByName(string $name): Product
     {
         if (!isset($this->productStoredByName[$name])) {
-            throw new CannotFindProductException(sprintf("Cannot find a product with name '%s'", $name));
+            throw new CannotFindProductException(sprintf("Cannot find a product with name '%s' in repository.", $name));
         }
 
         return $this->productStoredByName[$name];

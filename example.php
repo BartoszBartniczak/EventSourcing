@@ -26,6 +26,7 @@ use Shop\Event\Repository\InMemoryEventRepository;
 use Shop\Event\Serializer\JMSJsonSerializer;
 use Shop\Order\Command\CreateOrder as CreateOrderCommand;
 use Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
+use Shop\Product\Id as ProductId;
 use Shop\Product\Product;
 use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
 use Shop\Product\Repository\Command\Handler\FindProductByName as FindProductByNameCommandHandler;
@@ -88,12 +89,13 @@ $userRepository = new InMemoryUserRepository($eventRepository, $userFactory);
 $hashGenerator = new \Shop\Password\HashGenerator();
 
 $productRepository = new InMemoryProductRepository();
-$productRepository->save(new Product($uuidGenerator->generate(), 'Milk'));
+$milkId = new ProductId($uuidGenerator->generate()->toNative());
+$productRepository->save(new Product($milkId, 'Milk'));
 
-$breadId = $uuidGenerator->generate();
+$breadId = new ProductId($uuidGenerator->generate()->toNative());
 $productRepository->save(new Product($breadId, 'Bread'));
 
-$butterUuid = $uuidGenerator->generate();
+$butterUuid = new ProductId($uuidGenerator->generate()->toNative());
 $productRepository->save(new Product($butterUuid, 'Butter'));
 
 /* Controller */
@@ -145,7 +147,7 @@ $commandBus->handle($changeQuantityOfTheProduct);
 $removeProductFromTheBasket = new RemoveProductFromTheBasket($basket, $breadId);
 $commandBus->handle($removeProductFromTheBasket);
 
-$logOutUserCommand = new LogOutUserCommand($user);
+$logOutUserCommand = new LogOutUserCommand($user->getEmail(), $userRepository);
 $commandBus->handle($logOutUserCommand);
 
 $logInUserCommand = new LogInUserCommand('user@user.com', 'password', $hashGenerator, $userRepository);

@@ -61,6 +61,7 @@ class JMSJsonSerializer implements Serializer
 
     public function getPropertyKey(string $propertyName): string
     {
+        //@TODO
         $keys = [
             'eventFamilyName' => 'event_family_name',
             'userEmail' => 'user_email',

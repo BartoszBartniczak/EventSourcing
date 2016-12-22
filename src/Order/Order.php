@@ -8,9 +8,13 @@ namespace Shop\Order;
 
 
 use Shop\Basket\Id as BasketId;
+use Shop\Basket\Position\Position as BasketPosition;
+use Shop\Basket\Position\PositionArray as BasketPositions;
 use Shop\EventAggregate\EventAggregate;
 use Shop\Order\Event\OrderHasBeenCreated;
 use Shop\Order\Id as OrderId;
+use Shop\Order\Position\Position;
+use Shop\Order\Position\PositionArray;
 
 class Order extends EventAggregate
 {
@@ -34,14 +38,13 @@ class Order extends EventAggregate
      * Order constructor.
      * @param Id $orderId
      * @param BasketId $basketId
-     * @param array $positions
      */
-    public function __construct(Id $orderId, BasketId $basketId, array $positions)
+    public function __construct(Id $orderId, BasketId $basketId)
     {
         parent::__construct();
         $this->orderId = $orderId;
         $this->basketId = $basketId;
-        $this->positions = $positions;
+        $this->positions = new PositionArray();
     }
 
     /**
@@ -61,17 +64,29 @@ class Order extends EventAggregate
     }
 
     /**
-     * @return array
+     * @return PositionArray
      */
-    public function getPositions(): array
+    public function getPositions(): PositionArray
     {
         return $this->positions;
     }
 
     /**
+     * @param BasketPositions $basketPositions
+     */
+    public function addPositionsFromBasket(BasketPositions $basketPositions)
+    {
+        foreach ($basketPositions as $basketPosition) {
+            /* @var $basketPosition BasketPosition */
+            $orderPosition = new Position($basketPosition->getProduct(), $basketPosition->getQuantity());
+            $this->positions[] = $orderPosition;
+        }
+    }
+
+    /**
      * @param OrderHasBeenCreated $orderHasBeenCreated
      */
-    public function handleOrderHasBeenCreated(OrderHasBeenCreated $orderHasBeenCreated)
+    protected function handleOrderHasBeenCreated(OrderHasBeenCreated $orderHasBeenCreated)
     {
         $this->orderId = $orderHasBeenCreated->getOrderId();
         $this->basketId = $orderHasBeenCreated->getBasketId();

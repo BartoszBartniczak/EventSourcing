@@ -9,6 +9,7 @@ namespace Shop\Order\Event;
 use Shop\Basket\Id as BasketId;
 use Shop\Event\Id;
 use Shop\Order\Id as OrderId;
+use Shop\Order\Position\PositionArray;
 
 
 class OrderHasBeenCreated extends Event
@@ -25,7 +26,7 @@ class OrderHasBeenCreated extends Event
     private $basketId;
 
     /**
-     * @var array
+     * @var PositionArray
      */
     private $positions;
 
@@ -35,9 +36,9 @@ class OrderHasBeenCreated extends Event
      * @param \DateTime $dateTime
      * @param OrderId $orderId
      * @param BasketId $basketId
-     * @param array $positions
+     * @param PositionArray $positions
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, OrderId $orderId, BasketId $basketId, array $positions)
+    public function __construct(Id $eventId, \DateTime $dateTime, OrderId $orderId, BasketId $basketId, PositionArray $positions)
     {
         parent::__construct($eventId, $dateTime);
         $this->orderId = $orderId;
@@ -62,9 +63,9 @@ class OrderHasBeenCreated extends Event
     }
 
     /**
-     * @return array
+     * @return PositionArray
      */
-    public function getPositions(): array
+    public function getPositions(): PositionArray
     {
         return $this->positions;
     }

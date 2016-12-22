@@ -1,6 +1,6 @@
 Shop\Product\Product:
   properties:
     id:
-      type: Shop\UUID\UUID
+      type: Shop\Product\Id
     name:
       type: string

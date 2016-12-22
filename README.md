@@ -41,6 +41,7 @@ This is an example online shop.
     6. ExceptionTestCase
 2. Unit tests
 3. Behat tests
+4. Integrity tests
 
 ### Tests
 

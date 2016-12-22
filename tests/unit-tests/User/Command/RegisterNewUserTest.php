@@ -41,8 +41,13 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $uuidGenerator Generator */
 
-        $saltGenerator = new SaltGenerator();
-        $hashGenerator = new HashGenerator();
+        $saltGenerator = $this->getMockBuilder(SaltGenerator::class)
+            ->getMock();
+        /* @var $saltGenerator SaltGenerator */
+
+        $hashGenerator = $this->getMockBuilder(HashGenerator::class)
+            ->getMock();
+        /* @var $hashGenerator HashGenerator */
 
         $command = new RegisterNewUser(
             'user@email.com',

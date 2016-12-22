@@ -9,15 +9,16 @@ namespace Shop\User\Command\Handler;
 
 use Shop\Command\Command;
 use Shop\Command\Handler\CommandHandler;
-use Shop\EventAggregate\EventAggregate;
+use Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use Shop\User\Event\UserHasBeenLoggedIn;
+use Shop\User\User;
 
 class LogInUser extends CommandHandler
 {
     /**
      * @inheritDoc
      */
-    public function handle(Command $command): EventAggregate
+    public function handle(Command $command): User
     {
         /* @var $command \Shop\User\Command\LogInUser */
 
@@ -31,8 +32,13 @@ class LogInUser extends CommandHandler
                 $command->getUserEmail()
             ));
         } else {
-            /* @todo UnsuccessfulAttemptOfLogInEvent */
-            throw new \InvalidArgumentException();
+            $user->apply(
+                new UnsuccessfulAttemptOfLoggingIn(
+                    $this->generateEventId(),
+                    $this->generateDateTime(),
+                    $command->getUserEmail()
+                )
+            );
         }
 
         return $user;

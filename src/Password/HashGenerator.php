@@ -9,7 +9,7 @@ namespace Shop\Password;
 
 use Shop\User\User;
 
-final class HashGenerator
+class HashGenerator
 {
 
     /**

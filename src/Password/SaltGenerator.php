@@ -9,7 +9,7 @@ namespace Shop\Password;
 
 use Ramsey\Uuid\Uuid;
 
-final class SaltGenerator
+class SaltGenerator
 {
 
     /**

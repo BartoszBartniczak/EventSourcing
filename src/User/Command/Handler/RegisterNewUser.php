@@ -28,11 +28,13 @@ class RegisterNewUser extends CommandHandler
      * @param Command|RegisterNewUserCommand $command
      * @return EventAggregate;
      */
-    public function handle(Command $command): EventAggregate
+    public function handle(Command $command): User
     {
         $salt = $command->getSaltGenerator()->generate();
-        $this->user = new User($command->getUserEmail(), $command->getHashGenerator()->hash($command->getUserPassword(), $salt), $salt);
+        $passwordHash = $command->getHashGenerator()->hash($command->getUserPassword(), $salt);
+        $this->user = new User($command->getUserEmail(), $passwordHash, $salt);
         $activationToken = $command->getActivationTokenGenerator()->generate();
+
         $this->user->apply(
             new UserHasBeenRegistered(
                 $this->generateEventId(),

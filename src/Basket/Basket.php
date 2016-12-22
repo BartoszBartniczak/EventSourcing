@@ -12,9 +12,11 @@ use Shop\Basket\Event\BasketHasBeenCreated;
 use Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
 use Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
 use Shop\Basket\Event\QuantityOfTheProductHasBeenChanged;
+use Shop\Basket\Position\Position;
+use Shop\Basket\Position\PositionArray;
 use Shop\EventAggregate\EventAggregate;
+use Shop\Product\Id as ProductId;
 use Shop\Product\Product;
-use Shop\UUID\UUID;
 
 class Basket extends EventAggregate
 {
@@ -27,7 +29,7 @@ class Basket extends EventAggregate
     /**
      * @var array
      */
-    private $products;
+    private $positions;
 
     /**
      * @var string
@@ -48,17 +50,17 @@ class Basket extends EventAggregate
     {
         parent::__construct();
         $this->id = $id;
-        $this->products = [];
+        $this->positions = new PositionArray();
         $this->ownerEmail = $ownerEmail;
         $this->open = true;
     }
 
     /**
-     * @return array
+     * @return PositionArray
      */
-    public function getPositions(): array
+    public function getPositions(): PositionArray
     {
-        return $this->products;
+        return $this->positions;
     }
 
     /**
@@ -100,20 +102,25 @@ class Basket extends EventAggregate
      */
     private function add(Product $product, float $quantity)
     {
-        $basketPosition = $this->findPositionByProductId($product->getId());
-        if (!$basketPosition) {
+        try {
+            $basketPosition = $this->findPositionByProductId($product->getId());
+            $basketPosition->addToQuantity($quantity);
+        } catch (CannotFindPositionException $invalidArgumentException) {
             $this->createNewItem($product, $quantity);
-        } else {
-            $this->products[$product->getId()->toNative()]['quantity'] += $quantity;
         }
     }
 
-    private function findPositionByProductId(UUID $uuid)
+    /**
+     * @param ProductId $productId
+     * @return Position
+     * @throws CannotFindPositionException
+     */
+    private function findPositionByProductId(ProductId $productId): Position
     {
-        if (isset($this->products[$uuid->toNative()])) {
-            return $this->products[$uuid->toNative()];
+        if (isset($this->positions[$productId->toNative()])) {
+            return $this->positions[$productId->toNative()];
         } else {
-            return null;
+            throw new CannotFindPositionException(sprintf("Cannot find position with product id: '%s'", $productId->toNative()));
         }
     }
 
@@ -123,10 +130,7 @@ class Basket extends EventAggregate
      */
     private function createNewItem(Product $product, float $quantity)
     {
-        $this->products[$product->getId()->toNative()] = [
-            'product' => $product,
-            'quantity' => $quantity
-        ];
+        $this->positions[$product->getId()->toNative()] = new Position($product, $quantity);
     }
 
     /**
@@ -146,17 +150,19 @@ class Basket extends EventAggregate
     }
 
     /**
-     * @param UUID $productId
+     * @param ProductId $productId
      * @param float $quantity
      * @throws CannotFindProductException
      */
-    private function changeQuantity(UUID $productId, float $quantity)
+    private function changeQuantity(ProductId $productId, float $quantity)
     {
-        if (!isset($this->products[$productId->toNative()])) {
-            throw new CannotFindProductException();
+        try {
+            $basketPosition = $this->findPositionByProductId($productId);
+            $basketPosition->changeQuantity($quantity);
+        } catch (CannotFindPositionException $cannotFindPositionException) {
+            throw new CannotFindProductException('Cannot find product with id: \'%s\'.', null, $cannotFindPositionException);
         }
 
-        $this->products[$productId->toNative()]['quantity'] = $quantity;
     }
 
     /**
@@ -168,16 +174,18 @@ class Basket extends EventAggregate
     }
 
     /**
-     * @param UUID $productId
+     * @param ProductId $productId
      * @throws CannotFindProductException
      */
-    private function remove(UUID $productId)
+    private function remove(ProductId $productId)
     {
-        if (!isset($this->products[$productId->toNative()])) {
-            throw new CannotFindProductException();
+        try {
+            $this->findPositionByProductId($productId);
+            $this->positions->offsetUnset($productId->toNative());
+        } catch (CannotFindPositionException $cannotFindPositionException) {
+            throw new CannotFindProductException('Cannot find product with id: \'%s\'.', null, $cannotFindPositionException);
         }
 
-        unset($this->products[$productId->toNative()]);
     }
 
     public function handleBasketHasBeenClosed(BasketHasBeenClosed $basketHasBeenClosed)

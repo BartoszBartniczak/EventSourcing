@@ -7,7 +7,9 @@
 namespace Shop\Product;
 
 
-class Exception extends \Exception
+use Shop\UUID\UUID;
+
+class Id extends UUID
 {
 
 }

@@ -8,6 +8,7 @@ namespace Shop\User\Command;
 
 
 use Shop\Command\Command;
+use Shop\User\Repository\UserRepository;
 use Shop\User\User;
 
 class LogOutUser implements Command
@@ -16,31 +17,37 @@ class LogOutUser implements Command
     /**
      * @var User
      */
-    private $user;
+    private $userEmail;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
     /**
      * LogOutUser constructor.
-     * @param User $user
+     * @param string $userEmail
+     * @param UserRepository $userRepository
      */
-    public function __construct(User $user)
+    public function __construct(string $userEmail, UserRepository $userRepository)
     {
-        $this->user = $user;
+        $this->userEmail = $userEmail;
+        $this->userRepository = $userRepository;
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
-    public function execute()
+    public function getUserEmail(): string
     {
-
+        return $this->userEmail;
     }
 
     /**
-     * @return User
+     * @return UserRepository
      */
-    public function getUser(): User
+    public function getUserRepository(): UserRepository
     {
-        return $this->user;
+        return $this->userRepository;
     }
 
 

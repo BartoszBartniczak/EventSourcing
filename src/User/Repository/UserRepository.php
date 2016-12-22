@@ -11,7 +11,11 @@ use Shop\User\User;
 
 interface UserRepository
 {
-
+    /**
+     * @param string $email
+     * @return User
+     * @throws CannotFindUserException
+     */
     public function findUserByEmail(string $email): User;
 
 }

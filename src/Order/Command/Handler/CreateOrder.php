@@ -26,9 +26,9 @@ class CreateOrder extends CommandHandler
 
         $order = new Order(
             new Id($command->getUuidGenerator()->generate()->toNative()),
-            $command->getBasket()->getId(),
-            $command->getBasket()->getPositions()
+            $command->getBasket()->getId()
         );
+        $order->addPositionsFromBasket($command->getBasket()->getPositions());
 
         $order->apply(
             new OrderHasBeenCreated(

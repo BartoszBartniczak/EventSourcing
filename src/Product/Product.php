@@ -7,13 +7,12 @@
 namespace Shop\Product;
 
 
-use Shop\UUID\UUID;
 
 class Product
 {
 
     /**
-     * @var UUID
+     * @var Id
      */
     private $id;
 
@@ -24,19 +23,20 @@ class Product
 
     /**
      * Product constructor.
-     * @param UUID $id
+     * @param Id $id
      * @param string $name
+     * @TODO EventAggregate
      */
-    public function __construct(UUID $id, string $name)
+    public function __construct(Id $id, string $name)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
     /**
-     * @return UUID
+     * @return Id
      */
-    public function getId(): UUID
+    public function getId(): Id
     {
         return $this->id;
     }

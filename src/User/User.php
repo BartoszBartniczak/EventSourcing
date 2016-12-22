@@ -11,6 +11,7 @@ use Shop\ArrayObject\ArrayObject;
 use Shop\EventAggregate\EventAggregate;
 use Shop\User\Event\ActivationTokenHasBeenGenerated;
 use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
+use Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
 use Shop\User\Event\UserAccountHasBeenActivated;
 use Shop\User\Event\UserHasBeenLoggedIn;
 use Shop\User\Event\UserHasBeenLoggedOut;
@@ -56,6 +57,11 @@ class User extends EventAggregate
     private $unsuccessfulAttemptsOfActivatingUserAccount;
 
     /**
+     * @var int
+     */
+    private $unsuccessfulAttemptsOfLoggingIn;
+
+    /**
      * User constructor.
      * @param string $email
      * @param string $passwordHash
@@ -72,6 +78,7 @@ class User extends EventAggregate
         $this->active = false;
         $this->loginDates = new ArrayObject();
         $this->unsuccessfulAttemptsOfActivatingUserAccount = 0;
+        $this->unsuccessfulAttemptsOfLoggingIn = 0;
     }
 
     public function isActive(): bool
@@ -125,6 +132,14 @@ class User extends EventAggregate
     public function getUnsuccessfulAttemptsOfActivatingUserAccount(): int
     {
         return $this->unsuccessfulAttemptsOfActivatingUserAccount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnsuccessfulAttemptsOfLoggingIn(): int
+    {
+        return $this->unsuccessfulAttemptsOfLoggingIn;
     }
 
     /**
@@ -188,6 +203,11 @@ class User extends EventAggregate
     protected function handleUserHasBeenLoggedOut(UserHasBeenLoggedOut $event)
     {
 
+    }
+
+    protected function handleUnsuccessfulAttemptOfLoggingIn(UnsuccessfulAttemptOfLoggingIn $unsuccessfulAttemptOfLoggingIn)
+    {
+        $this->unsuccessfulAttemptsOfLoggingIn++;
     }
 
 }

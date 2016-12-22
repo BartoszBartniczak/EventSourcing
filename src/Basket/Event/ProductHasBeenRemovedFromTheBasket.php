@@ -9,6 +9,7 @@ namespace Shop\Basket\Event;
 
 use Shop\Basket\Basket;
 use Shop\Event\Id;
+use Shop\Product\Id as ProductId;
 use Shop\UUID\UUID;
 
 class ProductHasBeenRemovedFromTheBasket extends Event
@@ -24,9 +25,9 @@ class ProductHasBeenRemovedFromTheBasket extends Event
      * @param Id $eventId
      * @param \DateTime $dateTime
      * @param Basket $basket
-     * @param UUID $productId
+     * @param ProductId $productId
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, UUID $productId)
+    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, ProductId $productId)
     {
         parent::__construct($eventId, $dateTime);
 
@@ -35,9 +36,9 @@ class ProductHasBeenRemovedFromTheBasket extends Event
     }
 
     /**
-     * @return UUID
+     * @return ProductId
      */
-    public function getProductId(): UUID
+    public function getProductId(): ProductId
     {
         return $this->productId;
     }

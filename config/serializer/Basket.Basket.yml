@@ -2,7 +2,7 @@ Shop\Basket\Basket:
   properties:
     id:
       type: Shop\Basket\Id
-    products:
+    positions:
       exclude: true
       expose: false
     ownerEmail:

@@ -23,4 +23,12 @@ class ArrayObject extends \ArrayObject
         return new ArrayObject($filteredData);
     }
 
+    public function shift()
+    {
+        $arrayCopy = $this->getArrayCopy();
+        $firstElement = array_shift($arrayCopy);
+        $this->exchangeArray($arrayCopy);
+        return $firstElement;
+    }
+
 }
