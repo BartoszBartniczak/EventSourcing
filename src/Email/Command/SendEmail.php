@@ -25,16 +25,6 @@ class SendEmail implements Command
     protected $email;
 
     /**
-     * @var bool
-     */
-    protected $sent;
-
-    /**
-     * @var string
-     */
-    protected $errorMessage;
-
-    /**
      * SendEmail constructor.
      * @param EmailSenderService $emailSenderService
      * @param Email $email

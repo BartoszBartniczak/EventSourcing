@@ -6,9 +6,7 @@
 
 namespace Shop\Email\Sender;
 
-use Shop\Email\Exception as EmailException;
-
-class Exception extends EmailException
+class Exception extends \Exception
 {
 
 }

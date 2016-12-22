@@ -10,7 +10,6 @@ namespace Shop\User\Command\Handler;
 use Shop\Command\Command;
 use Shop\Command\Handler\CommandHandler;
 use Shop\Email\Command\SendEmail as SendEmailCommand;
-use Shop\Email\Email;
 use Shop\EventAggregate\EventAggregate;
 use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
 use Shop\User\Event\ActivationTokenHasBeenGenerated;
@@ -52,7 +51,7 @@ class RegisterNewUser extends CommandHandler
             $activationToken
         ));
 
-        $this->addNextCommand(new SendEmailCommand($command->getEmailSenderService(), new Email($this->uuidGenerator->generate())));
+        $this->addNextCommand(new SendEmailCommand($command->getEmailSenderService(), $command->getEmail()));
 
         return $this->user;
     }

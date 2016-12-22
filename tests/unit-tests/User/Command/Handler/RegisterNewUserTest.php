@@ -8,6 +8,7 @@ namespace Shop\User\Command\Handler;
 
 
 use Shop\Email\Command\SendEmail;
+use Shop\Email\Email;
 use Shop\Email\Sender\Service;
 use Shop\Generator\ActivationTokenGenerator;
 use Shop\Password\HashGenerator;
@@ -26,10 +27,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandle()
     {
-
-        $uuidGenerator = $this->getMockBuilder(Generator::class)
-            ->getMockForAbstractClass();
-        /* @var $uuidGenerator Generator */
 
         $emailSenderService = $this->getMockBuilder(Service::class)
             ->getMock();
@@ -70,6 +67,11 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             ->willReturn('passwordHash');
         /* @var $hashGenerator HashGenerator */
 
+        $email = $this->getMockBuilder(Email::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $email Email */
+
         $command = new RegisterNewUserCommand(
             'user@email.com',
             'password',
@@ -77,7 +79,8 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             $activationTokenGenerator,
             $uuidGenerator,
             $saltGenerator,
-            $hashGenerator
+            $hashGenerator,
+            $email
         );
 
         $registerNewUser = new RegisterNewUser($uuidGenerator);
@@ -87,7 +90,11 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('passwordHash', $user->getPasswordHash());
         $this->assertSame('passwordSalt', $user->getPasswordSalt());
         $this->assertSame('activationToken', $user->getActivationToken());
-        $this->assertInstanceOf(SendEmail::class, $registerNewUser->getNextCommands()->shift());
+        $sendEmailCommand = $registerNewUser->getNextCommands()->shift();
+        $this->assertInstanceOf(SendEmail::class, $sendEmailCommand);
+        /* @var $sendEmailCommand SendEmail */
+        $this->assertSame($email, $sendEmailCommand->getEmail());
+        $this->assertSame($emailSenderService, $sendEmailCommand->getEmailSenderService());
         $this->assertEquals(0, $user->getCommittedEvents()->count());
         $userHasBeenRegistered = $user->getUncommittedEvents()->shift();
         /* @var $userHasBeenRegistered UserHasBeenRegistered */

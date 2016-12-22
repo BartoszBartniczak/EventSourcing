@@ -4,9 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Event;
+namespace Shop\Email;
 
-class EmailHasBeenSent extends Event
+
+use Shop\UUID\UUID;
+
+class Id extends UUID
 {
 
 }

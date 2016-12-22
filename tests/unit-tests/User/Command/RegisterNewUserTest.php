@@ -7,6 +7,7 @@
 namespace Shop\User\Command;
 
 
+use Shop\Email\Email;
 use Shop\Email\Sender\Service;
 use Shop\Generator\ActivationTokenGenerator;
 use Shop\Password\HashGenerator;
@@ -49,6 +50,11 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $hashGenerator HashGenerator */
 
+        $email = $this->getMockBuilder(Email::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $email Email */
+
         $command = new RegisterNewUser(
             'user@email.com',
             'password',
@@ -56,7 +62,8 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             $activationTokenGenerator,
             $uuidGenerator,
             $saltGenerator,
-            $hashGenerator
+            $hashGenerator,
+            $email
         );
 
         $this->assertSame('user@email.com', $command->getUserEmail());
@@ -66,6 +73,7 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($uuidGenerator, $command->getUuidGenerator());
         $this->assertSame($saltGenerator, $command->getSaltGenerator());
         $this->assertSame($hashGenerator, $command->getHashGenerator());
+        $this->assertSame($email, $command->getEmail());
 
     }
 

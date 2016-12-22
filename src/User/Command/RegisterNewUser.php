@@ -8,6 +8,7 @@ namespace Shop\User\Command;
 
 
 use Shop\Command\Command;
+use Shop\Email\Email;
 use Shop\Email\Sender\Service as EmailSenderService;
 use Shop\Generator\ActivationTokenGenerator;
 use Shop\Password\HashGenerator;
@@ -51,6 +52,10 @@ class RegisterNewUser implements Command
      * @var HashGenerator
      */
     private $hashGenerator;
+    /**
+     * @var Email
+     */
+    private $email;
 
     /**
      * RegisterNewUser constructor.
@@ -61,8 +66,9 @@ class RegisterNewUser implements Command
      * @param UUIDGenerator $generator
      * @param SaltGenerator $saltGenerator
      * @param HashGenerator $hashGenerator
+     * @param Email $email
      */
-    public function __construct(string $userEmail, string $userPassword, EmailSenderService $emailSenderService, ActivationTokenGenerator $activationTokenGenerator, UUIDGenerator $generator, SaltGenerator $saltGenerator, HashGenerator $hashGenerator)
+    public function __construct(string $userEmail, string $userPassword, EmailSenderService $emailSenderService, ActivationTokenGenerator $activationTokenGenerator, UUIDGenerator $generator, SaltGenerator $saltGenerator, HashGenerator $hashGenerator, Email $email)
     {
         $this->emailSenderService = $emailSenderService;
         $this->userEmail = $userEmail;
@@ -71,6 +77,7 @@ class RegisterNewUser implements Command
         $this->saltGenerator = $saltGenerator;
         $this->userPassword = $userPassword;
         $this->hashGenerator = $hashGenerator;
+        $this->email = $email;
     }
 
     /**
@@ -127,6 +134,14 @@ class RegisterNewUser implements Command
     public function getUserPassword(): string
     {
         return $this->userPassword;
+    }
+
+    /**
+     * @return Email
+     */
+    public function getEmail(): Email
+    {
+        return $this->email;
     }
 
 

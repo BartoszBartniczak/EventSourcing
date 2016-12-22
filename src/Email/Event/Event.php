@@ -8,7 +8,7 @@ namespace Shop\Email\Event;
 
 use Shop\Email\Email;
 use Shop\Event\Event as BasicEvent;
-use Shop\EventAggregate\EventAggregate;
+use Shop\Event\Id;
 
 
 abstract class Event extends BasicEvent
@@ -21,14 +21,24 @@ abstract class Event extends BasicEvent
      */
     protected $email;
 
+    /**
+     * Event constructor.
+     * @param Id $eventId
+     * @param \DateTime $dateTime
+     * @param Email $email
+     */
+    public function __construct(Id $eventId, \DateTime $dateTime, Email $email)
+    {
+        parent::__construct($eventId, $dateTime);
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
     public function getEventFamilyName(): string
     {
         return self::FAMILY_NAME;
-    }
-
-    public function getEventAggregate(): EventAggregate
-    {
-        return $this->getEmail();
     }
 
     /**

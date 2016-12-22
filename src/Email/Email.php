@@ -25,22 +25,44 @@ class Email extends EventAggregate
     private $sent;
 
     /**
-     * Email constructor.
-     * @param UUID $id
+     * @var
      */
-    public function __construct(UUID $id)
+    private $unsuccessfulAttemptsOfSending;
+
+    /**
+     * Email constructor.
+     * @param Id $id
+     */
+    public function __construct(Id $id)
     {
         parent::__construct();
         $this->id = $id;
         $this->sent = false;
+        $this->unsuccessfulAttemptsOfSending = 0;
     }
 
     /**
-     * @return UUID
+     * @return Id
      */
-    public function getId(): UUID
+    public function getId(): Id
     {
         return $this->id;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSent(): bool
+    {
+        return $this->sent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnsuccessfulAttemptsOfSending()
+    {
+        return $this->unsuccessfulAttemptsOfSending;
     }
 
     public function handleEmailHasBeenSent(EmailHasBeenSent $event)
@@ -55,7 +77,7 @@ class Email extends EventAggregate
 
     public function handleEmailHasNotBeenSent(EmailHasNotBeenSent $event)
     {
-
+        $this->unsuccessfulAttemptsOfSending++;
     }
 
 }

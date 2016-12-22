@@ -19,8 +19,7 @@ class EmailHasNotBeenSent extends Event
 
     public function __construct(Id $eventId, \DateTime $dateTime, Email $email, string $errorMessage)
     {
-        parent::__construct($eventId, $dateTime);
-        $this->email = $email;
+        parent::__construct($eventId, $dateTime, $email);
         $this->errorMessage = $errorMessage;
     }
 
