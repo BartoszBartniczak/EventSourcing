@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
-use Shop\Basket\Basket;
-use Shop\Command\Command;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class RemoveProductFromTheBasket implements Command
 {
@@ -20,23 +20,19 @@ class RemoveProductFromTheBasket implements Command
     private $basket;
 
     /**
-     * @var UUID
+     * @var ProductId
      */
     private $productId;
 
     /**
      * RemoveProductFromTheBasket constructor.
      * @param Basket $basket
-     * @param UUID $productId
+     * @param ProductId $productId
      */
-    public function __construct(Basket $basket, UUID $productId)
+    public function __construct(Basket $basket, ProductId $productId)
     {
         $this->basket = $basket;
         $this->productId = $productId;
-    }
-
-    public function execute()
-    {
     }
 
     /**
@@ -48,9 +44,9 @@ class RemoveProductFromTheBasket implements Command
     }
 
     /**
-     * @return UUID
+     * @return ProductId
      */
-    public function getProductId(): UUID
+    public function getProductId(): ProductId
     {
         return $this->productId;
     }

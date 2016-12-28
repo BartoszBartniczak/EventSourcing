@@ -4,20 +4,20 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email;
+namespace BartoszBartniczak\EventSourcing\Shop\Email;
 
-use Shop\Email\Event\EmailHasBeenSent;
-use Shop\Email\Event\EmailHasNotBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent;
 
 
 class EmailTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Email\Email::__construct
-     * @covers \Shop\Email\Email::getId()
-     * @covers \Shop\Email\Email::isSent()
-     * @covers \Shop\Email\Email::getUnsuccessfulAttemptsOfSending()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::getId()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::isSent()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::getUnsuccessfulAttemptsOfSending()
      */
     public function testConstructor()
     {
@@ -34,8 +34,8 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Email\Email::handleEmailHasBeenSent
-     * @covers \Shop\Email\Email::markAsSent()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::handleEmailHasBeenSent
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::markAsSent()
      */
     public function testHandleEmailHasBeenSent()
     {
@@ -69,8 +69,8 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Email\Email::handleEmailHasNotBeenSent
-     * @covers \Shop\Email\Email::getUnsuccessfulAttemptsOfSending()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::handleEmailHasNotBeenSent
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Email::getUnsuccessfulAttemptsOfSending()
      */
     public function testHandleEmailHasNotBeenSent()
     {

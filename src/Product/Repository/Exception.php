@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
 class Exception extends \Exception

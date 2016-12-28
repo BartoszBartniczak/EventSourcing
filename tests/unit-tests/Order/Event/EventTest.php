@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
-use Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
 
 class EventTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Order\Event\Event::__construct
-     * @covers \Shop\Order\Event\Event::getEventFamilyName()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\Event::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\Event::getEventFamilyName()
      */
     public function testConstructor()
     {

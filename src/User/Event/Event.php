@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
-use Shop\Event\Event as BasicEvent;
-use Shop\Event\Id;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 
 abstract class Event extends BasicEvent

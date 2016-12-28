@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
 class CannotFindUserException extends InvalidArgumentException

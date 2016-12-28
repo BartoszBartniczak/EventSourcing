@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class UnsuccessfulAttemptOfActivatingUserAccountTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::__construct
-     * @covers \Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::getActivationToken
-     * @covers \Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::getMessage
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::getActivationToken
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount::getMessage
      */
     public function testGetters()
     {

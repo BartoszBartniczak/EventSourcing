@@ -1,4 +1,4 @@
-Shop\User\Event\UserHasBeenRegistered:
+BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered:
   properties:
     passwordHash:
       type: string

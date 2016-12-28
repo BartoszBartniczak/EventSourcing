@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
-use Shop\Basket\Basket;
-use Shop\Command\Command;
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class AddProductToTheBasket implements Command
 {

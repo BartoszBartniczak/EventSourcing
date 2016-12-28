@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Factory;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Factory;
 
 
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class Factory
 {

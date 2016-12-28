@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
-use Shop\User\Event\UserHasBeenLoggedIn;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class LogInUser extends CommandHandler
 {

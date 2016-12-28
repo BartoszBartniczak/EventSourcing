@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler;
 
 
-use Shop\Basket\Command\CloseBasket;
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\Email\Command\SendEmail;
-use Shop\Order\Event\OrderHasBeenCreated;
-use Shop\Order\Id;
-use Shop\Order\Order;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail;
+use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Order\Id;
+use BartoszBartniczak\EventSourcing\Shop\Order\Order;
 
 class CreateOrder extends CommandHandler
 {

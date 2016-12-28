@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
-use Shop\Command\Command;
-use Shop\UUID\Generator as GeneratorUUID;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 
 class CreateNewBasket implements Command
 {
 
     /**
-     * @var GeneratorUUID
+     * @var Factory
      */
-    private $generatorUUID;
+    private $basketFactory;
 
     /**
      * @var string
@@ -25,21 +25,13 @@ class CreateNewBasket implements Command
 
     /**
      * CreateNewBasket constructor.
-     * @param GeneratorUUID $generatorUUID
+     * @param Factory $factory
      * @param string $userEmail
      */
-    public function __construct(GeneratorUUID $generatorUUID, string $userEmail)
+    public function __construct(Factory $factory, string $userEmail)
     {
-        $this->generatorUUID = $generatorUUID;
         $this->userEmail = $userEmail;
-    }
-
-    /**
-     * @return GeneratorUUID
-     */
-    public function getGeneratorUUID(): GeneratorUUID
-    {
-        return $this->generatorUUID;
+        $this->basketFactory = $factory;
     }
 
     /**
@@ -49,5 +41,14 @@ class CreateNewBasket implements Command
     {
         return $this->userEmail;
     }
+
+    /**
+     * @return Factory
+     */
+    public function getBasketFactory(): Factory
+    {
+        return $this->basketFactory;
+    }
+
 
 }

@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\ArrayObject;
+namespace BartoszBartniczak\EventSourcing\Shop\ArrayObject;
 
 
 use BartoszBartniczak\ArrayObject\ArrayOfObjects as ArrayOfObjectsBasic;
@@ -13,7 +13,7 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::__construct
      */
     public function testConstructor()
     {
@@ -25,7 +25,7 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::pop
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::pop
      */
     public function testPop()
     {
@@ -37,7 +37,7 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::shift
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::shift
      */
     public function testShift()
     {
@@ -49,7 +49,7 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::merge
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::merge
      */
     public function testMerge()
     {
@@ -64,8 +64,8 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::merge
-     * @covers \Shop\ArrayObject\ArrayOfObjects::throwExceptionIfObjectIsNotInstanceOfTheClass
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::merge
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::throwExceptionIfObjectIsNotInstanceOfTheClass
      */
     public function testMergeThrowsInvalidArgumentExceptionIfTheObjectAreNotInstanceOfTheClass()
     {
@@ -78,19 +78,31 @@ class ArrayOfObjectsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::isNotEmpty
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::isNotEmpty
      */
     public function testIsNotEmpty()
     {
-        $arrayOfObjectsFirst = new ArrayOfObjects(\DateTime::class);
-        $this->assertFalse($arrayOfObjectsFirst->isNotEmpty());
+        $arrayOfObjects = new ArrayOfObjects(\DateTime::class);
+        $this->assertFalse($arrayOfObjects->isNotEmpty());
 
-        $arrayOfObjectsFirst->append(new \DateTime());
-        $this->assertTrue($arrayOfObjectsFirst->isNotEmpty());
+        $arrayOfObjects->append(new \DateTime());
+        $this->assertTrue($arrayOfObjects->isNotEmpty());
     }
 
     /**
-     * @covers \Shop\ArrayObject\ArrayOfObjects::isNotEmpty
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::isEmpty
+     */
+    public function testIsEmpty()
+    {
+        $arrayOfObjects = new ArrayOfObjects(\DateTime::class);
+        $this->assertTrue($arrayOfObjects->isEmpty());
+
+        $arrayOfObjects->append(new \DateTime());
+        $this->assertFalse($arrayOfObjects->isEmpty());
+    }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects::filter
      */
     public function testFilter()
     {

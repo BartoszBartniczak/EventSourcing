@@ -4,28 +4,29 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\Email\Email;
-use Shop\Email\Sender\Service;
-use Shop\Generator\ActivationTokenGenerator;
-use Shop\Password\HashGenerator;
-use Shop\Password\SaltGenerator;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\RegisterNewUser::__construct
-     * @covers \Shop\User\Command\RegisterNewUser::getUserEmail
-     * @covers \Shop\User\Command\RegisterNewUser::getUserPassword
-     * @covers \Shop\User\Command\RegisterNewUser::getEmailSenderService
-     * @covers \Shop\User\Command\RegisterNewUser::getActivationTokenGenerator
-     * @covers \Shop\User\Command\RegisterNewUser::getUuidGenerator
-     * @covers \Shop\User\Command\RegisterNewUser::getSaltGenerator
-     * @covers \Shop\User\Command\RegisterNewUser::getHashGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getUserEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getUserPassword
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getEmailSenderService
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getActivationTokenGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getUuidGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getSaltGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getHashGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getEmail
      */
     public function testGetters()
     {

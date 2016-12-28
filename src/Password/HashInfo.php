@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Password;
+namespace BartoszBartniczak\EventSourcing\Shop\Password;
 
 
 class HashInfo extends \ArrayObject

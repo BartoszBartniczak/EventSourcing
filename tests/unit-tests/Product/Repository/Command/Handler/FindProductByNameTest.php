@@ -4,19 +4,22 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler;
 
-use Shop\Product\Product;
-use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
-use Shop\Product\Repository\Repository;
-use Shop\User\User;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CannotHandleTheCommandException;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\CannotFindProductException;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class FindProductByNameTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Product\Repository\Command\Handler\FindProductByName::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler\FindProductByName::handle
      */
     public function testHandleFindsProduct()
     {
@@ -55,6 +58,51 @@ class FindProductByNameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $findProductByName->getAdditionalEvents()->count());
         $this->assertEquals(0, $findProductByName->getNextCommands()->count());
 
+    }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler\FindProductByName::handle
+     */
+    public function testHandleCreatesAdditionalEventInCaseOfNotFindingTheProduct()
+    {
+
+        $this->expectException(CannotHandleTheCommandException::class);
+        $this->expectExceptionMessage("Product has not been found in repository");
+
+        $generator = $this->getMockBuilder(Generator::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        /* @var $generator Generator */
+
+        $user = $this->getMockBuilder(User::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'getEmail'
+            ])
+            ->getMock();
+        $user->method('getEmail')
+            ->willReturn('user@email.com');
+        /* @var $user User */
+
+        $repository = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'findByName'
+            ])
+            ->getMockForAbstractClass();
+        $repository->expects($this->once())
+            ->method('findByName')
+            ->with('ProductName')
+            ->willThrowException(new CannotFindProductException());
+        /* @var $repository Repository */
+
+        $findProductByNameCommand = new FindProductByNameCommand($user, 'ProductName', $repository);
+
+        $findProductByName = new FindProductByName($generator);
+        $findProductByName->handle($findProductByNameCommand);
+
+        $this->assertEquals(1, $findProductByName->getAdditionalEvents()->count());
+        $this->assertInstanceOf(ProductHasNotBeenFound::class, $findProductByName->getAdditionalEvents()->shift());
     }
 
 }

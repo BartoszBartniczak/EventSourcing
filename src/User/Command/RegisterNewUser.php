@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\Command\Command;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service as EmailSenderService;
-use Shop\Generator\ActivationTokenGenerator;
-use Shop\Password\HashGenerator;
-use Shop\Password\SaltGenerator;
-use Shop\UUID\Generator as UUIDGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
+use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
 
 class RegisterNewUser implements Command
 {

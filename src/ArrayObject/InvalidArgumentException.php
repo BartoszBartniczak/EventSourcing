@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\ArrayObject;
+namespace BartoszBartniczak\EventSourcing\Shop\ArrayObject;
 
 use BartoszBartniczak\ArrayObject\InvalidArgumentException as InvalidArgumentExceptionBasic;
 

@@ -1,4 +1,4 @@
-Shop\User\Event\Event:
+BartoszBartniczak\EventSourcing\Shop\User\Event\Event:
   properties:
     userEmail:
       type: string

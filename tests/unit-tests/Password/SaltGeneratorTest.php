@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Password;
+namespace BartoszBartniczak\EventSourcing\Shop\Password;
 
 
 class SaltGeneratorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Password\SaltGenerator::generate
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator::generate
      */
     public function testGenerate()
     {

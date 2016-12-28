@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Position;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Position;
 
 
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class Position
 {

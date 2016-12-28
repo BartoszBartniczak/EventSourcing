@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Generator;
+namespace BartoszBartniczak\EventSourcing\Shop\Generator;
 
 
 interface Generator

@@ -6,43 +6,51 @@
 
 require_once('vendor/autoload.php');
 
-use Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
-use Shop\Basket\Command\ChangeQuantityOfTheProduct;
-use Shop\Basket\Command\CloseBasket as CloseBasketCommand;
-use Shop\Basket\Command\CreateNewBasket as CreateNewBasketCommand;
-use Shop\Basket\Command\Handler\AddProductToTheBasket as AddProductToTheBasketHandler;
-use Shop\Basket\Command\Handler\ChangeQuantityOfTheProduct as ChangeQuantityOfTheProductHandler;
-use Shop\Basket\Command\Handler\CloseBasket as CloseBasketCommandHandler;
-use Shop\Basket\Command\Handler\RemoveProductFromTheBasket as RemoveProductFromTheBasketHandler;
-use Shop\Basket\Command\RemoveProductFromTheBasket;
-use Shop\Basket\Repository\InMemoryRepository as BasketRepository;
-use Shop\Command\Bus\CommandBus;
-use Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
-use Shop\Email\Command\SendEmail as SendEmailCommand;
-use Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
-use Shop\Email\Sender\NullEmailSenderService;
-use Shop\Event\Bus\SimpleEventBus;
-use Shop\Event\Repository\InMemoryEventRepository;
-use Shop\Event\Serializer\JMSJsonSerializer;
-use Shop\Order\Command\CreateOrder as CreateOrderCommand;
-use Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
-use Shop\Product\Id as ProductId;
-use Shop\Product\Product;
-use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
-use Shop\Product\Repository\Command\Handler\FindProductByName as FindProductByNameCommandHandler;
-use Shop\Product\Repository\Event\ProductHasNotBeenFound as ProductHasNotBeenFoundEvent;
-use Shop\Product\Repository\InMemoryRepository as InMemoryProductRepository;
-use Shop\User\Command\ActivateUser as ActivateUserCommand;
-use Shop\User\Command\Handler\ActivateUser as ActivateUserCommandHandler;
-use Shop\User\Command\Handler\LogInUser as LogInUserCommandHandler;
-use Shop\User\Command\Handler\LogOutUser as LogOutUserCommandHandler;
-use Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserCommandHandler;
-use Shop\User\Command\LogInUser as LogInUserCommand;
-use Shop\User\Command\LogOutUser as LogOutUserCommand;
-use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
-use Shop\User\Factory\Factory as UserFactory;
-use Shop\User\Repository\InMemoryUserRepository as InMemoryUserRepository;
-use Shop\UUID\RamseyGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\ChangeQuantityOfTheProduct;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CreateNewBasket as CreateNewBasketCommand;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\AddProductToTheBasket as AddProductToTheBasketHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\ChangeQuantityOfTheProduct as ChangeQuantityOfTheProductHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\CloseBasket as CloseBasketCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\CreateNewBasket as CreateNewBasketHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\RemoveProductFromTheBasket as RemoveProductFromTheBasketHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\RemoveProductFromTheBasket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Repository\InMemoryRepository as BasketRepository;
+use BartoszBartniczak\EventSourcing\Shop\Command\Bus\CannotHandleTheCommandException;
+use BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent as EmailHasNotBeenSentEvent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Id as EmailId;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService;
+use BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus;
+use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer;
+use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrderCommand;
+use BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder as CreateOrderCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler\FindProductByName as FindProductByNameCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound as ProductHasNotBeenFoundEvent;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository as InMemoryProductRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser as ActivateUserCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogInUser as LogInUserCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogOutUser as LogOutUserCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\RegisterNewUser as RegisterNewUserCommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser as LogInUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser as LogOutUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory as UserFactory;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository as InMemoryUserRepository;
+use BartoszBartniczak\EventSourcing\Shop\UUID\RamseyGenerator;
 
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
@@ -53,10 +61,13 @@ $whoops->register();
 $uuidGenerator = new RamseyGenerator();
 $emailSenderService = new NullEmailSenderService(true);
 
+$propertyNamingStrategy = new \JMS\Serializer\Naming\CamelCaseNamingStrategy();
+
 $jmsSerializer = JMS\Serializer\SerializerBuilder::create()
-    ->addMetadataDir(__DIR__ . '/config/serializer', "Shop")
+    ->setPropertyNamingStrategy($propertyNamingStrategy)
+    ->addMetadataDir(__DIR__ . '/config/serializer', "BartoszBartniczak\EventSourcing\Shop")
     ->build();
-$serializer = new JMSJsonSerializer($jmsSerializer);
+$serializer = new JMSJsonSerializer($jmsSerializer, $propertyNamingStrategy);
 
 $eventRepository = new InMemoryEventRepository($serializer);
 
@@ -69,7 +80,7 @@ $eventBus->registerHandler(ProductHasNotBeenFoundEvent::class, function (Product
 });
 
 $commandBus = new CommandBus($uuidGenerator, $eventRepository, $eventBus);
-$commandBus->registerHandler(CreateNewBasketCommand::class, new \Shop\Basket\Command\Handler\CreateNewBasket($uuidGenerator));
+$commandBus->registerHandler(CreateNewBasketCommand::class, new CreateNewBasketHandler($uuidGenerator));
 $commandBus->registerHandler(AddProductToTheBasketCommand::class, new AddProductToTheBasketHandler($uuidGenerator));
 $commandBus->registerHandler(ChangeQuantityOfTheProduct::class, new ChangeQuantityOfTheProductHandler($uuidGenerator));
 $commandBus->registerHandler(RemoveProductFromTheBasket::class, new RemoveProductFromTheBasketHandler($uuidGenerator));
@@ -82,11 +93,12 @@ $commandBus->registerHandler(LogOutUserCommand::class, new LogOutUserCommandHand
 $commandBus->registerHandler(CreateOrderCommand::class, new CreateOrderCommandHandler($uuidGenerator));
 $commandBus->registerHandler(CloseBasketCommand::class, new CloseBasketCommandHandler($uuidGenerator));
 
-$basketRepository = new BasketRepository($eventRepository);
+$basketFactory = new BasketFactory($uuidGenerator);
+$basketRepository = new BasketRepository($eventRepository, $basketFactory);
 $userFactory = new UserFactory();
 $userRepository = new InMemoryUserRepository($eventRepository, $userFactory);
 
-$hashGenerator = new \Shop\Password\HashGenerator();
+$hashGenerator = new HashGenerator();
 
 $productRepository = new InMemoryProductRepository();
 $milkId = new ProductId($uuidGenerator->generate()->toNative());
@@ -98,9 +110,11 @@ $productRepository->save(new Product($breadId, 'Bread'));
 $butterUuid = new ProductId($uuidGenerator->generate()->toNative());
 $productRepository->save(new Product($butterUuid, 'Butter'));
 
+
 /* Controller */
 
-$registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new \Shop\Generator\ActivationTokenGenerator(), $uuidGenerator, new \Shop\Password\SaltGenerator(), $hashGenerator);
+$registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new ActivationTokenGenerator(), $uuidGenerator, new SaltGenerator(), $hashGenerator, new Email(new EmailId(uniqid())));
+
 $commandBus->handle($registerUserCommand);
 $user = $commandBus->getOutputForCommand($registerUserCommand);
 
@@ -120,7 +134,7 @@ $findProductByNameCommand = new FindProductByNameCommand($user, 'Milk', $product
 $commandBus->handle($findProductByNameCommand);
 $milk = $commandBus->getOutputForCommand($findProductByNameCommand);
 
-$createNewBasket = new CreateNewBasketCommand($uuidGenerator, $user->getEmail());
+$createNewBasket = new CreateNewBasketCommand($basketFactory, $user->getEmail());
 $commandBus->handle($createNewBasket);
 $basket = $basketRepository->findLastBasketByUserEmail($user->getEmail());
 
@@ -156,12 +170,12 @@ $commandBus->handle($logInUserCommand);
 try {
     $findProductByNameCommand = new FindProductByNameCommand($user, 'Cookies', $productRepository);
     $commandBus->handle($findProductByNameCommand);
-} catch (\Shop\Command\Bus\CannotHandleTheCommandException $cannotHandleTheCommandException) {
+} catch (CannotHandleTheCommandException $cannotHandleTheCommandException) {
     dump("Display the error message", $cannotHandleTheCommandException);
 }
 
 
-$createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new \Shop\Email\Email($uuidGenerator->generate()));
+$createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new Email(new EmailId(uniqid())));
 $commandBus->handle($createOrderCommand);
 
 ///** Recreating the basket */

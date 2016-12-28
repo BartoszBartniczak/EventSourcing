@@ -4,20 +4,20 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command;
 
 
-use Shop\Product\Repository\Repository;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class FindProductByNameTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Product\Repository\Command\FindProductByName::__construct
-     * @covers \Shop\Product\Repository\Command\FindProductByName::getUser
-     * @covers \Shop\Product\Repository\Command\FindProductByName::getProductName
-     * @covers \Shop\Product\Repository\Command\FindProductByName::getProductRepository
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName::getUser
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName::getProductName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName::getProductRepository
      */
     public function testGetters()
     {

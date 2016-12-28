@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Repository;
 
 
-use Shop\Basket\Basket;
-use Shop\Basket\Id;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
 
 interface BasketRepository
 {

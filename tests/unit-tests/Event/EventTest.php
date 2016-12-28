@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Event;
 
 
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class EventTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\Event\Event::__construct
-     * @covers \Shop\Event\Event::getEventId
-     * @covers \Shop\Event\Event::getDateTime
-     * @covers \Shop\Event\Event::getName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getEventId
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getDateTime
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getName
      */
     public function testGetters()
     {

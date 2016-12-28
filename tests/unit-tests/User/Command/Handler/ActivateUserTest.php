@@ -4,21 +4,21 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
-use Shop\User\Command\ActivateUser as ActivateUserCommand;
-use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
-use Shop\User\Event\UserAccountHasBeenActivated;
-use Shop\User\Repository\UserRepository;
-use Shop\User\User;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class ActivateUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
      */
     public function testHandleValidActivationToken()
     {
@@ -68,8 +68,8 @@ class ActivateUserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
      */
     public function testHandleUserHasBeenAlreadyActivated()
     {
@@ -122,8 +122,8 @@ class ActivateUserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\Command\Handler\ActivateUser::handle
-     * @covers \Shop\User\Command\Handler\ActivateUser::tokenValidation
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\ActivateUser::tokenValidation
      */
     public function testHandleInvalidActivationToken()
     {

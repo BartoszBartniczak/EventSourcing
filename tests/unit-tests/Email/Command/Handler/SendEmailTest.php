@@ -4,24 +4,24 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler;
 
-use Shop\Email\Command\SendEmail as SendEmailCommand;
-use Shop\Email\Email;
-use Shop\Email\Event\EmailHasBeenSent;
-use Shop\Email\Event\EmailHasNotBeenSent;
-use Shop\Email\Id;
-use Shop\Email\Sender\CannotSendEmailException;
-use Shop\Email\Sender\Service;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Id;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\CannotSendEmailException;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 
 class SendEmailTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Email\Command\Handler\SendEmail::handle
-     * @covers \Shop\Email\Command\Handler\SendEmail::isSent()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail::isSent()
      */
     public function testHandleWithoutErrors()
     {
@@ -63,8 +63,8 @@ class SendEmailTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Email\Command\Handler\SendEmail::handle
-     * @covers \Shop\Email\Command\Handler\SendEmail::isSent()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail::isSent()
      */
     public function testHandleSenderException()
     {

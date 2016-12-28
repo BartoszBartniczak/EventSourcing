@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Command;
 
 
-use Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
 
 class CommandList extends ArrayOfObjects
 {

@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Event;
 
 
-use Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
 
 class EventStream extends ArrayOfObjects
 {

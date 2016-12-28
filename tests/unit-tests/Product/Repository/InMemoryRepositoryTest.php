@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
-use Shop\Product\Id;
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Product\Repository\InMemoryRepository::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::__construct
      */
     public function testConstructor()
     {
@@ -24,9 +24,9 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Product\Repository\InMemoryRepository::save
-     * @covers \Shop\Product\Repository\InMemoryRepository::findById
-     * @covers \Shop\Product\Repository\InMemoryRepository::findByName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::save
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::findById
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::findByName
      */
     public function testSavingAndSearching()
     {
@@ -68,7 +68,7 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Product\Repository\InMemoryRepository::findById
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::findById
      */
     public function testFindByIdThrowsCannotFindProductException()
     {
@@ -82,7 +82,7 @@ class InMemoryRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Product\Repository\InMemoryRepository::findByName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\InMemoryRepository::findByName
      */
     public function testFindByNameThrowsCannotFindProductException()
     {

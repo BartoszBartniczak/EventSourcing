@@ -4,13 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Generator;
+namespace BartoszBartniczak\EventSourcing\Shop\Generator;
 
 
 class ActivationTokenGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \Shop\Generator\ActivationTokenGenerator::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator::__construct
      */
     public function testConstructor()
     {
@@ -19,7 +19,7 @@ class ActivationTokenGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Generator\ActivationTokenGenerator::generate
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator::generate
      */
     public function testGenerate()
     {

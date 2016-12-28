@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
 
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class ProductHasNotBeenFoundTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\Product\Repository\Event\ProductHasNotBeenFound::__construct
-     * @covers \Shop\Product\Repository\Event\ProductHasNotBeenFound::getUserEmail
-     * @covers \Shop\Product\Repository\Event\ProductHasNotBeenFound::getProductName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound::getUserEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound::getProductName
      */
     public function testGetters()
     {

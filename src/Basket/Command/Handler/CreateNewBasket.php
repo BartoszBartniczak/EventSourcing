@@ -4,15 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
-use Shop\Basket\Basket;
-use Shop\Basket\Event\BasketHasBeenCreated;
-use Shop\Basket\Id;
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 
 class CreateNewBasket extends CommandHandler
 {
@@ -23,10 +21,7 @@ class CreateNewBasket extends CommandHandler
     public function handle(Command $command): EventAggregate
     {
         /* @var $command \Shop\Basket\Command\CreateNewBasket */
-        $basket = new Basket(
-            new Id($command->getGeneratorUUID()->generate()->toNative()),
-            $command->getUserEmail()
-        );
+        $basket = $command->getBasketFactory()->createNew($command->getUserEmail());
 
         $basket->apply(
             new BasketHasBeenCreated(

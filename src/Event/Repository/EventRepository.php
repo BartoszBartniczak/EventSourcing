@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Repository;
 
 
-use Shop\Event\Event;
-use Shop\Event\EventStream;
-use Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 
 interface EventRepository
 {

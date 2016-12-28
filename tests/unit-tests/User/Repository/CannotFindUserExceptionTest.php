@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use Shop\ExceptionTestCase;
+use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
 
 class CannotFindUserExceptionTest extends ExceptionTestCase
 {
 
     /**
-     * @covers \Shop\User\Repository\CannotFindUserException::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Repository\CannotFindUserException::__construct
      */
     public function testConstructor()
     {

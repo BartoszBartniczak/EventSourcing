@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Repository;
 
 
-use Shop\Basket\Basket;
-use Shop\Basket\Event\BasketHasBeenCreated;
-use Shop\Basket\Id;
-use Shop\Event\Dispatcher\Dispatcher;
-use Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id;
+use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
 
 class InMemoryRepository implements BasketRepository
 {
@@ -22,19 +22,49 @@ class InMemoryRepository implements BasketRepository
     private $inMemoryEventRepository;
 
     /**
+     * @var Factory
+     */
+    private $factory;
+
+    /**
      * InMemoryRepository constructor.
      * @param InMemoryEventRepository $inMemoryEventRepository
+     * @param Factory $factory
      */
-    public function __construct(InMemoryEventRepository $inMemoryEventRepository)
+    public function __construct(InMemoryEventRepository $inMemoryEventRepository, Factory $factory)
     {
         $this->inMemoryEventRepository = $inMemoryEventRepository;
+        $this->factory = $factory;
     }
 
+    /**
+     * @param string $userEmail
+     * @return Basket
+     */
     public function findLastBasketByUserEmail(string $userEmail): Basket
     {
-
         $propertyName = $this->inMemoryEventRepository->getEventSerializer()->getPropertyKey('name');
-        $eventStream = $this->inMemoryEventRepository->find('Basket', ['lastBasket' => function ($serializedEvent) use ($propertyName, $userEmail) {
+        $eventStream = $this->inMemoryEventRepository->find('Basket', ['lastBasket' => $this->filterName($propertyName, $userEmail)]);
+
+        if ($eventStream->isEmpty()) {
+            throw new CannotFindBasketException(sprintf("Cannot find basket for user: '%s'.", $userEmail));
+        }
+
+        $basket = $this->factory->createEmpty();
+        $basket->applyEventStream($eventStream);
+        $basket->commit();
+
+        return $this->findBasket($basket->getId());
+    }
+
+    /**
+     * @param string $propertyName
+     * @param string $userEmail
+     * @return callable
+     */
+    protected function filterName(string $propertyName, string $userEmail): callable
+    {
+        return function ($serializedEvent) use ($propertyName, $userEmail) {
 
             $event = $this->inMemoryEventRepository->getEventSerializer()->deserialize($serializedEvent);
             /* @var $event \Shop\Basket\Event\Event */
@@ -49,13 +79,7 @@ class InMemoryRepository implements BasketRepository
 
             return true;
 
-        }]);
-
-        $basket = new Basket(new Id(''), '');
-        $basket->applyEventStream($eventStream);
-        $basket->commit();
-
-        return $this->findBasket($basket->getId());
+        };
     }
 
     /**
@@ -64,7 +88,25 @@ class InMemoryRepository implements BasketRepository
      */
     public function findBasket(Id $basketId): Basket
     {
-        $eventStream = $this->inMemoryEventRepository->find('Basket', ['basketId' => function ($serializedEvent) use ($basketId) {
+        $eventStream = $this->inMemoryEventRepository->find('Basket', ['basketId' => $this->filterId($basketId)]);
+
+        if ($eventStream->isEmpty()) {
+            throw new CannotFindBasketException(sprintf("There is no basket with id: '%s'", $basketId->toNative()));
+        }
+
+        $basket = $this->factory->createEmpty();
+        $basket->applyEventStream($eventStream);
+        $basket->commit();
+        return $basket;
+    }
+
+    /**
+     * @param Id $basketId
+     * @return callable
+     */
+    protected function filterId(Id $basketId): callable
+    {
+        return function ($serializedEvent) use ($basketId) {
             $event = $this->inMemoryEventRepository->getEventSerializer()->deserialize($serializedEvent);
             /* @var $event \Shop\Basket\Event\Event */
 
@@ -73,13 +115,7 @@ class InMemoryRepository implements BasketRepository
             }
 
             return true;
-        }]);
-
-        $basket = new Basket($basketId, '');
-        $basket->applyEventStream($eventStream);
-        $basket->commit();
-        return $basket;
+        };
     }
-
 
 }

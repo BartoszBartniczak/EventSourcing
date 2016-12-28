@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Sender;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Sender;
 
 
-use Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 
 class NullEmailSenderServiceTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Email\Sender\NullEmailSenderService::send
-     * @covers \Shop\Email\Sender\NullEmailSenderService::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService::send
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService::__construct
      */
     public function testSendDoesNotThrowExceptionIfSwitchIsOff()
     {
@@ -28,8 +28,8 @@ class NullEmailSenderServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Email\Sender\NullEmailSenderService::send
-     * @covers \Shop\Email\Sender\NullEmailSenderService::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService::send
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Sender\NullEmailSenderService::__construct
      */
     public function testSendThrowsExceptionIfSwitchIsOff()
     {

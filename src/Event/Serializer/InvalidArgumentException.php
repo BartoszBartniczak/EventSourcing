@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
 
 
 class InvalidArgumentException extends \InvalidArgumentException

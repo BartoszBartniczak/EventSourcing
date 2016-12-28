@@ -1,7 +1,7 @@
-Shop\Basket\Basket:
+BartoszBartniczak\EventSourcing\Shop\Basket\Basket:
   properties:
     id:
-      type: Shop\Basket\Id
+      type: BartoszBartniczak\EventSourcing\Shop\Basket\Id
     positions:
       exclude: true
       expose: false

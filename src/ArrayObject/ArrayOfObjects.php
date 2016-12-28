@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\ArrayObject;
+namespace BartoszBartniczak\EventSourcing\Shop\ArrayObject;
 
 /**
  * Class ArrayOfElements can contain only objects of given type

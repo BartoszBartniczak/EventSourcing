@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Sender;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Sender;
 
 
-use Shop\Email\Exception as EmailException;
-use Shop\ExceptionTestCase;
+use BartoszBartniczak\EventSourcing\Shop\Email\Exception as EmailException;
+use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
 
 class ExceptionTest extends ExceptionTestCase
 {
 
     /**
-     * @covers \Shop\Email\Sender\Exception::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Sender\Exception::__construct
      */
     public function testConstructor()
     {

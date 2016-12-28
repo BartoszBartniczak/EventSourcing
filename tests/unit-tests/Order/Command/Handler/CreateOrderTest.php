@@ -4,31 +4,31 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler;
 
 
-use Shop\Basket\Basket;
-use Shop\Basket\Command\CloseBasket;
-use Shop\Basket\Id as BasketId;
-use Shop\Basket\Position\Position as BasketPosition;
-use Shop\Basket\Position\PositionArray as BasketPositions;
-use Shop\Email\Command\SendEmail;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service;
-use Shop\Order\Command\CreateOrder as CreateOrderCommand;
-use Shop\Order\Event\OrderHasBeenCreated;
-use Shop\Order\Order;
-use Shop\Order\Position\Position as OrderPosition;
-use Shop\Order\Position\PositionArray as OrderPositions;
-use Shop\Product\Product;
-use Shop\UUID\Generator;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder as CreateOrderCommand;
+use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Order\Order;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position as OrderPosition;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray as OrderPositions;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 class CreateOrderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Order\Command\Handler\CreateOrder::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\Handler\CreateOrder::handle
      */
     public function testHandle()
     {

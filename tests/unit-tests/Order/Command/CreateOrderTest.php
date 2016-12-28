@@ -4,23 +4,23 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Command;
 
 
-use Shop\Basket\Basket;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class CreateOrderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Order\Command\CreateOrder::__construct
-     * @covers \Shop\Order\Command\CreateOrder::getUuidGenerator()
-     * @covers \Shop\Order\Command\CreateOrder::getBasket()
-     * @covers \Shop\Order\Command\CreateOrder::getEmailSenderService()
-     * @covers \Shop\Order\Command\CreateOrder::getEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getUuidGenerator()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getBasket()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getEmailSenderService()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Command\CreateOrder::getEmail
      */
     public function testGetters()
     {

@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Command;
 
 
-use Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
 
 class CommandListTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Command\CommandList::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\CommandList::__construct
      */
     public function testConstructor()
     {

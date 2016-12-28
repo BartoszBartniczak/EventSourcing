@@ -4,24 +4,24 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order;
+namespace BartoszBartniczak\EventSourcing\Shop\Order;
 
-use Shop\Basket\Id as BasketId;
-use Shop\Basket\Position\Position as BasketPosition;
-use Shop\Basket\Position\PositionArray as BasketPositions;
-use Shop\EventAggregate\EventAggregate;
-use Shop\Order\Event\OrderHasBeenCreated;
-use Shop\Order\Position\PositionArray;
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Order\Order::__construct
-     * @covers \Shop\Order\Order::getOrderId()
-     * @covers \Shop\Order\Order::getBasketId()
-     * @covers \Shop\Order\Order::getPositions()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::getOrderId()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::getBasketId()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::getPositions()
      */
     public function testGetters()
     {
@@ -46,7 +46,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Order\Order::addPositionsFromBasket
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::addPositionsFromBasket
      */
     public function testAddPositionsFromBasket()
     {
@@ -116,10 +116,32 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Order\Order::handleOrderHasBeenCreated
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Order::handleOrderHasBeenCreated
      */
     public function testHandleOrderHasBeenCreated()
     {
+
+        $orderIdConstructor = $this->getMockBuilder(Id::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $orderId Id */
+
+        $basketIdConstructor = $this->getMockBuilder(BasketId::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        /* @var $basketId BasketId */
+
+        $order = $this->getMockBuilder(Order::class)
+            ->setConstructorArgs([
+                $orderIdConstructor, $basketIdConstructor
+            ])
+            ->setMethods([
+                'findHandleMethod'
+            ])
+            ->getMock();
+        $order->method('findHandleMethod')
+            ->willReturn('handleOrderHasBeenCreated');
+        /* @var $order Order */
 
         $orderId = $this->getMockBuilder(Id::class)
             ->disableOriginalConstructor()
@@ -130,18 +152,6 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         /* @var $basketId BasketId */
-
-        $order = $this->getMockBuilder(Order::class)
-            ->setConstructorArgs([
-                $orderId, $basketId
-            ])
-            ->setMethods([
-                'findHandleMethod'
-            ])
-            ->getMock();
-        $order->method('findHandleMethod')
-            ->willReturn('handleOrderHasBeenCreated');
-        /* @var $order Order */
 
         $positions = $this->getMockBuilder(PositionArray::class)
             ->getMock();
@@ -171,7 +181,6 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($orderId, $order->getOrderId());
         $this->assertSame($basketId, $order->getBasketId());
         $this->assertSame($positions, $order->getPositions());
-
     }
 
 }

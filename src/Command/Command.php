@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Command;
 
 
 interface Command

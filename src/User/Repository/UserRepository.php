@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 interface UserRepository
 {

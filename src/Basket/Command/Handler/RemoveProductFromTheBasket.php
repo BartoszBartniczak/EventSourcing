@@ -4,13 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
-use Shop\Basket\Basket;
-use Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 
 class RemoveProductFromTheBasket extends CommandHandler
 {

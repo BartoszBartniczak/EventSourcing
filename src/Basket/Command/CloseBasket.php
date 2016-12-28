@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
-use Shop\Basket\Basket;
-use Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 
 class CloseBasket implements Command
 {

@@ -4,15 +4,15 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CannotHandleTheCommandException;
-use Shop\Command\Handler\CommandHandler;
-use Shop\Product\Repository\CannotFindProductException;
-use Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
-use Shop\Product\Repository\Event\ProductHasNotBeenFound;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CannotHandleTheCommandException;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\CannotFindProductException;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound;
 
 class FindProductByName extends CommandHandler
 {

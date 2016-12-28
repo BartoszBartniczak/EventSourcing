@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 
 class LogOutUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\LogOutUser::__construct
-     * @covers \Shop\User\Command\LogOutUser::getUserEmail
-     * @covers \Shop\User\Command\LogOutUser::getUserRepository
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser::getUserEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser::getUserRepository
      */
     public function testGetters()
     {

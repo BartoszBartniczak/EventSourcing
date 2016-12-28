@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Password;
+namespace BartoszBartniczak\EventSourcing\Shop\Password;
 
 
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class HashGeneratorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Password\HashGenerator::hash
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator::hash
      */
     public function testHash()
     {
@@ -24,7 +24,7 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Password\HashGenerator::verifyUserPassword
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator::verifyUserPassword
      */
     public function testVerifyUserPassword()
     {
@@ -45,7 +45,7 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Password\HashGenerator::needsRehash
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator::needsRehash
      */
     public function testNeedsRehash()
     {
@@ -56,7 +56,7 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\Password\HashGenerator::hashInfo
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator::hashInfo
      */
     public function testHashInfo()
     {

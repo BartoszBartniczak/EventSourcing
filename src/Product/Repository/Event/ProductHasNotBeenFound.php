@@ -4,9 +4,9 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
-use Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
 
 class ProductHasNotBeenFound extends Event
 {

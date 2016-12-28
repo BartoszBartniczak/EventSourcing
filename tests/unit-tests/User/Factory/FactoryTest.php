@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Factory;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Factory;
 
 
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class FactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Factory\Factory::createEmpty
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory::createEmpty
      */
     public function testCreateEmpty()
     {

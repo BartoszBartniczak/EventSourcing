@@ -1,4 +1,4 @@
-Shop\Email\Email:
+BartoszBartniczak\EventSourcing\Shop\Email\Email:
   properties:
     id:
-      type: Shop\UUID\UUID
+      type: BartoszBartniczak\EventSourcing\Shop\Email\Id

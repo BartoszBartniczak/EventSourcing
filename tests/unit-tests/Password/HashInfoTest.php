@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Password;
+namespace BartoszBartniczak\EventSourcing\Shop\Password;
 
 
 class HashInfoTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Password\HashInfo::__construct
-     * @covers \Shop\Password\HashInfo::getAlgorithm
-     * @covers \Shop\Password\HashInfo::getAlgorithmName
-     * @covers \Shop\Password\HashInfo::getCost
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashInfo::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashInfo::getAlgorithm
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashInfo::getAlgorithmName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Password\HashInfo::getCost
      */
     public function testGetters()
     {

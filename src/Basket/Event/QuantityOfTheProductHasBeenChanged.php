@@ -4,13 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use Shop\Basket\Basket;
-use Shop\Event\Id;
-use Shop\Product\Id as ProductId;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
+use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 class QuantityOfTheProductHasBeenChanged extends Event
 {
@@ -35,9 +35,7 @@ class QuantityOfTheProductHasBeenChanged extends Event
      */
     public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket, ProductId $productId, float $quantity)
     {
-        parent::__construct($eventId, $dateTime);
-
-        $this->basket = $basket;
+        parent::__construct($eventId, $dateTime, $basket);
         $this->productId = $productId;
         $this->quantity = $quantity;
     }

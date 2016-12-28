@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Command\Handler;
 
 
 class Exception extends \Exception

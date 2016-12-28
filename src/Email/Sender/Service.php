@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Sender;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Sender;
 
 
-use Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 
 interface Service
 {

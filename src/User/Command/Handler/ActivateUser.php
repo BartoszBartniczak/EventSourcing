@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\User\Command\ActivateUser as ActivateUserCommand;
-use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEvent;
-use Shop\User\Event\UserAccountHasBeenActivated as UserAccountHasBeenActivatedEvent;
-use Shop\User\Repository\CannotFindUserException;
-use Shop\User\Repository\UserRepository;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser as ActivateUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount as UnsuccessfulAttemptOfActivatingUserAccountEvent;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated as UserAccountHasBeenActivatedEvent;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\CannotFindUserException;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class ActivateUser extends CommandHandler
 {

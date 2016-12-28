@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
 
 
-use Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 
 interface Serializer
 {

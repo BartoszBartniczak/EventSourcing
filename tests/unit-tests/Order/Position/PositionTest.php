@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Position;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Position;
 
 
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class PositionTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Order\Position\Position::__construct
-     * @covers \Shop\Order\Position\Position::getProduct()
-     * @covers \Shop\Order\Position\Position::getQuantity()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Position\Position::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Position\Position::getProduct()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Position\Position::getQuantity()
      */
     public function testGetters()
     {

@@ -4,29 +4,30 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User;
+namespace BartoszBartniczak\EventSourcing\Shop\User;
 
 
-use Shop\ArrayObject\ArrayObject;
-use Shop\EventAggregate\EventAggregate;
-use Shop\User\Event\ActivationTokenHasBeenGenerated;
-use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
-use Shop\User\Event\UserAccountHasBeenActivated;
-use Shop\User\Event\UserHasBeenLoggedIn;
-use Shop\User\Event\UserHasBeenLoggedOut;
-use Shop\User\Event\UserHasBeenRegistered;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\User::__construct
-     * @covers \Shop\User\User::getEmail
-     * @covers \Shop\User\User::getPasswordHash
-     * @covers \Shop\User\User::getPasswordSalt
-     * @covers \Shop\User\User::isActive
-     * @covers \Shop\User\User::getLoginDates
-     * @covers \Shop\User\User::getUnsuccessfulAttemptsOfActivatingUserAccount
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getPasswordHash
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getPasswordSalt
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::isActive
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getLoginDates
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getUnsuccessfulAttemptsOfActivatingUserAccount
      */
     public function testConstructor()
     {
@@ -44,7 +45,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\User::handleUserHasBeenRegistered
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUserHasBeenRegistered
      */
     public function testHandleUserHasBeenRegistered()
     {
@@ -68,7 +69,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
         /* @var $userHasBeenRegisteredEvent UserHasBeenRegistered */
 
         $user = $this->getMockBuilder(User::class)
-            ->disableOriginalConstructor()
+            ->setConstructorArgs([
+                'empty', 'empty', 'empty'
+            ])
             ->setMethods([
                 'findHandleMethod'
             ])
@@ -82,13 +85,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('user@user.com', $user->getEmail());
         $this->assertEquals('password', $user->getPasswordHash());
         $this->assertEquals('salt', $user->getPasswordSalt());
-
+        $this->assertEquals(0, $user->getCommittedEvents()->count());
+        $this->assertEquals(1, $user->getUncommittedEvents()->count());
     }
 
     /**
-     * @covers \Shop\User\User::handleActivationTokenHasBeenGenerated
-     * @covers \Shop\User\User::getActivationToken
-     * @covers \Shop\User\User::changeActivationToken
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleActivationTokenHasBeenGenerated
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getActivationToken
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::changeActivationToken
      */
     public function testHandleActivationTokenHasBeenGenerated()
     {
@@ -118,7 +122,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\User::handleUnsuccessfulAttemptOfActivatingUserAccount
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUnsuccessfulAttemptOfActivatingUserAccount
      */
     public function testHandleUnsuccessfulAttemptOfActivatingUserAccount()
     {
@@ -149,8 +153,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\User::handleUserAccountHasBeenActivated
-     * @covers \Shop\User\User::activate
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUserAccountHasBeenActivated
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::activate
      */
     public function testHandleUserAccountHasBeenActivated()
     {
@@ -177,7 +181,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\User::handleUserHasBeenLoggedIn
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUserHasBeenLoggedIn
      */
     public function testHandleUserHasBeenLoggedIn()
     {
@@ -218,7 +222,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\User::handleUserHasBeenLoggedOut
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUserHasBeenLoggedOut
      */
     public function testHandleUserHasBeenLoggedOut()
     {
@@ -242,4 +246,36 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user->apply($userHasBeenLoggedOut);
     }
 
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::handleUnsuccessfulAttemptOfLoggingIn
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getUnsuccessfulAttemptsOfLoggingIn
+     */
+    public function testHandleUnsuccessfulAttemptOfLoggingIn()
+    {
+
+        $unsuccessfulAttemptOfLoggingIn = $this->getMockBuilder(UnsuccessfulAttemptOfLoggingIn::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $unsuccessfulAttemptOfLoggingIn UnsuccessfulAttemptOfLoggingIn */
+
+        $user = $this->getMockBuilder(User::class)
+            ->setConstructorArgs([
+                'user@email', 'password', 'salt'
+            ])
+            ->setMethods([
+                'findHandleMethod'
+            ])
+            ->getMock();
+        $user->method('findHandleMethod')
+            ->willReturn('handleUnsuccessfulAttemptOfLoggingIn');
+        /* @var $user User */
+
+        $user->apply($unsuccessfulAttemptOfLoggingIn);
+
+        $this->assertEquals(1, $user->getUncommittedEvents()->count());
+        $this->assertInstanceOf(UnsuccessfulAttemptOfLoggingIn::class, $user->getUncommittedEvents()->shift());
+        $this->assertEquals(1, $user->getUnsuccessfulAttemptsOfLoggingIn());
+
+    }
 }

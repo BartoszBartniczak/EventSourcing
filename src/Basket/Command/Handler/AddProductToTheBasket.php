@@ -4,13 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
-use Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 
 class AddProductToTheBasket extends CommandHandler
 {

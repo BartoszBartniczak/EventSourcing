@@ -4,17 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
 
 
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer;
-use Shop\Event\Event;
 
 class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Event\Serializer\JMSJsonSerializer::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::__construct
      */
     public function testConstructor()
     {
@@ -27,19 +28,25 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $jmsSerializerMock Serializer */
 
-        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock);
-        $this->assertInstanceOf(\Shop\Event\Serializer\Serializer::class, $jmsJsonSerializer);
+        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
+
+        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock, $propertyNamingStrategyInterface);
+        $this->assertInstanceOf(\BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer::class, $jmsJsonSerializer);
     }
 
 
     /**
-     * @covers \Shop\Event\Serializer\JMSJsonSerializer::serialize
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::serialize
      */
     public function testSerialize()
     {
         $event = $this->getMockBuilder(Event::class)
             ->disableOriginalConstructor()
             ->getMock();
+        /* @var $event Event */
 
         $jmsSerializerMock = $this->getMockBuilder(Serializer::class)
             ->disableOriginalConstructor()
@@ -53,13 +60,18 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
             ->willReturn('{}');
         /* @var $jmsSerializerMock Serializer */
 
-        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock);
+        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
+
+        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock, $propertyNamingStrategyInterface);
         $this->assertEquals('{}', $jmsJsonSerializer->serialize($event));
     }
 
     /**
-     * @covers \Shop\Event\Serializer\JMSJsonSerializer::deserialize
-     * @covers \Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::deserialize
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
      */
     public function testDeserialize()
     {
@@ -79,12 +91,17 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($event);
         /* @var $jmsSerializerMock Serializer */
 
-        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock);
+        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
+
+        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock, $propertyNamingStrategyInterface);
         $this->assertSame($event, $jmsJsonSerializer->deserialize('{"name": "Event"}'));
     }
 
     /**
-     * @covers \Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
      */
     public function testTryToExtractClassNameThrowsExceptionIfNameIsNotDefined()
     {
@@ -104,7 +121,42 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         /* @var $jmsSerializerMock Serializer */
 
-        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock);
+        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
+            ->disableOriginalConstructor()
+            ->getMockForAbstractClass();
+        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
+
+        $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock, $propertyNamingStrategyInterface);
         $this->assertSame($event, $jmsJsonSerializer->deserialize('{}'));
     }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::getPropertyKey
+     */
+    public function testGetPropertyKey()
+    {
+
+        $serializer = $this->getMockBuilder(Serializer::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $serializer Serializer */
+
+        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'translateName'
+            ])
+            ->getMockForAbstractClass();
+        $propertyNamingStrategyInterface->expects($this->once())
+            ->method('translateName')
+            ->willReturn('property_name');
+        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
+
+        $jmsJsonSerializer = new JMSJsonSerializer($serializer, $propertyNamingStrategyInterface);
+        $this->assertSame('property_name', $jmsJsonSerializer->getPropertyKey('PropertyName'));
+
+    }
+
+
 }

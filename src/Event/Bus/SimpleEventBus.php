@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Bus;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Bus;
 
 
-use Shop\Event\Event;
-use Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 
 class SimpleEventBus implements EventBus
 {

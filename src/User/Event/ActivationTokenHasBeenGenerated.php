@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
 
 class ActivationTokenHasBeenGenerated extends Event
 {

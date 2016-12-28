@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Command;
 
 
-use Shop\Command\Command;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service as EmailSenderService;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
 
 class SendEmail implements Command
 {

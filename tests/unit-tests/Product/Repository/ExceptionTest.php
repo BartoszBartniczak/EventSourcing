@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
-use Shop\ExceptionTestCase;
+use BartoszBartniczak\EventSourcing\Shop\ExceptionTestCase;
 
 class ExceptionTest extends ExceptionTestCase
 {
 
     /**
-     * @covers \Shop\Product\Repository\Exception::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Repository\Exception::__construct
      */
     public function testConstructor()
     {

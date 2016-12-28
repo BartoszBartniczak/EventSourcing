@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Bus;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Bus;
 
 
-use Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 
 /**
  * EventBus processes all the Events from the System.

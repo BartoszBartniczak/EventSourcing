@@ -1,4 +1,4 @@
-Shop\UUID\UUID:
+BartoszBartniczak\EventSourcing\Shop\UUID\UUID:
   properties:
     uuid:
       type: string

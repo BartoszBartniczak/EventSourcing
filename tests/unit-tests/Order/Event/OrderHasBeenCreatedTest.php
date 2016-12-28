@@ -4,22 +4,22 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
 
-use Shop\Basket\Id as BasketId;
-use Shop\EventTestCase;
-use Shop\Order\Id;
-use Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\Order\Id;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 
 class OrderHasBeenCreatedTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\Order\Event\OrderHasBeenCreated::__construct
-     * @covers \Shop\Order\Event\OrderHasBeenCreated::getOrderId()
-     * @covers \Shop\Order\Event\OrderHasBeenCreated::getBasketId()
-     * @covers \Shop\Order\Event\OrderHasBeenCreated::getPositions()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated::getOrderId()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated::getBasketId()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated::getPositions()
      */
     public function testGetters()
     {

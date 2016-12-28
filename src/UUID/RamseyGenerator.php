@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\UUID;
+namespace BartoszBartniczak\EventSourcing\Shop\UUID;
 
 
 use Ramsey\Uuid\Uuid as RamseyUUID;

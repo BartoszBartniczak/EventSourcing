@@ -4,18 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command\Bus;
+namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\Command\Handler\Exception as HandlerException;
-use Shop\Event\Bus\EventBus;
-use Shop\Event\EventStream;
-use Shop\Event\Repository\EventRepository;
-use Shop\EventAggregate\EventAggregate;
-use Shop\UUID\Generator as UUIDGenerator;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\Exception as HandlerException;
+use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\Repository\EventRepository;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
+use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 class CommandBus
 {
@@ -37,7 +38,7 @@ class CommandBus
      */
     private $generator;
     /**
-     * @var array
+     * @var ArrayObject
      */
     private $output;
     /**
@@ -49,6 +50,7 @@ class CommandBus
      * CommandBus constructor.
      * @param UUIDGenerator $generator
      * @param EventRepository $eventRepository
+     * @param EventBus $eventBus
      */
     public function __construct(UUIDGenerator $generator, EventRepository $eventRepository, EventBus $eventBus)
     {
@@ -64,7 +66,7 @@ class CommandBus
      */
     private function clearOutput()
     {
-        $this->output = [];
+        $this->output = new ArrayObject();
     }
 
     /**
@@ -137,12 +139,12 @@ class CommandBus
      */
     protected function findHandler(Command $command): CommandHandler
     {
-        $classname = get_class($command);
+        $className = get_class($command);
 
-        if (isset($this->commandHandlers[$classname]) && $this->commandHandlers[$classname] instanceof CommandHandler) {
-            return $this->commandHandlers[$classname];
+        if (isset($this->commandHandlers[$className]) && $this->commandHandlers[$className] instanceof CommandHandler) {
+            return $this->commandHandlers[$className];
         } else {
-            throw new CannotFindHandlerException(sprintf('Cannot find handler for command: %s', get_class($command)));
+            throw new CannotFindHandlerException(sprintf("Cannot find handler for command: '%s'.", get_class($command)));
         }
     }
 
@@ -157,9 +159,9 @@ class CommandBus
     }
 
     /**
-     * @return array
+     * @return ArrayObject
      */
-    public function getOutput(): array
+    public function getOutput(): ArrayObject
     {
         return $this->output;
     }

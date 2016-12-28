@@ -4,12 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
 
-class Event extends \Shop\Event\Event
+abstract class Event extends \BartoszBartniczak\EventSourcing\Shop\Event\Event
 {
 
     const FAMILY_NAME = 'Basket';
@@ -18,6 +19,12 @@ class Event extends \Shop\Event\Event
      * @var Basket
      */
     protected $basket;
+
+    public function __construct(Id $eventId, \DateTime $dateTime, Basket $basket)
+    {
+        parent::__construct($eventId, $dateTime);
+        $this->basket = $basket;
+    }
 
     /**
      * @inheritDoc
@@ -33,14 +40,6 @@ class Event extends \Shop\Event\Event
     public function getBasket(): Basket
     {
         return $this->basket;
-    }
-
-    /**
-     * @param Basket $basket
-     */
-    protected function setBasket(Basket $basket)
-    {
-        $this->basket = $basket;
     }
 
 }

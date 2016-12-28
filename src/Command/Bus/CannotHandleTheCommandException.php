@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command\Bus;
+namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
 class CannotHandleTheCommandException extends Exception

@@ -4,13 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Event;
 
 
-use Shop\Basket\Basket;
-use Shop\Event\Id;
-use Shop\EventAggregate\EventAggregate;
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class ProductHasBeenAddedToTheBasket extends Event
 {
@@ -34,8 +33,7 @@ class ProductHasBeenAddedToTheBasket extends Event
      */
     public function __construct(Id $eventId, \DateTime $eventDateTime, Basket $basket, Product $product, float $quantity)
     {
-        parent::__construct($eventId, $eventDateTime);
-        $this->setBasket($basket);
+        parent::__construct($eventId, $eventDateTime, $basket);
         $this->product = $product;
         $this->quantity = $quantity;
     }
@@ -55,11 +53,5 @@ class ProductHasBeenAddedToTheBasket extends Event
     {
         return $this->quantity;
     }
-
-    public function getEventAggregate(): EventAggregate
-    {
-        return $this->getBasket();
-    }
-
 
 }

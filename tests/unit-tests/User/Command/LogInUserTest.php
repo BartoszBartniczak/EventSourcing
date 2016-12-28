@@ -4,21 +4,21 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\Password\HashGenerator;
-use Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 
 class LogInUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\LogInUser::__construct
-     * @covers \Shop\User\Command\LogInUser::getPassword
-     * @covers \Shop\User\Command\LogInUser::getUserEmail
-     * @covers \Shop\User\Command\LogInUser::getHashGenerator
-     * @covers \Shop\User\Command\LogInUser::getUserRepository
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser::getPassword
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser::getUserEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser::getHashGenerator
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser::getUserRepository
      */
     public function testGetters()
     {

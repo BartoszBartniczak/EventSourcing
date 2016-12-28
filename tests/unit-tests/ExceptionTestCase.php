@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop;
+namespace BartoszBartniczak\EventSourcing\Shop;
 
 abstract class ExceptionTestCase extends \PHPUnit_Framework_TestCase
 {

@@ -4,26 +4,26 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use Shop\Email\Command\SendEmail;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service;
-use Shop\Generator\ActivationTokenGenerator;
-use Shop\Password\HashGenerator;
-use Shop\Password\SaltGenerator;
-use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
-use Shop\User\Event\ActivationTokenHasBeenGenerated;
-use Shop\User\Event\UserHasBeenRegistered;
-use Shop\User\User;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\Generator\ActivationTokenGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Password\SaltGenerator;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\Handler\RegisterNewUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\RegisterNewUser::handle
      */
     public function testHandle()
     {

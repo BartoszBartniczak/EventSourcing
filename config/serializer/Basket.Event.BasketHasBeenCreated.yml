@@ -1,2 +1,2 @@
-Shop\Basket\Event\BasketHasBeenCreated:
+BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated:
   properties:

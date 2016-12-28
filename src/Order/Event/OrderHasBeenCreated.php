@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
-use Shop\Basket\Id as BasketId;
-use Shop\Event\Id;
-use Shop\Order\Id as OrderId;
-use Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 
 
 class OrderHasBeenCreated extends Event

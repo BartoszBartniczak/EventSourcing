@@ -1,7 +1,7 @@
-Shop\Event\Event:
+BartoszBartniczak\EventSourcing\Shop\Event\Event:
   properties:
     eventId:
-      type: Shop\UUID\UUID
+      type: BartoszBartniczak\EventSourcing\Shop\UUID\UUID
     dateTime:
       type: DateTime
   virtual_properties:

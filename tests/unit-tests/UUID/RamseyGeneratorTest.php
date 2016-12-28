@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\UUID;
+namespace BartoszBartniczak\EventSourcing\Shop\UUID;
 
 
 class RamseyGeneratorTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\UUID\RamseyGenerator::generate
+     * @covers \BartoszBartniczak\EventSourcing\Shop\UUID\RamseyGenerator::generate
      */
     public function testGenerate()
     {

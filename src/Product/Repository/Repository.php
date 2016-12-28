@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository;
 
 
-use Shop\Product\Product;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 interface Repository
 {

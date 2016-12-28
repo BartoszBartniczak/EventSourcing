@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\Email\Email;
-use Shop\Email\Event\EmailHasBeenSent;
-use Shop\Email\Event\EmailHasNotBeenSent;
-use Shop\Email\Sender\CannotSendEmailException;
-use Shop\Email\Sender\Exception;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Event\EmailHasNotBeenSent;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\CannotSendEmailException;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Exception;
 
 class SendEmail extends CommandHandler
 {

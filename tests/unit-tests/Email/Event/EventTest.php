@@ -4,20 +4,20 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
-use Shop\Email\Email;
-use Shop\Event\Event as BasicEvent;
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class EventTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\Email\Event\Event::__construct
-     * @covers \Shop\Email\Event\Event::getEventFamilyName()
-     * @covers \Shop\Email\Event\Event::getEmail()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Event\Event::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Event\Event::getEventFamilyName()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Event\Event::getEmail()
      */
     public function testGetters()
     {

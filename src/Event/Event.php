@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Event;
 
 
 abstract class Event

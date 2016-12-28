@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class ActivationTokenHasBeenGeneratedTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\User\Event\ActivationTokenHasBeenGenerated::__construct
-     * @covers \Shop\User\Event\ActivationTokenHasBeenGenerated::getActivationToken
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated::getActivationToken
      */
     public function testGetters()
     {

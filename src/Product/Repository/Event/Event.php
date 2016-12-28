@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event;
 
 
-abstract class Event extends \Shop\Event\Event
+abstract class Event extends \BartoszBartniczak\EventSourcing\Shop\Event\Event
 {
 
     const FAMILY_NAME = 'ProductRepository';

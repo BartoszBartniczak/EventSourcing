@@ -4,13 +4,13 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use Shop\Event\Repository\InMemoryEventRepository;
-use Shop\User\Event\Event;
-use Shop\User\Factory\Factory;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class InMemoryUserRepository implements UserRepository
 {

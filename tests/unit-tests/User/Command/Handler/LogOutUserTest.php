@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
-use Shop\User\Command\LogOutUser as LogOutUserCommand;
-use Shop\User\Event\UserHasBeenLoggedOut;
-use Shop\User\Repository\UserRepository;
-use Shop\User\User;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogOutUser as LogOutUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class LogOutUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\Handler\LogOutUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogOutUser::handle
      */
     public function testHandle()
     {

@@ -4,10 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
 
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use JMS\Serializer\Metadata\StaticPropertyMetadata;
+use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer as JMSSerializer;
-use Shop\Event\Event;
 
 
 class JMSJsonSerializer implements Serializer
@@ -19,12 +21,19 @@ class JMSJsonSerializer implements Serializer
     private $jmsSerializer;
 
     /**
+     * @var PropertyNamingStrategyInterface
+     */
+    private $namingStrategy;
+
+    /**
      * JMSJsonSerializer constructor.
      * @param JMSSerializer $jmsSerializer
+     * @param PropertyNamingStrategyInterface $namingStrategy
      */
-    public function __construct(JMSSerializer $jmsSerializer)
+    public function __construct(JMSSerializer $jmsSerializer, PropertyNamingStrategyInterface $namingStrategy)
     {
         $this->jmsSerializer = $jmsSerializer;
+        $this->namingStrategy = $namingStrategy;
     }
 
     /**
@@ -61,13 +70,8 @@ class JMSJsonSerializer implements Serializer
 
     public function getPropertyKey(string $propertyName): string
     {
-        //@TODO
-        $keys = [
-            'eventFamilyName' => 'event_family_name',
-            'userEmail' => 'user_email',
-            'name' => 'name'
-        ];
-        return $keys[$propertyName];
+        $propertyMetadata = new StaticPropertyMetadata('string', $propertyName, '');
+        return $this->namingStrategy->translateName($propertyMetadata);
     }
 
 

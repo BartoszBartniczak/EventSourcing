@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 
 class ActivateUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\ActivateUser::__construct
-     * @covers \Shop\User\Command\ActivateUser::getUserEmail
-     * @covers \Shop\User\Command\ActivateUser::getActivationToken
-     * @covers \Shop\User\Command\ActivateUser::getUserRepository
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser::getUserEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser::getActivationToken
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\ActivateUser::getUserRepository
      */
     public function testGetters()
     {

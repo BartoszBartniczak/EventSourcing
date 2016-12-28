@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler;
 
 
-use Shop\Basket\Event\BasketHasBeenClosed;
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 
 class CloseBasket extends CommandHandler
 {

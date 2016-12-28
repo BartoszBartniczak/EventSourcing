@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product\Repository\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command;
 
 
-use Shop\Command\Command;
-use Shop\Product\Repository\Repository as ProductRepository;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository as ProductRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class FindProductByName implements Command
 {

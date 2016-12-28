@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use Shop\Command\Command;
-use Shop\User\Repository\UserRepository;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class ActivateUser implements Command
 {

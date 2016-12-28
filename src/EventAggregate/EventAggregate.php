@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\EventAggregate;
+namespace BartoszBartniczak\EventSourcing\Shop\EventAggregate;
 
 
-use Shop\Event\Event;
-use Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 
 abstract class EventAggregate
 {
@@ -34,7 +34,7 @@ abstract class EventAggregate
         $this->uncommittedEvents = new EventStream();
     }
 
-    final public function applyEventStream(EventStream $stream): EventAggregate
+    public function applyEventStream(EventStream $stream): EventAggregate
     {
         if (!$stream->isEmpty()) {
             foreach ($stream as $event) {
@@ -46,7 +46,7 @@ abstract class EventAggregate
         return $this;
     }
 
-    final public function apply(Event $event): EventAggregate
+    public function apply(Event $event): EventAggregate
     {
         $this->handle($event);
         $this->uncommittedEvents[] = $event;
@@ -58,7 +58,7 @@ abstract class EventAggregate
      * @return void
      * @throws CannotHandleTheEventException
      */
-    final private function handle(Event $event)
+    private function handle(Event $event)
     {
         $handleMethodName = $this->findHandleMethod($event);
         if (method_exists($this, $handleMethodName)) {
@@ -81,7 +81,7 @@ abstract class EventAggregate
         return 'handle' . end($arr);
     }
 
-    final public function commit()
+    public function commit()
     {
         foreach ($this->getUncommittedEvents() as $event) {
             $this->getCommittedEvents()[] = $event;
@@ -89,12 +89,12 @@ abstract class EventAggregate
         $this->uncommittedEvents = new EventStream();
     }
 
-    final public function getUncommittedEvents(): EventStream
+    public function getUncommittedEvents(): EventStream
     {
         return $this->uncommittedEvents;
     }
 
-    final public function getCommittedEvents(): EventStream
+    public function getCommittedEvents(): EventStream
     {
         return $this->committedEvents;
     }

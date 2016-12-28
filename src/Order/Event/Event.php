@@ -4,9 +4,9 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Event;
 
-use Shop\Event\Event as BasicEvent;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event as BasicEvent;
 
 class Event extends BasicEvent
 {

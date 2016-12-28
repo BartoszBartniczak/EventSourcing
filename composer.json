@@ -23,12 +23,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Shop\\": "src/"
+      "BartoszBartniczak\\EventSourcing\\Shop\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Shop\\": "tests/unit-tests/"
+      "BartoszBartniczak\\EventSourcing\\Shop\\": "tests/unit-tests/"
     }
   }
 }

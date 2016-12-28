@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\Handler\CommandHandler;
-use Shop\Email\Command\SendEmail as SendEmailCommand;
-use Shop\EventAggregate\EventAggregate;
-use Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
-use Shop\User\Event\ActivationTokenHasBeenGenerated;
-use Shop\User\Event\UserHasBeenRegistered;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser as RegisterNewUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class RegisterNewUser extends CommandHandler
 {

@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Position;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Position;
 
 
-use Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
 
 class PositionArray extends ArrayOfObjects
 {

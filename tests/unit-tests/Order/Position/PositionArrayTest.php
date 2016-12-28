@@ -4,15 +4,15 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order\Position;
+namespace BartoszBartniczak\EventSourcing\Shop\Order\Position;
 
 
-use Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
 
 class PositionArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers \Shop\Order\Position\PositionArray::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray::__construct
      */
     public function testConstructor()
     {

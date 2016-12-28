@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User;
+namespace BartoszBartniczak\EventSourcing\Shop\User;
 
 
-use Shop\ArrayObject\ArrayObject;
-use Shop\EventAggregate\EventAggregate;
-use Shop\User\Event\ActivationTokenHasBeenGenerated;
-use Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
-use Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
-use Shop\User\Event\UserAccountHasBeenActivated;
-use Shop\User\Event\UserHasBeenLoggedIn;
-use Shop\User\Event\UserHasBeenLoggedOut;
-use Shop\User\Event\UserHasBeenRegistered;
+use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfLoggingIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserAccountHasBeenActivated;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedIn;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenLoggedOut;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
 
 class User extends EventAggregate
 {
@@ -60,26 +60,6 @@ class User extends EventAggregate
      * @var int
      */
     private $unsuccessfulAttemptsOfLoggingIn;
-
-    /**
-     * User constructor.
-     * @param string $email
-     * @param string $passwordHash
-     * @param string $passwordSalt
-     */
-    public function __construct(string $email, string $passwordHash, string $passwordSalt)
-    {
-        parent::__construct();
-
-        $this->email = $email;
-        $this->passwordHash = $passwordHash;
-        $this->passwordSalt = $passwordSalt;
-
-        $this->active = false;
-        $this->loginDates = new ArrayObject();
-        $this->unsuccessfulAttemptsOfActivatingUserAccount = 0;
-        $this->unsuccessfulAttemptsOfLoggingIn = 0;
-    }
 
     public function isActive(): bool
     {
@@ -147,9 +127,27 @@ class User extends EventAggregate
      */
     protected function handleUserHasBeenRegistered(UserHasBeenRegistered $event)
     {
-        $this->email = $event->getUserEmail();
-        $this->passwordHash = $event->getPasswordHash();
-        $this->passwordSalt = $event->getPasswordSalt();
+        $this->__construct($event->getUserEmail(), $event->getPasswordHash(), $event->getPasswordSalt());
+    }
+
+    /**
+     * User constructor.
+     * @param string $email
+     * @param string $passwordHash
+     * @param string $passwordSalt
+     */
+    public function __construct(string $email, string $passwordHash, string $passwordSalt)
+    {
+        parent::__construct();
+
+        $this->email = $email;
+        $this->passwordHash = $passwordHash;
+        $this->passwordSalt = $passwordSalt;
+
+        $this->active = false;
+        $this->loginDates = new ArrayObject();
+        $this->unsuccessfulAttemptsOfActivatingUserAccount = 0;
+        $this->unsuccessfulAttemptsOfLoggingIn = 0;
     }
 
     /**

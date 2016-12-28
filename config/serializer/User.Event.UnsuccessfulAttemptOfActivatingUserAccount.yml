@@ -1,4 +1,4 @@
-Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount:
+BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount:
   properties:
     activationToken:
       type: string

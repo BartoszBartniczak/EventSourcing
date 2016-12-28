@@ -4,17 +4,17 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Order;
+namespace BartoszBartniczak\EventSourcing\Shop\Order;
 
 
-use Shop\Basket\Id as BasketId;
-use Shop\Basket\Position\Position as BasketPosition;
-use Shop\Basket\Position\PositionArray as BasketPositions;
-use Shop\EventAggregate\EventAggregate;
-use Shop\Order\Event\OrderHasBeenCreated;
-use Shop\Order\Id as OrderId;
-use Shop\Order\Position\Position;
-use Shop\Order\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Id as BasketId;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position as BasketPosition;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray as BasketPositions;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Order\Event\OrderHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Order\Id as OrderId;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\Position;
+use BartoszBartniczak\EventSourcing\Shop\Order\Position\PositionArray;
 
 class Order extends EventAggregate
 {
@@ -33,19 +33,6 @@ class Order extends EventAggregate
      * @var array
      */
     private $positions;
-
-    /**
-     * Order constructor.
-     * @param Id $orderId
-     * @param BasketId $basketId
-     */
-    public function __construct(Id $orderId, BasketId $basketId)
-    {
-        parent::__construct();
-        $this->orderId = $orderId;
-        $this->basketId = $basketId;
-        $this->positions = new PositionArray();
-    }
 
     /**
      * @return Id
@@ -88,9 +75,21 @@ class Order extends EventAggregate
      */
     protected function handleOrderHasBeenCreated(OrderHasBeenCreated $orderHasBeenCreated)
     {
-        $this->orderId = $orderHasBeenCreated->getOrderId();
-        $this->basketId = $orderHasBeenCreated->getBasketId();
+        $this->__construct($orderHasBeenCreated->getOrderId(), $orderHasBeenCreated->getBasketId());
         $this->positions = $orderHasBeenCreated->getPositions();
+    }
+
+    /**
+     * Order constructor.
+     * @param Id $orderId
+     * @param BasketId $basketId
+     */
+    public function __construct(Id $orderId, BasketId $basketId)
+    {
+        parent::__construct();
+        $this->orderId = $orderId;
+        $this->basketId = $basketId;
+        $this->positions = new PositionArray();
     }
 
 }

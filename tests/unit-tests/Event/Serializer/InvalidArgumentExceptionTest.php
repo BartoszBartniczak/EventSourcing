@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
 
 
 class InvalidArgumentExceptionTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Event\Event::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::__construct
      */
     public function testConstructor()
     {

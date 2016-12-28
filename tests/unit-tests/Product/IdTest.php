@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product;
+namespace BartoszBartniczak\EventSourcing\Shop\Product;
 
 
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 class IdTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Product\Id::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Id::__construct
      */
     public function testConstructor()
     {

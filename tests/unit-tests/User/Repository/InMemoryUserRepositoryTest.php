@@ -4,23 +4,23 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Repository;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Repository;
 
 
-use Shop\Event\EventStream;
-use Shop\Event\Repository\InMemoryEventRepository;
-use Shop\Event\Serializer\Serializer;
-use Shop\User\Event\UserHasBeenRegistered;
-use Shop\User\Factory\Factory;
-use Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository;
+use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer;
+use BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered;
+use BartoszBartniczak\EventSourcing\Shop\User\Factory\Factory;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
 
 class InMemoryUserRepositoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Repository\InMemoryUserRepository::__construct
-     * @covers \Shop\User\Repository\InMemoryUserRepository::findUserByEmail
-     * @covers \Shop\User\Repository\InMemoryUserRepository::getFilterEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository::findUserByEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository::getFilterEmail
      */
     public function testFindUserByEmail()
     {
@@ -114,7 +114,7 @@ class InMemoryUserRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\Repository\InMemoryUserRepository::findUserByEmail
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Repository\InMemoryUserRepository::findUserByEmail
      */
     public function testFindUserByEmailThrowsCannotFindUserException()
     {

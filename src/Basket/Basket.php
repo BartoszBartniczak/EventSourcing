@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket;
 
 
-use Shop\Basket\Event\BasketHasBeenClosed;
-use Shop\Basket\Event\BasketHasBeenCreated;
-use Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
-use Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
-use Shop\Basket\Event\QuantityOfTheProductHasBeenChanged;
-use Shop\Basket\Position\Position;
-use Shop\Basket\Position\PositionArray;
-use Shop\EventAggregate\EventAggregate;
-use Shop\Product\Id as ProductId;
-use Shop\Product\Product;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenClosed;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\BasketHasBeenCreated;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenAddedToTheBasket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\ProductHasBeenRemovedFromTheBasket;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Event\QuantityOfTheProductHasBeenChanged;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\Position;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Position\PositionArray;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 
 class Basket extends EventAggregate
 {
@@ -42,6 +42,14 @@ class Basket extends EventAggregate
     private $open;
 
     /**
+     * @param BasketHasBeenCreated $basketHasBeenCreated
+     */
+    public function handleBasketHasBeenCreated(BasketHasBeenCreated $basketHasBeenCreated)
+    {
+        $this->__construct($basketHasBeenCreated->getBasket()->getId(), $basketHasBeenCreated->getBasket()->getOwnerEmail());
+    }
+
+    /**
      * Basket constructor.
      * @param Id $id
      * @param string $ownerEmail
@@ -53,23 +61,6 @@ class Basket extends EventAggregate
         $this->positions = new PositionArray();
         $this->ownerEmail = $ownerEmail;
         $this->open = true;
-    }
-
-    /**
-     * @return PositionArray
-     */
-    public function getPositions(): PositionArray
-    {
-        return $this->positions;
-    }
-
-    /**
-     * @param BasketHasBeenCreated $basketHasBeenCreated
-     */
-    public function handleBasketHasBeenCreated(BasketHasBeenCreated $basketHasBeenCreated)
-    {
-        $this->id = $basketHasBeenCreated->getBasket()->getId();
-        $this->ownerEmail = $basketHasBeenCreated->getBasket()->getOwnerEmail();
     }
 
     /**
@@ -115,7 +106,7 @@ class Basket extends EventAggregate
      * @return Position
      * @throws CannotFindPositionException
      */
-    private function findPositionByProductId(ProductId $productId): Position
+    public function findPositionByProductId(ProductId $productId): Position
     {
         if (isset($this->positions[$productId->toNative()])) {
             return $this->positions[$productId->toNative()];
@@ -152,17 +143,12 @@ class Basket extends EventAggregate
     /**
      * @param ProductId $productId
      * @param float $quantity
-     * @throws CannotFindProductException
+     * @throws CannotFindPositionException
      */
     private function changeQuantity(ProductId $productId, float $quantity)
     {
-        try {
-            $basketPosition = $this->findPositionByProductId($productId);
-            $basketPosition->changeQuantity($quantity);
-        } catch (CannotFindPositionException $cannotFindPositionException) {
-            throw new CannotFindProductException('Cannot find product with id: \'%s\'.', null, $cannotFindPositionException);
-        }
-
+        $basketPosition = $this->findPositionByProductId($productId);
+        $basketPosition->changeQuantity($quantity);
     }
 
     /**
@@ -175,17 +161,21 @@ class Basket extends EventAggregate
 
     /**
      * @param ProductId $productId
-     * @throws CannotFindProductException
+     * @throws CannotFindPositionException
      */
     private function remove(ProductId $productId)
     {
-        try {
-            $this->findPositionByProductId($productId);
-            $this->positions->offsetUnset($productId->toNative());
-        } catch (CannotFindPositionException $cannotFindPositionException) {
-            throw new CannotFindProductException('Cannot find product with id: \'%s\'.', null, $cannotFindPositionException);
-        }
+        $this->findPositionByProductId($productId);
+        $this->getPositions()->offsetUnset($productId->toNative());
 
+    }
+
+    /**
+     * @return PositionArray
+     */
+    public function getPositions(): PositionArray
+    {
+        return $this->positions;
     }
 
     public function handleBasketHasBeenClosed(BasketHasBeenClosed $basketHasBeenClosed)

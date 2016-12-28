@@ -1,4 +1,4 @@
-Shop\Product\Repository\Event\ProductHasNotBeenFound:
+BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound:
   properties:
     productName:
       type: string

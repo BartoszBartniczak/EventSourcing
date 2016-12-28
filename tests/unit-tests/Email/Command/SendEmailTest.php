@@ -4,20 +4,20 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Command;
 
 
-use Shop\Command\Command;
-use Shop\Email\Email;
-use Shop\Email\Sender\Service;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
 
 class SendEmailTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Email\Command\SendEmail::__construct
-     * @covers \Shop\Email\Command\SendEmail::getEmail()
-     * @covers \Shop\Email\Command\SendEmail::getEmailSenderService()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail::getEmail()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail::getEmailSenderService()
      */
     public function testGetters()
     {

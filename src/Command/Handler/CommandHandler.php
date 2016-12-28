@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\Command\Handler;
 
 
-use Shop\Command\Command;
-use Shop\Command\CommandList;
-use Shop\Event\Event;
-use Shop\Event\EventStream;
-use Shop\Event\Id;
-use Shop\EventAggregate\EventAggregate;
-use Shop\UUID\Generator as UUIDGenerator;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
+use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
 
 abstract class CommandHandler
 {

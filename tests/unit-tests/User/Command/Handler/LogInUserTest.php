@@ -4,20 +4,20 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use Shop\Password\HashGenerator;
-use Shop\User\Command\LogInUser as LogInUserCommand;
-use Shop\User\Repository\UserRepository;
-use Shop\User\User;
-use Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Shop\Password\HashGenerator;
+use BartoszBartniczak\EventSourcing\Shop\User\Command\LogInUser as LogInUserCommand;
+use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
+use BartoszBartniczak\EventSourcing\Shop\User\User;
+use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
 
 class LogInUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\User\Command\Handler\LogInUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogInUser::handle
      */
     public function testHandleValidPassword()
     {
@@ -75,7 +75,7 @@ class LogInUserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Shop\User\Command\Handler\LogInUser::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\Handler\LogInUser::handle
      */
     public function testHandleInvalidPassword()
     {

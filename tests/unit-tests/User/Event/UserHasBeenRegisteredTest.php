@@ -4,18 +4,18 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\User\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\User\Event;
 
 
-use Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
 
 class UserHasBeenRegisteredTest extends EventTestCase
 {
 
     /**
-     * @covers \Shop\User\Event\UserHasBeenRegistered::__construct
-     * @covers \Shop\User\Event\UserHasBeenRegistered::getPasswordHash
-     * @covers \Shop\User\Event\UserHasBeenRegistered::getPasswordSalt
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::getPasswordHash
+     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::getPasswordSalt
      */
     public function testGetters()
     {

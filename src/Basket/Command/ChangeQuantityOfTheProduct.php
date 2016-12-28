@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Basket\Command;
+namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
-use Shop\Basket\Basket;
-use Shop\Command\Command;
-use Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
+use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class ChangeQuantityOfTheProduct implements Command
 {
@@ -20,7 +20,7 @@ class ChangeQuantityOfTheProduct implements Command
     private $basket;
 
     /**
-     * @var UUID
+     * @var ProductId
      */
     private $productId;
 
@@ -32,21 +32,14 @@ class ChangeQuantityOfTheProduct implements Command
     /**
      * ChangeQuantityOfTheProduct constructor.
      * @param Basket $basket
-     * @param UUID $productId
+     * @param ProductId $productId
      * @param float $quantity
      */
-    public function __construct(Basket $basket, UUID $productId, $quantity)
+    public function __construct(Basket $basket, ProductId $productId, float $quantity)
     {
         $this->basket = $basket;
         $this->productId = $productId;
         $this->quantity = $quantity;
-    }
-
-    /**
-     * @return void
-     */
-    public function execute()
-    {
     }
 
     /**
@@ -58,9 +51,9 @@ class ChangeQuantityOfTheProduct implements Command
     }
 
     /**
-     * @return UUID
+     * @return ProductId
      */
-    public function getProductId(): UUID
+    public function getProductId(): ProductId
     {
         return $this->productId;
     }

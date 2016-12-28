@@ -4,16 +4,16 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Product;
+namespace BartoszBartniczak\EventSourcing\Shop\Product;
 
 
 class ProductTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \Shop\Product\Product::__construct
-     * @covers \Shop\Product\Product::getId
-     * @covers \Shop\Product\Product::getName
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Product::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Product::getId
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Product\Product::getName
      */
     public function testGetters()
     {

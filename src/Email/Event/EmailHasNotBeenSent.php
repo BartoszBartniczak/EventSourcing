@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace Shop\Email\Event;
+namespace BartoszBartniczak\EventSourcing\Shop\Email\Event;
 
 
-use Shop\Email\Email;
-use Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Shop\Email\Email;
+use BartoszBartniczak\EventSourcing\Shop\Event\Id;
 
 class EmailHasNotBeenSent extends Event
 {
