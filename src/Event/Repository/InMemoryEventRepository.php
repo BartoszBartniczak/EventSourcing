@@ -38,6 +38,7 @@ class InMemoryEventRepository implements EventRepository
     public function saveEventAggregate(EventAggregate $eventAggregate)
     {
         $this->saveEventStream($eventAggregate->getUncommittedEvents());
+        $eventAggregate->commit();
     }
 
     public function saveEventStream(EventStream $stream)

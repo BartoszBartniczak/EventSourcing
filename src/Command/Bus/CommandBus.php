@@ -7,16 +7,16 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\Exception as HandlerException;
+use BartoszBartniczak\EventSourcing\Shop\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Repository\EventRepository;
 use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
 
 class CommandBus
 {
@@ -30,7 +30,7 @@ class CommandBus
      */
     private $commandHandlers;
     /**
-     * @var \Shop\Event\Repository\EventRepository
+     * @var EventRepository
      */
     private $eventRepository;
     /**
@@ -38,13 +38,9 @@ class CommandBus
      */
     private $generator;
     /**
-     * @var ArrayObject
+     * @var mixed
      */
     private $output;
-    /**
-     * @var UUID
-     */
-    private $fingerprint;
 
     /**
      * CommandBus constructor.
@@ -66,7 +62,7 @@ class CommandBus
      */
     private function clearOutput()
     {
-        $this->output = new ArrayObject();
+        $this->output = null;
     }
 
     /**
@@ -79,57 +75,39 @@ class CommandBus
     }
 
     /**
-     * In general it handles command, but it does in in the given order:
-     *
-     * At the beginning it generates fingerprint. It is required for saving the output for all of commands from the chain.
-     * Then, it finds the command handler and passes the command to it.
-     * If the handler returns EventAggregate, the uncommitted events are saved in repository and stored for emission.
-     * If the command generates additional events (not connected with EventAggregate), they are saved in repository and stored for emission.
-     * Next, the output for the command is saved.
-     * Then uncommitted events and additional events are emitted to EventBus.
-     * At the end, next commands for execution are passed to the CommandBus.
-     *
      * @param Command $command
-     * @param UUID|null $fingerprint
      * @throws CannotHandleTheCommandException
      * @throws CannotFindHandlerException
+     * @return mixed
      */
-    public function handle(Command $command, UUID $fingerprint = null)
+    public function handle(Command $command)
     {
-        if (!$fingerprint instanceof UUID) {
-            $fingerprint = $this->generator->generate();
-            $this->fingerprint = $fingerprint;
-            $this->clearOutput();
+        if ($command instanceof Query) {
+            return $this->handleQuery($command);
+        } else {
+            $this->handleCommand($command);
         }
+    }
 
-        $handler = $this->findHandler($command);
-        try {
-            $eventAggregate = $handler->handle($command);
-        } catch (HandlerException $handlerException) {
-            $additionalEvents = $handler->getAdditionalEvents();
-            $this->eventRepository->saveEventStream($additionalEvents);
-            $this->eventBus->emmit($additionalEvents);
-            throw new CannotHandleTheCommandException(sprintf("Command '%s' cannot be handled.", get_class($command)), null, $handlerException);
-        }
-        $eventsToEmmit = new EventStream();
+    /**
+     * @param Query $query
+     * @throws CannotHandleTheCommandException
+     * @throws CannotFindHandlerException
+     * @return mixed
+     */
+    protected function handleQuery(Query $query)
+    {
+        $this->clearOutput();
+        $handler = $this->findHandler($query);
+        $eventAggregate = $this->tryToHandleCommand($query, $handler);
 
-        if ($eventAggregate instanceof EventAggregate) {
-            $eventsToEmmit = clone $eventAggregate->getUncommittedEvents();
-            $this->eventRepository->saveEventAggregate($eventAggregate);
-            $eventAggregate->commit();
-        }
+        $this->saveOutput($eventAggregate);
 
         $additionalEvents = $handler->getAdditionalEvents();
-        $eventsToEmmit->merge($additionalEvents);
         $this->eventRepository->saveEventStream($additionalEvents);
 
-        $this->saveOutput($command, $eventAggregate);
-        $this->eventBus->emmit($eventsToEmmit);
-        $commandList = $handler->getNextCommands();
-        if ($commandList->isNotEmpty()) {
-            foreach ($commandList as $nextCommand)
-                $this->handle($nextCommand, $fingerprint);
-        }
+        $this->eventBus->emmit($additionalEvents);
+        return $this->output;
     }
 
     /**
@@ -150,30 +128,83 @@ class CommandBus
 
     /**
      * @param Command $command
-     * @param $data
+     * @param CommandHandler $handler
+     * @return mixed
+     * @throws CannotHandleTheCommandException
      */
-    private function saveOutput(Command $command, $data)
+    private function tryToHandleCommand(Command $command, CommandHandler $handler)
     {
-        $commandName = get_class($command);
-        $this->output[$commandName] = $data;
+        try {
+            $eventAggregate = $handler->handle($command);
+            return $eventAggregate;
+        } catch (HandlerException $handlerException) {
+            $this->handleHandlerException($handler);
+            throw new CannotHandleTheCommandException(sprintf("Command '%s' cannot be handled.", get_class($command)), null, $handlerException);
+        }
     }
 
     /**
-     * @return ArrayObject
+     * @param CommandHandler $handler
+     * @throws CannotHandleTheCommandException
      */
-    public function getOutput(): ArrayObject
+    private function handleHandlerException(CommandHandler $handler)
     {
-        return $this->output;
+        $additionalEvents = $handler->getAdditionalEvents();
+        $this->eventRepository->saveEventStream($additionalEvents);
+        $this->eventBus->emmit($additionalEvents);
+    }
+
+    /**
+     * @param $data
+     */
+    private function saveOutput($data)
+    {
+        $this->output = $data;
     }
 
     /**
      * @param Command $command
-     * @return mixed
+     * @throws CannotHandleTheCommandException
+     * @throws CannotFindHandlerException
      */
-    public function getOutputForCommand(Command $command)
+    protected function handleCommand(Command $command)
     {
-        $commandName = get_class($command);
-        return $this->output[$commandName];
+        $handler = $this->findHandler($command);
+        $data = $this->tryToHandleCommand($command, $handler);
+
+        if ($data instanceof EventAggregate) {
+            $eventsToEmmit = clone $data->getUncommittedEvents();
+            $this->saveDataInRepository($data);
+        } else {
+            $eventsToEmmit = new EventStream();
+        }
+
+        $additionalEvents = $handler->getAdditionalEvents();
+        $this->eventRepository->saveEventStream($additionalEvents);
+
+        $eventsToEmmit->merge($additionalEvents);
+        $this->eventBus->emmit($eventsToEmmit);
+
+        $this->passNextCommandsToTheBus($handler->getNextCommands());
+    }
+
+    /**
+     * @param $eventAggregate
+     */
+    private function saveDataInRepository(EventAggregate $eventAggregate)
+    {
+        $this->eventRepository->saveEventAggregate($eventAggregate);
+    }
+
+    /**
+     * @param CommandList $commandList
+     */
+    private function passNextCommandsToTheBus(CommandList $commandList)
+    {
+        if ($commandList->isNotEmpty()) {
+            foreach ($commandList as $nextCommand)
+                $this->handle($nextCommand);
+        }
     }
 
 

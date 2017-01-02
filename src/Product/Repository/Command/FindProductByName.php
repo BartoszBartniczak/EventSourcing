@@ -7,11 +7,11 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\EventSourcing\Shop\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Repository as ProductRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
 
-class FindProductByName implements Command
+class FindProductByName implements Query
 {
 
     /**

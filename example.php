@@ -114,9 +114,8 @@ $productRepository->save(new Product($butterUuid, 'Butter'));
 /* Controller */
 
 $registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new ActivationTokenGenerator(), $uuidGenerator, new SaltGenerator(), $hashGenerator, new Email(new EmailId(uniqid())));
-
 $commandBus->handle($registerUserCommand);
-$user = $commandBus->getOutputForCommand($registerUserCommand);
+$user = $userRepository->findUserByEmail('user@user.com');
 
 $activateUserCommand = new ActivateUserCommand('user@user.com', 'xxx', $userRepository); //attempt of activating user account with wrong token
 $commandBus->handle($activateUserCommand);
@@ -131,8 +130,7 @@ $logInUserCommand = new LogInUserCommand('user@user.com', 'password', $hashGener
 $commandBus->handle($logInUserCommand);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Milk', $productRepository);
-$commandBus->handle($findProductByNameCommand);
-$milk = $commandBus->getOutputForCommand($findProductByNameCommand);
+$milk = $commandBus->handle($findProductByNameCommand);
 
 $createNewBasket = new CreateNewBasketCommand($basketFactory, $user->getEmail());
 $commandBus->handle($createNewBasket);
@@ -142,15 +140,13 @@ $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $milk, 2.0);
 $commandBus->handle($addProductToTheBasket);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Bread', $productRepository);
-$commandBus->handle($findProductByNameCommand);
-$bread = $commandBus->getOutputForCommand($findProductByNameCommand);
+$bread = $commandBus->handle($findProductByNameCommand);
 
 $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $bread, 1.0);
 $commandBus->handle($addProductToTheBasket);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Butter', $productRepository);
-$commandBus->handle($findProductByNameCommand);
-$butter = $commandBus->getOutputForCommand($findProductByNameCommand);
+$butter = $commandBus->handle($findProductByNameCommand);
 
 $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $butter, 3.0);
 $commandBus->handle($addProductToTheBasket);

@@ -23,7 +23,7 @@ interface EventRepository
     /**
      * @param string|null $eventFamily Family name filter. If null, returns all events
      * @param array|null $parameters Additional parameters used for searching.
-     * @return \Shop\Event\EventStream
+     * @return EventStream
      */
     public function find(string $eventFamily = null, array $parameters = null): EventStream;
 

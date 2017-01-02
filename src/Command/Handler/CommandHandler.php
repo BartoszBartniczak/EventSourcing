@@ -12,7 +12,6 @@ use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Id;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
 
 abstract class CommandHandler
@@ -30,7 +29,7 @@ abstract class CommandHandler
 
     /**
      * Additional events are not connected with EventAggregate. Although they are emitted to EventBus.
-     * @var  \Shop\Event\EventStream
+     * @var  EventStream
      */
     private $additionalEvents;
 
@@ -47,7 +46,6 @@ abstract class CommandHandler
 
     /**
      * @param Command $command
-     * @return EventAggregate|void
      */
     abstract public function handle(Command $command);
 

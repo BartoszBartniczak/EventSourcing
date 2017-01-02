@@ -12,6 +12,7 @@ use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\Exception as HandlerException;
+use BartoszBartniczak\EventSourcing\Shop\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
@@ -55,6 +56,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleCommand
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::findHandler
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::__construct
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::registerHandler
@@ -121,10 +123,11 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::saveOutput
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::getOutput
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::getOutputForCommand
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleQuery
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::tryToHandleCommand
      */
-    public function testOutputFromOneCommand()
+    public function testOutputForQuery()
     {
         $generator = $this->getMockBuilder(Generator::class)
             ->getMockForAbstractClass();
@@ -154,98 +157,23 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
             ->willReturn($eventAggregate);
         /* @var $commandHandler CommandHandler */
 
-        $command = $this->getMockBuilder(Command::class)
-            ->setMockClassName('CommandMock')
+        $command = $this->getMockBuilder(Query::class)
+            ->setMockClassName('QueryMock')
             ->getMockForAbstractClass();
         /* @var $command Command */
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
-        $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->registerHandler('QueryMock', $commandHandler);
+        $output = $commandBus->handle($command);
 
-        $this->assertSame($eventAggregate, $commandBus->getOutput()['CommandMock']);
-        $this->assertSame($eventAggregate, $commandBus->getOutputForCommand($command));
+        $this->assertSame($eventAggregate, $output);
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::saveOutput
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::getOutput
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::getOutputForCommand
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
-     */
-    public function testOutputFromMultipleCommands()
-    {
-        $generator = $this->getMockBuilder(Generator::class)
-            ->getMockForAbstractClass();
-        /* @var $generator Generator */
-
-        $eventRepository = $this->getMockBuilder(EventRepository::class)
-            ->getMockForAbstractClass();
-        /* @var $eventRepository EventRepository */
-
-        $eventBus = $this->getMockBuilder(EventBus::class)
-            ->getMockForAbstractClass();
-        /* @var $eventBus EventBus */
-
-        $eventAggregate2 = $this->getMockBuilder(EventAggregate::class)
-            ->getMockForAbstractClass();
-        /* @var $eventAggregate2 EventAggregate */
-
-        $eventAggregate1 = $this->getMockBuilder(EventAggregate::class)
-            ->getMockForAbstractClass();
-        /* @var $eventAggregate1 EventAggregate */
-
-        $command2 = $this->getMockBuilder(Command::class)
-            ->setMockClassName('CommandMock2')
-            ->getMockForAbstractClass();
-        /* @var $command2 Command */
-
-        $commandList = new CommandList();
-        $commandList->append($command2);
-
-        $commandHandler2 = $this->getMockBuilder(CommandHandler::class)
-            ->setConstructorArgs([
-                $generator
-            ])
-            ->setMethods([
-                'handle',
-            ])
-            ->getMockForAbstractClass();
-        $commandHandler2->method('handle')
-            ->willReturn($eventAggregate2);
-        /* @var $commandHandler2 CommandHandler */
-
-        $commandHandler1 = $this->getMockBuilder(CommandHandler::class)
-            ->setConstructorArgs([
-                $generator
-            ])
-            ->setMethods([
-                'handle',
-                'getNextCommands'
-            ])
-            ->getMockForAbstractClass();
-        $commandHandler1->method('handle')
-            ->willReturn($eventAggregate1);
-        $commandHandler1->method('getNextCommands')
-            ->willReturn($commandList);
-        /* @var $commandHandler1 CommandHandler */
-
-        $command1 = $this->getMockBuilder(Command::class)
-            ->setMockClassName('CommandMock')
-            ->getMockForAbstractClass();
-        /* @var $command1 Command */
-
-        $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
-        $commandBus->registerHandler('CommandMock', $commandHandler1);
-        $commandBus->registerHandler('CommandMock2', $commandHandler2);
-        $commandBus->handle($command1);
-
-        $this->assertSame($eventAggregate1, $commandBus->getOutputForCommand($command1));
-        $this->assertSame($eventAggregate2, $commandBus->getOutputForCommand($command2));
-    }
-
-    /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleCommand
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::saveDataInRepository
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::clearOutput
      */
     public function testEventAggregateIsSavedInRepository()
     {
@@ -418,6 +346,10 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleHandlerException
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::tryToHandleCommand
+     */
     public function testHandleError()
     {
         $this->expectException(CannotHandleTheCommandException::class);
@@ -475,4 +407,79 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::passNextCommandsToTheBus
+     */
+    public function testPassNextCommandsToTheBus()
+    {
+        $command1 = $this->getMockBuilder(Command::class)
+            ->setMockClassName('CommandMock')
+            ->getMockForAbstractClass();
+        /* @var $command1 Command */
+
+        $command2 = $this->getMockBuilder(Command::class)
+            ->setMockClassName('CommandMock')
+            ->getMockForAbstractClass();
+        /* @var $command2 Command */
+
+        $command3 = $this->getMockBuilder(Command::class)
+            ->setMockClassName('CommandMock')
+            ->getMockForAbstractClass();
+        /* @var $command3 Command */
+
+        $generator = $this->getMockBuilder(Generator::class)
+            ->getMockForAbstractClass();
+        /* @var $generator Generator */
+
+        $eventRepository = $this->getMockBuilder(EventRepository::class)
+            ->getMockForAbstractClass();
+        /* @var $eventRepository EventRepository */
+
+        $eventBus = $this->getMockBuilder(EventBus::class)
+            ->getMock();
+        /* @var $eventBus EventBus */
+
+        $commandList = new CommandList();
+        $commandList[] = $command2;
+        $commandList[] = $command3;
+
+
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)
+            ->setConstructorArgs([
+                $generator
+            ])
+            ->setMethods([
+                'handle',
+                'getNextCommands'
+            ])
+            ->getMock();
+        $commandHandler->expects($this->at(1))
+            ->method('getNextCommands')
+            ->willReturn($commandList);
+        /* @var $commandHandler CommandHandler */
+
+        $commandBus = $this->getMockBuilder(CommandBus::class)
+            ->setConstructorArgs([
+                $generator,
+                $eventRepository,
+                $eventBus
+            ])
+            ->setMethods([
+                'findHandler'
+            ])
+            ->getMock();
+        $commandBus->expects($this->exactly(3))
+            ->method('findHandler')
+            ->withConsecutive(
+                $command1,
+                $command2,
+                $command3
+            )
+            ->willReturn($commandHandler);
+        /* @var $commandBus CommandBus */
+
+        $commandBus->registerHandler('CommandMock', $commandHandler);
+        $commandBus->handle($command1);
+
+    }
 }

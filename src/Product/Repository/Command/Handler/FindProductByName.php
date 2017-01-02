@@ -10,6 +10,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handle
 use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CannotHandleTheCommandException;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\CannotFindProductException;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\FindProductByName as FindProductByNameCommand;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\Event\ProductHasNotBeenFound;
@@ -19,7 +20,7 @@ class FindProductByName extends CommandHandler
     /**
      * @inheritDoc
      */
-    public function handle(Command $command)
+    public function handle(Command $command): Product
     {
         /* @var $command FindProductByNameCommand */
 
