@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Event;
 
 
-use BartoszBartniczak\EventSourcing\EventTestCase;
+use BartoszBartniczak\EventSourcing\Test\EventTestCase;
 
 class EventTest extends EventTestCase
 {
