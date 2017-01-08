@@ -29,9 +29,8 @@ class RegisterNewUser extends CommandHandler
      */
     public function handle(Command $command): User
     {
-        $salt = $command->getSaltGenerator()->generate();
-        $passwordHash = $command->getHashGenerator()->hash($command->getUserPassword(), $salt);
-        $this->user = new User($command->getUserEmail(), $passwordHash, $salt);
+        $passwordHash = $command->getHashGenerator()->hash($command->getUserPassword());
+        $this->user = new User($command->getUserEmail(), $passwordHash);
         $activationToken = $command->getActivationTokenGenerator()->generate();
 
         $this->user->apply(
@@ -39,8 +38,7 @@ class RegisterNewUser extends CommandHandler
                 $this->generateEventId(),
                 $this->generateDateTime(),
                 $this->user->getEmail(),
-                $this->user->getPasswordHash(),
-                $this->user->getPasswordSalt()
+                $this->user->getPasswordHash()
             )
         );
 

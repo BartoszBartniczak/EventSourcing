@@ -42,11 +42,6 @@ class User extends EventAggregate
     private $passwordHash;
 
     /**
-     * @var string
-     */
-    private $passwordSalt;
-
-    /**
      * @var ArrayObject
      */
     private $loginDates;
@@ -80,14 +75,6 @@ class User extends EventAggregate
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPasswordSalt(): string
-    {
-        return $this->passwordSalt;
     }
 
     /**
@@ -127,7 +114,7 @@ class User extends EventAggregate
      */
     protected function handleUserHasBeenRegistered(UserHasBeenRegistered $event)
     {
-        $this->__construct($event->getUserEmail(), $event->getPasswordHash(), $event->getPasswordSalt());
+        $this->__construct($event->getUserEmail(), $event->getPasswordHash());
     }
 
     /**
@@ -136,13 +123,12 @@ class User extends EventAggregate
      * @param string $passwordHash
      * @param string $passwordSalt
      */
-    public function __construct(string $email, string $passwordHash, string $passwordSalt)
+    public function __construct(string $email, string $passwordHash)
     {
         parent::__construct();
 
         $this->email = $email;
         $this->passwordHash = $passwordHash;
-        $this->passwordSalt = $passwordSalt;
 
         $this->active = false;
         $this->loginDates = new ArrayObject();

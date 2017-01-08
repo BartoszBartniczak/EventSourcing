@@ -15,7 +15,6 @@ class UserHasBeenRegisteredTest extends EventTestCase
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::__construct
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::getPasswordHash
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Event\UserHasBeenRegistered::getPasswordSalt
      */
     public function testGetters()
     {
@@ -32,7 +31,6 @@ class UserHasBeenRegisteredTest extends EventTestCase
         $this->assertSameDateTimeAsGenerated($event);
         $this->assertEquals('user@email.com', $event->getUserEmail());
         $this->assertEquals('password', $event->getPasswordHash());
-        $this->assertEquals('salt', $event->getPasswordSalt());
     }
 
 }

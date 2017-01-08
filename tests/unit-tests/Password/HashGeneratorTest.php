@@ -19,8 +19,7 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $hashGenerator = new HashGenerator();
         $this->assertNotEquals($hashGenerator->hash('password'), $hashGenerator->hash('password'));
-        $this->assertNotEmpty($hashGenerator->hash('password', 'd6a4d4f7-e446-4a49-b5fe-b5d9df85811a'));
-        $this->assertEquals($hashGenerator->hash('password', 'd6a4d4f7-e446-4a49-b5fe-b5d9df85811a'), $hashGenerator->hash('password', 'd6a4d4f7-e446-4a49-b5fe-b5d9df85811a'));
+        $this->assertNotEmpty($hashGenerator->hash('password'));
     }
 
     /**
@@ -29,16 +28,14 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testVerifyUserPassword()
     {
         $hashGenerator = new HashGenerator();
-        $hash = $hashGenerator->hash('password', 'd6a4d4f7-e446-4a49-b5fe-b5d9df85811a');
+        $hash = $hashGenerator->hash('password');
 
         $user = $this->getMockBuilder(User::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getPasswordHash', 'getPasswordSalt'])
+            ->setMethods(['getPasswordHash'])
             ->getMock();
         $user->method('getPasswordHash')
             ->willReturn($hash);
-        $user->method('getPasswordSalt')
-            ->willReturn('d6a4d4f7-e446-4a49-b5fe-b5d9df85811a');
         /* @var $user User */
         $this->assertFalse($hashGenerator->verifyUserPassword('wrong_password', $user));
         $this->assertTrue($hashGenerator->verifyUserPassword('password', $user));
@@ -50,7 +47,7 @@ class HashGeneratorTest extends \PHPUnit_Framework_TestCase
     public function testNeedsRehash()
     {
         $hashGenerator = new HashGenerator();
-        $hash = $hashGenerator->hash('password', 'd6a4d4f7-e446-4a49-b5fe-b5d9df85811a', PASSWORD_BCRYPT, 10);
+        $hash = $hashGenerator->hash('password', PASSWORD_BCRYPT, 10);
         $this->assertFalse($hashGenerator->needsRehash($hash));
         $this->assertTrue($hashGenerator->needsRehash(substr($hash, 1, 10), PASSWORD_BCRYPT, 10));
     }

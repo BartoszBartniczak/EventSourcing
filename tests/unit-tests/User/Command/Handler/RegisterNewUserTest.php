@@ -46,16 +46,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         /* @var $uuidGenerator Generator */
 
-        $saltGenerator = $this->getMockBuilder(SaltGenerator::class)
-            ->setMethods([
-                'generate'
-            ])
-            ->getMock();
-        $saltGenerator->expects($this->once())
-            ->method('generate')
-            ->willReturn('passwordSalt');
-        /* @var $saltGenerator SaltGenerator */
-
         $hashGenerator = $this->getMockBuilder(HashGenerator::class)
             ->setMethods([
                 'hash'
@@ -63,7 +53,7 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $hashGenerator->expects($this->once())
             ->method('hash')
-            ->with('password', 'passwordSalt')
+            ->with('password')
             ->willReturn('passwordHash');
         /* @var $hashGenerator HashGenerator */
 
@@ -78,7 +68,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
             $emailSenderService,
             $activationTokenGenerator,
             $uuidGenerator,
-            $saltGenerator,
             $hashGenerator,
             $email
         );
@@ -88,7 +77,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame('user@email.com', $user->getEmail());
         $this->assertSame('passwordHash', $user->getPasswordHash());
-        $this->assertSame('passwordSalt', $user->getPasswordSalt());
         $this->assertSame('activationToken', $user->getActivationToken());
         $sendEmailCommand = $registerNewUser->getNextCommands()->shift();
         $this->assertInstanceOf(SendEmail::class, $sendEmailCommand);
@@ -101,7 +89,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(UserHasBeenRegistered::class, $userHasBeenRegistered);
         $this->assertSame('user@email.com', $userHasBeenRegistered->getUserEmail());
         $this->assertSame('passwordHash', $userHasBeenRegistered->getPasswordHash());
-        $this->assertSame('passwordSalt', $userHasBeenRegistered->getPasswordSalt());
         $activationTokenHasBeenGenerated = $user->getUncommittedEvents()->shift();
         /* @var $activationTokenHasBeenGenerated ActivationTokenHasBeenGenerated */
         $this->assertInstanceOf(ActivationTokenHasBeenGenerated::class, $activationTokenHasBeenGenerated);

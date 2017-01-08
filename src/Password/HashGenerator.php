@@ -19,13 +19,10 @@ class HashGenerator
      * @param int $cost
      * @return string
      */
-    public function hash(string $password, string $salt = '', int $algorithm = PASSWORD_DEFAULT, int $cost = 10): string
+    public function hash(string $password, int $algorithm = PASSWORD_DEFAULT, int $cost = 10): string
     {
 
         $params = ['cost' => $cost];
-        if (strlen($salt) > 0) {
-            $params['salt'] = $salt;
-        }
 
         return password_hash($password, $algorithm, $params);
     }
@@ -44,7 +41,7 @@ class HashGenerator
      */
     public function needsRehash(string $hash, int $algorithm = PASSWORD_DEFAULT, $cost = 10): bool
     {
-        return password_needs_rehash($hash, $algorithm, ['cost' => 10]);
+        return password_needs_rehash($hash, $algorithm, ['cost' => $cost]);
     }
 
     /**

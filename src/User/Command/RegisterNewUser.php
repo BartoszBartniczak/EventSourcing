@@ -44,11 +44,6 @@ class RegisterNewUser implements Command
     private $uuidGenerator;
 
     /**
-     * @var SaltGenerator
-     */
-    private $saltGenerator;
-
-    /**
      * @var HashGenerator
      */
     private $hashGenerator;
@@ -64,17 +59,16 @@ class RegisterNewUser implements Command
      * @param EmailSenderService $emailSenderService
      * @param ActivationTokenGenerator $activationTokenGenerator
      * @param UUIDGenerator $generator
-     * @param SaltGenerator $saltGenerator
      * @param HashGenerator $hashGenerator
      * @param Email $email
+     * @internal param SaltGenerator $saltGenerator
      */
-    public function __construct(string $userEmail, string $userPassword, EmailSenderService $emailSenderService, ActivationTokenGenerator $activationTokenGenerator, UUIDGenerator $generator, SaltGenerator $saltGenerator, HashGenerator $hashGenerator, Email $email)
+    public function __construct(string $userEmail, string $userPassword, EmailSenderService $emailSenderService, ActivationTokenGenerator $activationTokenGenerator, UUIDGenerator $generator, HashGenerator $hashGenerator, Email $email)
     {
         $this->emailSenderService = $emailSenderService;
         $this->userEmail = $userEmail;
         $this->activationTokenGenerator = $activationTokenGenerator;
         $this->uuidGenerator = $generator;
-        $this->saltGenerator = $saltGenerator;
         $this->userPassword = $userPassword;
         $this->hashGenerator = $hashGenerator;
         $this->email = $email;
@@ -86,14 +80,6 @@ class RegisterNewUser implements Command
     public function getEmailSenderService(): EmailSenderService
     {
         return $this->emailSenderService;
-    }
-
-    /**
-     * @return SaltGenerator
-     */
-    public function getSaltGenerator(): SaltGenerator
-    {
-        return $this->saltGenerator;
     }
 
     /**

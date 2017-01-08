@@ -24,19 +24,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::__construct
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getEmail
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getPasswordHash
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getPasswordSalt
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::isActive
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getLoginDates
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\User::getUnsuccessfulAttemptsOfActivatingUserAccount
      */
     public function testConstructor()
     {
-        $user = new User('user@user.com', 'password', 'salt');
+        $user = new User('user@user.com', 'password');
         $this->assertInstanceOf(EventAggregate::class, $user);
 
         $this->assertEquals('user@user.com', $user->getEmail());
         $this->assertEquals('password', $user->getPasswordHash());
-        $this->assertEquals('salt', $user->getPasswordSalt());
 
         $this->assertFalse($user->isActive());
         $this->assertInstanceOf(ArrayObject::class, $user->getLoginDates());
@@ -54,7 +52,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->setMethods([
                 'getUserEmail',
                 'getPasswordHash',
-                'getPasswordSalt'
             ])
             ->getMock();
 
@@ -63,9 +60,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $userHasBeenRegisteredEvent->method('getPasswordHash')
             ->willReturn('password');
-
-        $userHasBeenRegisteredEvent->method('getPasswordSalt')
-            ->willReturn('salt');
         /* @var $userHasBeenRegisteredEvent UserHasBeenRegistered */
 
         $user = $this->getMockBuilder(User::class)
@@ -79,12 +73,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user->method('findHandleMethod')
             ->willReturn('handleUserHasBeenRegistered');
 
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
         $user->apply($userHasBeenRegisteredEvent);
 
         $this->assertEquals('user@user.com', $user->getEmail());
         $this->assertEquals('password', $user->getPasswordHash());
-        $this->assertEquals('salt', $user->getPasswordSalt());
         $this->assertEquals(0, $user->getCommittedEvents()->count());
         $this->assertEquals(1, $user->getUncommittedEvents()->count());
     }
@@ -115,7 +108,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $user->method('findHandleMethod')
             ->willReturn('handleActivationTokenHasBeenGenerated');
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
 
         $user->apply($activationTokenHasBeenGenerated);
         $this->assertEquals('newToken', $user->getActivationToken());
@@ -143,7 +136,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $user->method('findHandleMethod')
             ->willReturn('handleUnsuccessfulAttemptOfActivatingUserAccount');
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
 
         $this->assertEquals(0, $user->getUnsuccessfulAttemptsOfActivatingUserAccount());
         $user->apply($unsuccessfulAttemptsOfActivatingUserAccount);
@@ -174,7 +167,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $user->method('findHandleMethod')
             ->willReturn('handleUserAccountHasBeenActivated');
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
 
         $user->apply($userAccountHasBeenActivated);
         $this->assertTrue($user->isActive());
@@ -212,7 +205,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $user->method('findHandleMethod')
             ->willReturn('handleUserHasBeenLoggedIn');
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
 
         $user->apply($userHasBeenLoggedIn);
         $user->apply($userHasBeenLoggedIn);
@@ -241,7 +234,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $user->method('findHandleMethod')
             ->willReturn('handleUserHasBeenLoggedOut');
-        /* @var $user \Shop\User\User */
+        /* @var $user \BartoszBartniczak\EventSourcing\Shop\User\User */
 
         $user->apply($userHasBeenLoggedOut);
     }

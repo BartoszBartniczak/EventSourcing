@@ -17,11 +17,6 @@ class UserHasBeenRegistered extends Event
     private $passwordHash;
 
     /**
-     * @var string
-     */
-    private $passwordSalt;
-
-    /**
      * UserHasBeenRegistered constructor.
      * @param Id $eventId
      * @param \DateTime $dateTime
@@ -29,11 +24,10 @@ class UserHasBeenRegistered extends Event
      * @param string $passwordHash
      * @param string $passwordSalt
      */
-    public function __construct(Id $eventId, \DateTime $dateTime, string $userEmail, string $passwordHash, string $passwordSalt)
+    public function __construct(Id $eventId, \DateTime $dateTime, string $userEmail, string $passwordHash)
     {
         parent::__construct($eventId, $dateTime, $userEmail);
         $this->passwordHash = $passwordHash;
-        $this->passwordSalt = $passwordSalt;
     }
 
     /**
@@ -43,14 +37,5 @@ class UserHasBeenRegistered extends Event
     {
         return $this->passwordHash;
     }
-
-    /**
-     * @return string
-     */
-    public function getPasswordSalt(): string
-    {
-        return $this->passwordSalt;
-    }
-
 
 }

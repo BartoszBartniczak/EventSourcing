@@ -24,7 +24,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getEmailSenderService
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getActivationTokenGenerator
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getUuidGenerator
-     * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getSaltGenerator
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getHashGenerator
      * @covers \BartoszBartniczak\EventSourcing\Shop\User\Command\RegisterNewUser::getEmail
      */
@@ -57,14 +56,7 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         /* @var $email Email */
 
         $command = new RegisterNewUser(
-            'user@email.com',
-            'password',
-            $emailSenderService,
-            $activationTokenGenerator,
-            $uuidGenerator,
-            $saltGenerator,
-            $hashGenerator,
-            $email
+            'user@email.com', 'password', $emailSenderService, $activationTokenGenerator, $uuidGenerator, $hashGenerator, $email
         );
 
         $this->assertSame('user@email.com', $command->getUserEmail());
@@ -72,7 +64,6 @@ class RegisterNewUserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($emailSenderService, $command->getEmailSenderService());
         $this->assertSame($activationTokenGenerator, $command->getActivationTokenGenerator());
         $this->assertSame($uuidGenerator, $command->getUuidGenerator());
-        $this->assertSame($saltGenerator, $command->getSaltGenerator());
         $this->assertSame($hashGenerator, $command->getHashGenerator());
         $this->assertSame($email, $command->getEmail());
 
