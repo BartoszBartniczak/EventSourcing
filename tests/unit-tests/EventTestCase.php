@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop;
+namespace BartoszBartniczak\EventSourcing;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\Id;
 
 abstract class EventTestCase extends TestCase
 {

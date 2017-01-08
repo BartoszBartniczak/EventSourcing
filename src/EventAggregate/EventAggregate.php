@@ -4,11 +4,11 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\EventAggregate;
+namespace BartoszBartniczak\EventSourcing\EventAggregate;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
 
 abstract class EventAggregate
 {

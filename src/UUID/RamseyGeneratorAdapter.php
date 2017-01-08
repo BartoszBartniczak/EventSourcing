@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\UUID;
+namespace BartoszBartniczak\EventSourcing\UUID;
 
 
 use Ramsey\Uuid\Uuid as RamseyUUID;
 
-class RamseyGenerator implements Generator
+class RamseyGeneratorAdapter implements Generator
 {
     /**
      * @return UUID

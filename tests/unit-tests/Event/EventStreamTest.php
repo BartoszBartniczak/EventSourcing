@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Event;
 
 
 use BartoszBartniczak\ArrayObject\ArrayOfObjects;
@@ -13,7 +13,7 @@ class EventStreamTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\EventStream::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Event\EventStream::__construct
      */
     public function testConstructor()
     {

@@ -4,15 +4,15 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\UUID;
+namespace BartoszBartniczak\EventSourcing\UUID;
 
 
 class UUIDTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\UUID\UUID::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\UUID\UUID::toNative()
+     * @covers \BartoszBartniczak\EventSourcing\UUID\UUID::__construct
+     * @covers \BartoszBartniczak\EventSourcing\UUID\UUID::toNative()
      */
     public function testToNative()
     {

@@ -4,21 +4,21 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event\Repository;
+namespace BartoszBartniczak\EventSourcing\Event\Repository;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 
 
 class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::getEventSerializer
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::getEventSerializer
      */
     public function testConstructor()
     {
@@ -40,8 +40,8 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::saveEvent
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::find
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::saveEvent
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
      */
     public function testSaveEvent()
     {
@@ -86,7 +86,7 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::saveEventStream
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::saveEventStream
      */
     public function testSaveEventStream()
     {
@@ -124,7 +124,7 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::saveEventAggregate
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::saveEventAggregate
      */
     public function testSaveEventAggregate()
     {
@@ -158,9 +158,9 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::saveEvent
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::find
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::deserializeEvents
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::saveEvent
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::deserializeEvents
      */
     public function testFind()
     {
@@ -215,7 +215,7 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::find
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
      */
     public function testFindThrowsExcptionIfDataDoesNotContainEventFamilyName()
     {
@@ -266,7 +266,7 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::find
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
      */
     public function testFindUsesParameters()
     {
@@ -326,7 +326,7 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Repository\InMemoryEventRepository::find
+     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
      */
     public function testFindThrowsUnexpectedValueExceptionIfParameterIsNotACallback()
     {

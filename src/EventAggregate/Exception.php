@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\EventAggregate;
+namespace BartoszBartniczak\EventSourcing\EventAggregate;
 
 
 class Exception extends \Exception

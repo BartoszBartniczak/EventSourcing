@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\EventTestCase;
+use BartoszBartniczak\EventSourcing\EventTestCase;
 
 class EventTest extends EventTestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getEventId
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getDateTime
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Event::getName
+     * @covers \BartoszBartniczak\EventSourcing\Event\Event::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Event\Event::getEventId
+     * @covers \BartoszBartniczak\EventSourcing\Event\Event::getDateTime
+     * @covers \BartoszBartniczak\EventSourcing\Event\Event::getName
      */
     public function testGetters()
     {
@@ -28,7 +28,7 @@ class EventTest extends EventTestCase
             ])
             ->setMockClassName('EventMock')
             ->getMockForAbstractClass();
-        /* @var $event \Shop\Event\Event */
+        /* @var $event Event */
 
         $this->assertSameEventIdAsGenerated($event);
         $this->assertSameDateTimeAsGenerated($event);

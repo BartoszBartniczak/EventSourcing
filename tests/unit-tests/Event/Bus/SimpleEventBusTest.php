@@ -4,12 +4,12 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event\Bus;
+namespace BartoszBartniczak\EventSourcing\Event\Bus;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Id;
 
 class DummyEvent extends Event
 {
@@ -49,7 +49,7 @@ class SimpleEventBusTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::__construct
      */
     public function testConstructor()
     {
@@ -58,10 +58,10 @@ class SimpleEventBusTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::emmit
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::registerHandler
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::findHandleMethod
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::emmit
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::registerHandler
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::handle
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::findHandleMethod
      */
     public function testEmmit()
     {
@@ -84,8 +84,8 @@ class SimpleEventBusTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Bus\SimpleEventBus::findHandleMethod
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::handle
+     * @covers \BartoszBartniczak\EventSourcing\Event\Bus\SimpleEventBus::findHandleMethod
      */
     public function testEmmitDoesNotThrowExceptionIfHandlerIsNotRegistered()
     {

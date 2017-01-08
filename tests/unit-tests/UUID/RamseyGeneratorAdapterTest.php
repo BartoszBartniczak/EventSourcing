@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\UUID;
+namespace BartoszBartniczak\EventSourcing\UUID;
 
 
-class RamseyGeneratorTest extends \PHPUnit_Framework_TestCase
+class RamseyGeneratorAdapterTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\UUID\RamseyGenerator::generate
+     * @covers \BartoszBartniczak\EventSourcing\UUID\RamseyGeneratorAdapter::generate
      */
     public function testGenerate()
     {
 
-        $ramseyGenerator = new RamseyGenerator();
+        $ramseyGenerator = new RamseyGeneratorAdapter();
         $this->assertNotEmpty($ramseyGenerator->generate());
         $this->assertNotEquals($ramseyGenerator->generate(), $ramseyGenerator->generate());
     }

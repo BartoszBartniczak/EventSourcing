@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Event\Serializer;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\Event;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer;
 
@@ -15,7 +15,7 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::__construct
      */
     public function testConstructor()
     {
@@ -34,12 +34,12 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
         /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
 
         $jmsJsonSerializer = new JMSJsonSerializer($jmsSerializerMock, $propertyNamingStrategyInterface);
-        $this->assertInstanceOf(\BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer::class, $jmsJsonSerializer);
+        $this->assertInstanceOf(\BartoszBartniczak\EventSourcing\Event\Serializer\Serializer::class, $jmsJsonSerializer);
     }
 
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::serialize
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::serialize
      */
     public function testSerialize()
     {
@@ -70,8 +70,8 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::deserialize
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::deserialize
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
      */
     public function testDeserialize()
     {
@@ -101,7 +101,7 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::tryToExtractClassName
      */
     public function testTryToExtractClassNameThrowsExceptionIfNameIsNotDefined()
     {
@@ -131,7 +131,7 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Event\Serializer\JMSJsonSerializer::getPropertyKey
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::getPropertyKey
      */
     public function testGetPropertyKey()
     {

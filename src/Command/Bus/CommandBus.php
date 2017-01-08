@@ -4,7 +4,7 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
+namespace BartoszBartniczak\EventSourcing\Command\Bus;
 
 
 use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
@@ -13,12 +13,12 @@ use BartoszBartniczak\CQRS\Command\Bus\CommandBus as BasicCommandBus;
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
 use BartoszBartniczak\CQRS\Command\Query;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
-use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Repository\EventRepository;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
+use BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler;
+use BartoszBartniczak\EventSourcing\Event\Bus\EventBus;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Repository\EventRepository;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\UUID\Generator as UUIDGenerator;
 
 class CommandBus extends BasicCommandBus
 {

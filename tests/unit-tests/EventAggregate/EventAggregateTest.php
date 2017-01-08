@@ -4,19 +4,19 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\EventAggregate;
+namespace BartoszBartniczak\EventSourcing\EventAggregate;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
 
 class EventAggregateTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getCommittedEvents
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getUncommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::__construct
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getCommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getUncommittedEvents
      */
     public function testConstructor()
     {
@@ -31,11 +31,11 @@ class EventAggregateTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::apply
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getUncommittedEvents
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::commit
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getCommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::apply
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::handle
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getUncommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::commit
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getCommittedEvents
      */
     public function testApply()
     {
@@ -78,8 +78,8 @@ class EventAggregateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::findHandleMethod
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::handle
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::findHandleMethod
      */
     public function testHandleThrowsCannotHandleTheEventException()
     {
@@ -100,11 +100,11 @@ class EventAggregateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::applyEventStream
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getUncommittedEvents
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::commit
-     * @covers \BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate::getCommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::applyEventStream
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::handle
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getUncommittedEvents
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::commit
+     * @covers \BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate::getCommittedEvents
      */
     public function testApplyEventStream()
     {

@@ -4,15 +4,15 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Command\Handler;
+namespace BartoszBartniczak\EventSourcing\Command\Handler;
 
 
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\CQRS\Command\CommandList;
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Id;
-use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\EventSourcing\UUID\Generator;
 
 /**
  * Class CommandHandlerMock
@@ -55,9 +55,9 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::__construct
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::getAdditionalEvents
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::getNextCommands
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::__construct
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::getAdditionalEvents
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::getNextCommands
      */
     public function testConstructor()
     {
@@ -81,8 +81,8 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::generateEventId
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::generateDateTime
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::generateEventId
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::generateDateTime
      */
     public function testGenerators()
     {
@@ -99,8 +99,8 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::addNextCommand
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::getNextCommands
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::addNextCommand
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::getNextCommands
      */
     public function testAddNextCommand()
     {
@@ -119,8 +119,8 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::addAdditionalEvent
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler::getAdditionalEvents
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::addAdditionalEvent
+     * @covers \BartoszBartniczak\EventSourcing\Command\Handler\CommandHandler::getAdditionalEvents
      */
     public function testAddAdditionalEvent()
     {

@@ -19,17 +19,16 @@
   },
   "require-dev": {
     "filp/whoops": "*",
-    "symfony/var-dumper": "*",
     "phpunit/phpunit": "5.*"
   },
   "autoload": {
     "psr-4": {
-      "BartoszBartniczak\\EventSourcing\\Shop\\": "src/"
+      "BartoszBartniczak\\EventSourcing\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BartoszBartniczak\\EventSourcing\\Shop\\": "tests/unit-tests/"
+      "BartoszBartniczak\\EventSourcing\\": "tests/unit-tests/"
     }
   }
 }

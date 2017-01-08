@@ -4,14 +4,14 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event\Repository;
+namespace BartoszBartniczak\EventSourcing\Event\Repository;
 
 
 use BartoszBartniczak\ArrayObject\ArrayObject;
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
-use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
-use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer as EventSerializer;
-use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
+use BartoszBartniczak\EventSourcing\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer as EventSerializer;
+use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 
 class InMemoryEventRepository implements EventRepository
 {

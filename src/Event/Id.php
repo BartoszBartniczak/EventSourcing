@@ -4,10 +4,10 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event;
+namespace BartoszBartniczak\EventSourcing\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\UUID\UUID;
+use BartoszBartniczak\EventSourcing\UUID\UUID;
 
 class Id extends UUID
 {

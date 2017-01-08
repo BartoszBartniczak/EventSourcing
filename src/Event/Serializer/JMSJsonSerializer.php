@@ -4,9 +4,9 @@
  * User: Bartosz Bartniczak <kontakt@bartoszbartniczak.pl>
  */
 
-namespace BartoszBartniczak\EventSourcing\Shop\Event\Serializer;
+namespace BartoszBartniczak\EventSourcing\Event\Serializer;
 
-use BartoszBartniczak\EventSourcing\Shop\Event\Event;
+use BartoszBartniczak\EventSourcing\Event\Event;
 use JMS\Serializer\Metadata\StaticPropertyMetadata;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer as JMSSerializer;
