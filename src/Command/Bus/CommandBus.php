@@ -7,9 +7,9 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-use BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus;
+use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\CQRS\Command\Bus\CannotFindHandlerException;
-use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
+use BartoszBartniczak\CQRS\Command\Bus\CommandBus as BasicCommandBus;
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
 use BartoszBartniczak\CQRS\Command\Query;
@@ -65,11 +65,11 @@ class CommandBus extends BasicCommandBus
 
     /**
      * @param Query $query
-     * @throws CannotHandleTheCommandException
+     * @throws CannotExecuteTheCommandException
      * @throws CannotFindHandlerException
      * @return mixed
      */
-    protected function handleQuery(Query $query)
+    protected function executeQuery(Query $query)
     {
         $this->clearOutput();
         $handler = $this->findHandler($query);
@@ -87,7 +87,7 @@ class CommandBus extends BasicCommandBus
 
     /**
      * @param BasicCommandHandler $handler
-     * @throws CannotHandleTheCommandException
+     * @throws CannotExecuteTheCommandException
      */
     protected function handleHandlerException(BasicCommandHandler $handler)
     {
@@ -99,10 +99,10 @@ class CommandBus extends BasicCommandBus
 
     /**
      * @param Command $command
-     * @throws CannotHandleTheCommandException
+     * @throws CannotExecuteTheCommandException
      * @throws CannotFindHandlerException
      */
-    protected function handleCommand(Command $command)
+    protected function executeCommand(Command $command)
     {
         $handler = $this->findHandler($command);
         /* @var $handler CommandHandler */
@@ -121,7 +121,7 @@ class CommandBus extends BasicCommandBus
         $eventsToEmmit->merge($additionalEvents);
         $this->eventBus->emmit($eventsToEmmit);
 
-        $this->passNextCommandsToTheBus($handler->getNextCommands());
+        $this->executeNextCommands($handler->getNextCommands());
     }
 
     /**
@@ -129,7 +129,9 @@ class CommandBus extends BasicCommandBus
      */
     protected function saveDataInRepository($data)
     {
-        $this->eventRepository->saveEventAggregate($data);
+        if ($data instanceof EventAggregate) {
+            $this->eventRepository->saveEventAggregate($data);
+        }
     }
 
 

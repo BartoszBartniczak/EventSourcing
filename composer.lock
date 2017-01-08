@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e21f7d244bf4477cbedb95229bb81c71",
-    "content-hash": "e32349222ddb5c35fc37790821f5fa24",
+    "hash": "46cde8f38fbfa1bddddb332837c88582",
+    "content-hash": "2ab17c19a74c4060984945e7e0f3156f",
     "packages": [
         {
             "name": "bartoszbartniczak/array-object",
@@ -45,16 +45,16 @@
         },
         {
             "name": "bartoszbartniczak/cqrs",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BartoszBartniczak/CQRS.git",
-                "reference": "7a831d20737fb8956c159a6e48ecf4314e07d20d"
+                "reference": "d175815fd71a7c165d76d0a19579b4825bd67de7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BartoszBartniczak/CQRS/zipball/7a831d20737fb8956c159a6e48ecf4314e07d20d",
-                "reference": "7a831d20737fb8956c159a6e48ecf4314e07d20d",
+                "url": "https://api.github.com/repos/BartoszBartniczak/CQRS/zipball/d175815fd71a7c165d76d0a19579b4825bd67de7",
+                "reference": "d175815fd71a7c165d76d0a19579b4825bd67de7",
                 "shasum": ""
             },
             "require": {
@@ -70,11 +70,7 @@
                     "BartoszBartniczak\\CQRS\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "BartoszBartniczak\\CQRS\\": "tests/unit-tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache 2.0"
             ],
@@ -85,11 +81,7 @@
                 }
             ],
             "description": "Command Query Responsibility Segregation pattern applied in PHP.",
-            "support": {
-                "source": "https://github.com/BartoszBartniczak/CQRS/tree/master",
-                "issues": "https://github.com/BartoszBartniczak/CQRS/issues"
-            },
-            "time": "2017-01-04 18:25:34"
+            "time": "2017-01-07 13:15:39"
         },
         {
             "name": "doctrine/annotations",
@@ -2144,9 +2136,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "bartoszbartniczak/cqrs": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

@@ -8,6 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
 use BartoszBartniczak\ArrayObject\ArrayObject;
+use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\CQRS\Command\Bus\CannotFindHandlerException;
 use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
 use BartoszBartniczak\CQRS\Command\Command;
@@ -58,8 +59,8 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleCommand
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::execute()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::executeCommand()
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::findHandler
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::__construct
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::registerHandler
@@ -93,7 +94,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
@@ -121,13 +122,13 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         /* @var $command Command */
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::saveOutput
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleQuery
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::execute()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::executeQuery()
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::tryToHandleCommand
      */
     public function testOutputForQuery()
@@ -167,14 +168,14 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
         $commandBus->registerHandler('QueryMock', $commandHandler);
-        $output = $commandBus->handle($command);
+        $output = $commandBus->execute($command);
 
         $this->assertSame($eventAggregate, $output);
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handleCommand
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::execute()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::executeCommand()
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::saveDataInRepository
      * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::clearOutput
      */
@@ -227,11 +228,11 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::execute()
      */
     public function testAdditionalEventsAreSavedInRepository()
     {
@@ -278,11 +279,11 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::handle()
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::execute()
      */
     public function testAllEventsAreEmitted()
     {
@@ -345,7 +346,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBusMock);
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
     }
 
 
@@ -355,7 +356,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleError()
     {
-        $this->expectException(CannotHandleTheCommandException::class);
+        $this->expectException(CannotExecuteTheCommandException::class);
         $this->expectExceptionMessage("Command 'CommandMock' cannot be handled.");
 
         $generator = $this->getMockBuilder(Generator::class)
@@ -406,12 +407,12 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
 
         $commandBus = new CommandBus($generator, $eventRepository, $eventBus);
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command);
+        $commandBus->execute($command);
 
     }
 
     /**
-     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::passNextCommandsToTheBus
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::executeNextCommands
      */
     public function testPassNextCommandsToTheBus()
     {
@@ -482,7 +483,7 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         /* @var $commandBus CommandBus */
 
         $commandBus->registerHandler('CommandMock', $commandHandler);
-        $commandBus->handle($command1);
+        $commandBus->execute($command1);
 
     }
 

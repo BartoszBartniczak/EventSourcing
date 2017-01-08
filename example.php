@@ -6,7 +6,7 @@
 
 require_once('vendor/autoload.php');
 
-use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
+use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\ChangeQuantityOfTheProduct;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
@@ -114,64 +114,64 @@ $productRepository->save(new Product($butterUuid, 'Butter'));
 /* Controller */
 
 $registerUserCommand = new RegisterNewUserCommand('user@user.com', 'password', $emailSenderService, new ActivationTokenGenerator(), $uuidGenerator, new SaltGenerator(), $hashGenerator, new Email(new EmailId(uniqid())));
-$commandBus->handle($registerUserCommand);
+$commandBus->execute($registerUserCommand);
 $user = $userRepository->findUserByEmail('user@user.com');
 
 $activateUserCommand = new ActivateUserCommand('user@user.com', 'xxx', $userRepository); //attempt of activating user account with wrong token
-$commandBus->handle($activateUserCommand);
+$commandBus->execute($activateUserCommand);
 
 $activateUserCommand = new ActivateUserCommand('user@user.com', $user->getActivationToken(), $userRepository);
-$commandBus->handle($activateUserCommand);
+$commandBus->execute($activateUserCommand);
 
 $activateUserCommand = new ActivateUserCommand('user@user.com', $user->getActivationToken(), $userRepository); //attempt of activating already activated account
-$commandBus->handle($activateUserCommand);
+$commandBus->execute($activateUserCommand);
 
 $logInUserCommand = new LogInUserCommand('user@user.com', 'password', $hashGenerator, $userRepository);
-$commandBus->handle($logInUserCommand);
+$commandBus->execute($logInUserCommand);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Milk', $productRepository);
-$milk = $commandBus->handle($findProductByNameCommand);
+$milk = $commandBus->execute($findProductByNameCommand);
 
 $createNewBasket = new CreateNewBasketCommand($basketFactory, $user->getEmail());
-$commandBus->handle($createNewBasket);
+$commandBus->execute($createNewBasket);
 $basket = $basketRepository->findLastBasketByUserEmail($user->getEmail());
 
 $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $milk, 2.0);
-$commandBus->handle($addProductToTheBasket);
+$commandBus->execute($addProductToTheBasket);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Bread', $productRepository);
-$bread = $commandBus->handle($findProductByNameCommand);
+$bread = $commandBus->execute($findProductByNameCommand);
 
 $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $bread, 1.0);
-$commandBus->handle($addProductToTheBasket);
+$commandBus->execute($addProductToTheBasket);
 
 $findProductByNameCommand = new FindProductByNameCommand($user, 'Butter', $productRepository);
-$butter = $commandBus->handle($findProductByNameCommand);
+$butter = $commandBus->execute($findProductByNameCommand);
 
 $addProductToTheBasket = new AddProductToTheBasketCommand($basket, $butter, 3.0);
-$commandBus->handle($addProductToTheBasket);
+$commandBus->execute($addProductToTheBasket);
 
 $changeQuantityOfTheProduct = new ChangeQuantityOfTheProduct($basket, $butterUuid, 1.0);
-$commandBus->handle($changeQuantityOfTheProduct);
+$commandBus->execute($changeQuantityOfTheProduct);
 
 $removeProductFromTheBasket = new RemoveProductFromTheBasket($basket, $breadId);
-$commandBus->handle($removeProductFromTheBasket);
+$commandBus->execute($removeProductFromTheBasket);
 
 $logOutUserCommand = new LogOutUserCommand($user->getEmail(), $userRepository);
-$commandBus->handle($logOutUserCommand);
+$commandBus->execute($logOutUserCommand);
 
 $logInUserCommand = new LogInUserCommand('user@user.com', 'password', $hashGenerator, $userRepository);
-$commandBus->handle($logInUserCommand);
+$commandBus->execute($logInUserCommand);
 
 try {
     $findProductByNameCommand = new FindProductByNameCommand($user, 'Cookies', $productRepository);
-    $commandBus->handle($findProductByNameCommand);
-} catch (CannotHandleTheCommandException $cannotHandleTheCommandException) {
+    $commandBus->execute($findProductByNameCommand);
+} catch (CannotExecuteTheCommandException $cannotHandleTheCommandException) {
     dump("Display the error message", $cannotHandleTheCommandException);
 }
 
 $createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new Email(new EmailId(uniqid())));
-$commandBus->handle($createOrderCommand);
+$commandBus->execute($createOrderCommand);
 
 ///** Recreating the basket */
 dump($eventRepository);
