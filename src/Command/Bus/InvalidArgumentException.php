@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-class CannotHandleTheCommandException extends Exception
+class InvalidArgumentException extends \InvalidArgumentException
 {
 
 }

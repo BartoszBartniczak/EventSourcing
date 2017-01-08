@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Position;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\ArrayObject\ArrayOfObjects;
 
 class PositionArray extends ArrayOfObjects
 {

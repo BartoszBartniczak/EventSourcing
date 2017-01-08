@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Command;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\User\Repository\UserRepository;
 use BartoszBartniczak\EventSourcing\Shop\User\User;
 

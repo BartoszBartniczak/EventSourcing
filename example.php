@@ -6,6 +6,7 @@
 
 require_once('vendor/autoload.php');
 
+use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\AddProductToTheBasket as AddProductToTheBasketCommand;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\ChangeQuantityOfTheProduct;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\CloseBasket as CloseBasketCommand;
@@ -18,7 +19,6 @@ use BartoszBartniczak\EventSourcing\Shop\Basket\Command\Handler\RemoveProductFro
 use BartoszBartniczak\EventSourcing\Shop\Basket\Command\RemoveProductFromTheBasket;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory as BasketFactory;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Repository\InMemoryRepository as BasketRepository;
-use BartoszBartniczak\EventSourcing\Shop\Command\Bus\CannotHandleTheCommandException;
 use BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\Handler\SendEmail as SendEmailCommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
@@ -169,7 +169,6 @@ try {
 } catch (CannotHandleTheCommandException $cannotHandleTheCommandException) {
     dump("Display the error message", $cannotHandleTheCommandException);
 }
-
 
 $createOrderCommand = new CreateOrderCommand($uuidGenerator, $basket, $emailSenderService, new Email(new EmailId(uniqid())));
 $commandBus->handle($createOrderCommand);

@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Email\Command;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service;
 

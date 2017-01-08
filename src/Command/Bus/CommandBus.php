@@ -7,18 +7,20 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
+use BartoszBartniczak\CQRS\Command\Bus\BasicCommandBus;
+use BartoszBartniczak\CQRS\Command\Bus\CannotFindHandlerException;
+use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
+use BartoszBartniczak\CQRS\Command\Command;
+use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
+use BartoszBartniczak\CQRS\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\Exception as HandlerException;
-use BartoszBartniczak\EventSourcing\Shop\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Repository\EventRepository;
 use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
 
-class CommandBus
+class CommandBus extends BasicCommandBus
 {
 
     /**
@@ -28,19 +30,11 @@ class CommandBus
     /**
      * @var array
      */
-    private $commandHandlers;
-    /**
-     * @var EventRepository
-     */
     private $eventRepository;
     /**
      * @var UUIDGenerator
      */
     private $generator;
-    /**
-     * @var mixed
-     */
-    private $output;
 
     /**
      * CommandBus constructor.
@@ -50,44 +44,24 @@ class CommandBus
      */
     public function __construct(UUIDGenerator $generator, EventRepository $eventRepository, EventBus $eventBus)
     {
-        $this->commandHandlers = [];
+        parent::__construct();
         $this->eventRepository = $eventRepository;
         $this->generator = $generator;
-        $this->clearOutput();
         $this->eventBus = $eventBus;
     }
 
     /**
-     * @return void
+     * @inheritDoc
      */
-    private function clearOutput()
+    public function registerHandler(string $commandClassName, BasicCommandHandler $commandHandler)
     {
-        $this->output = null;
-    }
-
-    /**
-     * @param string $commandClassName
-     * @param CommandHandler $commandHandler
-     */
-    public function registerHandler(string $commandClassName, CommandHandler $commandHandler)
-    {
-        $this->commandHandlers[$commandClassName] = $commandHandler;
-    }
-
-    /**
-     * @param Command $command
-     * @throws CannotHandleTheCommandException
-     * @throws CannotFindHandlerException
-     * @return mixed
-     */
-    public function handle(Command $command)
-    {
-        if ($command instanceof Query) {
-            return $this->handleQuery($command);
-        } else {
-            $this->handleCommand($command);
+        if (!$commandHandler instanceof CommandHandler) {
+            throw new InvalidArgumentException(sprintf("CommandHandler has to be instance of: '%s'.", CommandHandler::class));
         }
+
+        parent::registerHandler($commandClassName, $commandHandler);
     }
+
 
     /**
      * @param Query $query
@@ -99,6 +73,7 @@ class CommandBus
     {
         $this->clearOutput();
         $handler = $this->findHandler($query);
+        /* @var $handler CommandHandler */
         $eventAggregate = $this->tryToHandleCommand($query, $handler);
 
         $this->saveOutput($eventAggregate);
@@ -107,59 +82,19 @@ class CommandBus
         $this->eventRepository->saveEventStream($additionalEvents);
 
         $this->eventBus->emmit($additionalEvents);
-        return $this->output;
+        return $this->getOutput();
     }
 
     /**
-     * @param Command $command
-     * @return CommandHandler
-     * @throws CannotFindHandlerException
-     */
-    protected function findHandler(Command $command): CommandHandler
-    {
-        $className = get_class($command);
-
-        if (isset($this->commandHandlers[$className]) && $this->commandHandlers[$className] instanceof CommandHandler) {
-            return $this->commandHandlers[$className];
-        } else {
-            throw new CannotFindHandlerException(sprintf("Cannot find handler for command: '%s'.", get_class($command)));
-        }
-    }
-
-    /**
-     * @param Command $command
-     * @param CommandHandler $handler
-     * @return mixed
+     * @param BasicCommandHandler $handler
      * @throws CannotHandleTheCommandException
      */
-    private function tryToHandleCommand(Command $command, CommandHandler $handler)
+    protected function handleHandlerException(BasicCommandHandler $handler)
     {
-        try {
-            $eventAggregate = $handler->handle($command);
-            return $eventAggregate;
-        } catch (HandlerException $handlerException) {
-            $this->handleHandlerException($handler);
-            throw new CannotHandleTheCommandException(sprintf("Command '%s' cannot be handled.", get_class($command)), null, $handlerException);
-        }
-    }
-
-    /**
-     * @param CommandHandler $handler
-     * @throws CannotHandleTheCommandException
-     */
-    private function handleHandlerException(CommandHandler $handler)
-    {
+        /* @var $handler CommandHandler */
         $additionalEvents = $handler->getAdditionalEvents();
         $this->eventRepository->saveEventStream($additionalEvents);
         $this->eventBus->emmit($additionalEvents);
-    }
-
-    /**
-     * @param $data
-     */
-    private function saveOutput($data)
-    {
-        $this->output = $data;
     }
 
     /**
@@ -170,6 +105,7 @@ class CommandBus
     protected function handleCommand(Command $command)
     {
         $handler = $this->findHandler($command);
+        /* @var $handler CommandHandler */
         $data = $this->tryToHandleCommand($command, $handler);
 
         if ($data instanceof EventAggregate) {
@@ -189,22 +125,11 @@ class CommandBus
     }
 
     /**
-     * @param $eventAggregate
+     * @param $data
      */
-    private function saveDataInRepository(EventAggregate $eventAggregate)
+    protected function saveDataInRepository($data)
     {
-        $this->eventRepository->saveEventAggregate($eventAggregate);
-    }
-
-    /**
-     * @param CommandList $commandList
-     */
-    private function passNextCommandsToTheBus(CommandList $commandList)
-    {
-        if ($commandList->isNotEmpty()) {
-            foreach ($commandList as $nextCommand)
-                $this->handle($nextCommand);
-        }
+        $this->eventRepository->saveEventAggregate($data);
     }
 
 

@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Handler;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
+use BartoszBartniczak\CQRS\Command\Command;
+use BartoszBartniczak\CQRS\Command\CommandList;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Id;

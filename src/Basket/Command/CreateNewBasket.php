@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Factory\Factory;
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 
 class CreateNewBasket implements Command
 {

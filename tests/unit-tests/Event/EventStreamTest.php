@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Event;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayOfObjects;
+use BartoszBartniczak\ArrayObject\ArrayOfObjects;
 
 class EventStreamTest extends \PHPUnit_Framework_TestCase
 {

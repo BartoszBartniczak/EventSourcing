@@ -6,9 +6,8 @@
 
 namespace BartoszBartniczak\EventSourcing\Shop\Product\Repository\Command\Handler;
 
-
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CannotHandleTheCommandException;
+use BartoszBartniczak\CQRS\Command\Command;
+use BartoszBartniczak\CQRS\Command\Handler\CannotHandleTheCommandException;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Product\Product;
 use BartoszBartniczak\EventSourcing\Shop\Product\Repository\CannotFindProductException;

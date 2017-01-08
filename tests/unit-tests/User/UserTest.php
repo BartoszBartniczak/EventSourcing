@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
+use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\ActivationTokenHasBeenGenerated;
 use BartoszBartniczak\EventSourcing\Shop\User\Event\UnsuccessfulAttemptOfActivatingUserAccount;

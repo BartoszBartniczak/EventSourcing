@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\User\Command\Handler;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Email\Command\SendEmail as SendEmailCommand;
 use BartoszBartniczak\EventSourcing\Shop\EventAggregate\EventAggregate;

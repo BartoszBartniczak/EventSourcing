@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Order\Command;
 
 
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Email\Email;
 use BartoszBartniczak\EventSourcing\Shop\Email\Sender\Service as EmailSenderService;
 use BartoszBartniczak\EventSourcing\Shop\UUID\Generator;

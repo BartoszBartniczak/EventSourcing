@@ -7,12 +7,15 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Bus;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
-use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
+use BartoszBartniczak\ArrayObject\ArrayObject;
+use BartoszBartniczak\CQRS\Command\Bus\CannotFindHandlerException;
+use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
+use BartoszBartniczak\CQRS\Command\Command;
+use BartoszBartniczak\CQRS\Command\CommandList;
+use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
+use BartoszBartniczak\CQRS\Command\Handler\Exception as HandlerException;
+use BartoszBartniczak\CQRS\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Command\Handler\CommandHandler;
-use BartoszBartniczak\EventSourcing\Shop\Command\Handler\Exception as HandlerException;
-use BartoszBartniczak\EventSourcing\Shop\Command\Query;
 use BartoszBartniczak\EventSourcing\Shop\Event\Bus\EventBus;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
@@ -482,4 +485,28 @@ class CommandBusTest extends \PHPUnit_Framework_TestCase
         $commandBus->handle($command1);
 
     }
+
+    /**
+     * @covers \BartoszBartniczak\EventSourcing\Shop\Command\Bus\CommandBus::registerHandler
+     */
+    public function testRegisterHandlerThrowsExceptionIfHandlerIsNotExpectedType()
+    {
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("CommandHandler has to be instance of: '" . CommandHandler::class . "'.");
+
+        $commandBus = $this->getMockBuilder(CommandBus::class)
+            ->disableOriginalConstructor()
+            ->setMethods(null)
+            ->getMock();
+        /* @var $commandBus CommandBus */
+
+        $basicCommandHandler = $this->getMockBuilder(BasicCommandHandler::class)
+            ->getMockForAbstractClass();
+        /* @var $basicCommandHandler BasicCommandHandler */
+
+        $commandBus->registerHandler(Command::class, $basicCommandHandler);
+
+    }
+
 }

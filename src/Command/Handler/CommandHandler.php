@@ -7,25 +7,20 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Command\Handler;
 
 
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
+use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
 use BartoszBartniczak\EventSourcing\Shop\Command\CommandList;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Id;
 use BartoszBartniczak\EventSourcing\Shop\UUID\Generator as UUIDGenerator;
 
-abstract class CommandHandler
+abstract class CommandHandler extends BasicCommandHandler
 {
 
     /**
      * @var UUIDGenerator;
      */
     protected $uuidGenerator;
-
-    /**
-     * @var CommandList;
-     */
-    private $nextCommands;
 
     /**
      * Additional events are not connected with EventAggregate. Although they are emitted to EventBus.
@@ -37,24 +32,11 @@ abstract class CommandHandler
      * CommandHandler constructor.
      * @param UUIDGenerator $uuidGenerator
      */
-    final public function __construct(UUIDGenerator $uuidGenerator)
+    public function __construct(UUIDGenerator $uuidGenerator)
     {
+        parent::__construct();
         $this->uuidGenerator = $uuidGenerator;
-        $this->nextCommands = new CommandList();
         $this->additionalEvents = new EventStream();
-    }
-
-    /**
-     * @param Command $command
-     */
-    abstract public function handle(Command $command);
-
-    /**
-     * @return CommandList
-     */
-    public function getNextCommands(): CommandList
-    {
-        return $this->nextCommands;
     }
 
     /**
@@ -63,14 +45,6 @@ abstract class CommandHandler
     public function getAdditionalEvents(): EventStream
     {
         return $this->additionalEvents;
-    }
-
-    /**
-     * @param Command $command
-     */
-    protected function addNextCommand(Command $command)
-    {
-        $this->nextCommands[] = $command;
     }
 
     /**

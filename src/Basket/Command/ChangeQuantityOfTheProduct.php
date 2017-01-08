@@ -7,8 +7,8 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Basket\Command;
 
 
+use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Basket\Basket;
-use BartoszBartniczak\EventSourcing\Shop\Command\Command;
 use BartoszBartniczak\EventSourcing\Shop\Product\Id as ProductId;
 
 class ChangeQuantityOfTheProduct implements Command

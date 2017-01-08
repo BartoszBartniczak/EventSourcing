@@ -7,7 +7,7 @@
 namespace BartoszBartniczak\EventSourcing\Shop\Event\Repository;
 
 
-use BartoszBartniczak\EventSourcing\Shop\ArrayObject\ArrayObject;
+use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\EventSourcing\Shop\Event\Event;
 use BartoszBartniczak\EventSourcing\Shop\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Shop\Event\Serializer\Serializer as EventSerializer;
