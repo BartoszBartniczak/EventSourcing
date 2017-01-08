@@ -10,7 +10,6 @@ namespace BartoszBartniczak\EventSourcing\Command\Bus;
 use BartoszBartniczak\ArrayObject\ArrayObject;
 use BartoszBartniczak\CQRS\Command\Bus\CannotExecuteTheCommandException;
 use BartoszBartniczak\CQRS\Command\Bus\CannotFindHandlerException;
-use BartoszBartniczak\CQRS\Command\Bus\CannotHandleTheCommandException;
 use BartoszBartniczak\CQRS\Command\Command;
 use BartoszBartniczak\CQRS\Command\CommandList;
 use BartoszBartniczak\CQRS\Command\Handler\CommandHandler as BasicCommandHandler;
@@ -22,8 +21,8 @@ use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Event\EventStream;
 use BartoszBartniczak\EventSourcing\Event\Repository\EventRepository;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
-use BartoszBartniczak\EventSourcing\TestCase;
 use BartoszBartniczak\EventSourcing\UUID\Generator;
+use BartoszBartniczak\TestCase\TestCase;
 
 class EventBusMock implements EventBus
 {

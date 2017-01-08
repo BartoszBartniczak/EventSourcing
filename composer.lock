@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7596758089e88c5a61ed24f93da3b743",
-    "content-hash": "8e7b327ed122e61f4975efd361b90cd9",
+    "hash": "e02350f9b7d5a1c30887300935c9d5ad",
+    "content-hash": "5aed16fb358ff17f3e5ddbd3e2929e9a",
     "packages": [
         {
             "name": "bartoszbartniczak/array-object",
@@ -752,6 +752,42 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "bartoszbartniczak/test-case",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BartoszBartniczak/TestCase.git",
+                "reference": "056ac82f5719add37ec2e351f51e20fda2d398da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BartoszBartniczak/TestCase/zipball/056ac82f5719add37ec2e351f51e20fda2d398da",
+                "reference": "056ac82f5719add37ec2e351f51e20fda2d398da",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BartoszBartniczak\\TestCase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache 2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bartosz Bartniczak",
+                    "email": "kontakt@bartoszbartniczak.pl"
+                }
+            ],
+            "description": "The library of PHPUnit TestCases",
+            "time": "2017-01-08 14:44:53"
+        },
         {
             "name": "filp/whoops",
             "version": "2.1.5",

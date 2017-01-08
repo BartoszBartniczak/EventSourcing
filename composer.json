@@ -19,7 +19,8 @@
   },
   "require-dev": {
     "filp/whoops": "*",
-    "phpunit/phpunit": "5.*"
+    "phpunit/phpunit": "5.*",
+    "bartoszbartniczak/test-case": "1.*"
   },
   "autoload": {
     "psr-4": {

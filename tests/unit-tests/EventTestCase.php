@@ -9,6 +9,7 @@ namespace BartoszBartniczak\EventSourcing;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Event\Id;
+use BartoszBartniczak\TestCase\TestCase;
 
 abstract class EventTestCase extends TestCase
 {
