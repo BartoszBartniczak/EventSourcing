@@ -7,7 +7,6 @@
 namespace BartoszBartniczak\EventSourcing\Event\Serializer;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
-use JMS\Serializer\Metadata\StaticPropertyMetadata;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer as JMSSerializer;
 
@@ -67,12 +66,5 @@ class JMSJsonSerializer implements Serializer
         }
         return $data['name'];
     }
-
-    public function getPropertyKey(string $propertyName): string
-    {
-        $propertyMetadata = new StaticPropertyMetadata('string', $propertyName, '');
-        return $this->namingStrategy->translateName($propertyMetadata);
-    }
-
 
 }

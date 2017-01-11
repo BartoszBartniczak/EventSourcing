@@ -130,33 +130,4 @@ class JMSJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($event, $jmsJsonSerializer->deserialize('{}'));
     }
 
-    /**
-     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\JMSJsonSerializer::getPropertyKey
-     */
-    public function testGetPropertyKey()
-    {
-
-        $serializer = $this->getMockBuilder(Serializer::class)
-            ->disableOriginalConstructor()
-            ->setMethods(null)
-            ->getMock();
-        /* @var $serializer Serializer */
-
-        $propertyNamingStrategyInterface = $this->getMockBuilder(PropertyNamingStrategyInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods([
-                'translateName'
-            ])
-            ->getMockForAbstractClass();
-        $propertyNamingStrategyInterface->expects($this->once())
-            ->method('translateName')
-            ->willReturn('property_name');
-        /* @var $propertyNamingStrategyInterface PropertyNamingStrategyInterface */
-
-        $jmsJsonSerializer = new JMSJsonSerializer($serializer, $propertyNamingStrategyInterface);
-        $this->assertSame('property_name', $jmsJsonSerializer->getPropertyKey('PropertyName'));
-
-    }
-
-
 }

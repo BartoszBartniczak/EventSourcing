@@ -67,18 +67,16 @@ class InMemoryEventRepository implements EventRepository
             $parameters = [];
         }
 
+        $events = $this->deserializeEvents($this->memory);
+
         if (!empty($eventFamily)) {
-            $filteredData = $this->memory->filter(
-                function ($serializedEvent) use ($eventFamily) {
-                    $eventArray = json_decode($serializedEvent, true);
-                    if (!isset($eventArray[$this->eventSerializer->getPropertyKey('eventFamilyName')])) {
-                        throw new \UnexpectedValueException('Event data expected.');
-                    }
-                    return $eventArray[$this->eventSerializer->getPropertyKey('eventFamilyName')] === $eventFamily;
+            $filteredData = $events->filter(
+                function (Event $event) use ($eventFamily) {
+                    return $event->getEventFamilyName() === $eventFamily;
                 }
             );
         } else {
-            $filteredData = $this->memory;
+            $filteredData = $events;
         }
 
         foreach ($parameters as $filter) {
@@ -89,7 +87,7 @@ class InMemoryEventRepository implements EventRepository
             }
         }
 
-        return $this->deserializeEvents($filteredData);
+        return new EventStream($filteredData->getArrayCopy());
     }
 
     /**

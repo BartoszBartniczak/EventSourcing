@@ -9,6 +9,7 @@ namespace BartoszBartniczak\EventSourcing\Event\Repository;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
 use BartoszBartniczak\EventSourcing\Event\EventStream;
+use BartoszBartniczak\EventSourcing\Event\Id;
 use BartoszBartniczak\EventSourcing\Event\Serializer\Serializer;
 use BartoszBartniczak\EventSourcing\EventAggregate\EventAggregate;
 
@@ -165,25 +166,31 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testFind()
     {
         $event1 = $this->getMockBuilder(Event::class)
+            ->setMethods([
+                'getEventFamilyName'
+            ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
+        $event1->method('getEventFamilyName')
+            ->willReturn('Family1');
         /* @var $event1 Event */
         $event2 = $this->getMockBuilder(Event::class)
+            ->setMethods([
+                'getEventFamilyName'
+            ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
+        $event2->method('getEventFamilyName')
+            ->willReturn('Family2');
         /* @var $event2 Event */
 
         $eventSerializer = $this->getMockBuilder(Serializer::class)
             ->setMethods([
                 'serialize',
                 'deserialize',
-                'getPropertyKey'
             ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-
-        $eventSerializer->method("getPropertyKey")
-            ->willReturn('event_family');
 
         $eventSerializer->expects($this->exactly(2))
             ->method('serialize')
@@ -217,79 +224,40 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
      */
-    public function testFindThrowsExcptionIfDataDoesNotContainEventFamilyName()
-    {
-        $this->expectException(\UnexpectedValueException::class);
-        $this->expectExceptionMessage('Event data expected.');
-
-        $event1 = $this->getMockBuilder(Event::class)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-        /* @var $event1 Event */
-        $event2 = $this->getMockBuilder(Event::class)
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-        /* @var $event2 Event */
-
-        $eventSerializer = $this->getMockBuilder(Serializer::class)
-            ->setMethods([
-                'serialize',
-                'deserialize',
-                'getEventFamilyPropertyKey'
-            ])
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
-
-        $eventSerializer->method("getEventFamilyPropertyKey")
-            ->willReturn('event_family');
-
-        $eventSerializer->expects($this->exactly(2))
-            ->method('serialize')
-            ->willReturnMap([
-                [$event1, '{"name":"Event1"}'],
-                [$event2, '{"name":"Event2"}']
-            ]);
-
-        $eventSerializer->method('deserialize')
-            ->willReturnMap([
-                ['{"name":"Event1"}', $event1],
-                ['{"name":"Event2"}', $event2]
-            ]);
-        /* @var $eventSerializer Serializer */
-
-        $inMemoryEventRepository = new InMemoryEventRepository($eventSerializer);
-        $inMemoryEventRepository->saveEvent($event1);
-        $inMemoryEventRepository->saveEvent($event2);
-
-
-        $inMemoryEventRepository->find("Family1");
-    }
-
-    /**
-     * @covers \BartoszBartniczak\EventSourcing\Event\Repository\InMemoryEventRepository::find
-     */
     public function testFindUsesParameters()
     {
         $event1 = $this->getMockBuilder(Event::class)
+            ->setMethods([
+                'getEventFamilyName',
+                'getEventId'
+            ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
+        $event1->method('getEventFamilyName')
+            ->willReturn('Family1');
+        $event1->method('getEventId')
+            ->willReturn(new Id(100));
         /* @var $event1 Event */
         $event2 = $this->getMockBuilder(Event::class)
+            ->setMethods([
+                'getEventFamilyName',
+                'getEventId'
+            ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
+        $event2->method('getEventFamilyName')
+            ->willReturn('Family1');
+        $event2->method('getEventId')
+            ->willReturn(new Id(200));
         /* @var $event2 Event */
 
         $eventSerializer = $this->getMockBuilder(Serializer::class)
             ->setMethods([
                 'serialize',
                 'deserialize',
-                'getPropertyKey'
             ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-
-        $eventSerializer->method("getPropertyKey")
-            ->willReturn('event_family');
 
         $eventSerializer->expects($this->exactly(2))
             ->method('serialize')
@@ -309,13 +277,8 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
         $inMemoryEventRepository->saveEvent($event1);
         $inMemoryEventRepository->saveEvent($event2);
 
-        $events = $inMemoryEventRepository->find("Family1", ['id' => function ($serializedEvent) {
-            $eventArray = json_decode($serializedEvent, true);
-            if (!isset($eventArray['id'])) {
-                return false;
-            }
-
-            if ($eventArray['id'] < 200) {
+        $events = $inMemoryEventRepository->find("Family1", ['id' => function (Event $event) {
+            if ($event->getEventId()->toNative() < 200) {
                 return true;
             }
         }]);
@@ -346,13 +309,9 @@ class InMemoryEventRepositoryTest extends \PHPUnit_Framework_TestCase
             ->setMethods([
                 'serialize',
                 'deserialize',
-                'getPropertyKey'
             ])
             ->disableOriginalConstructor()
             ->getMockForAbstractClass();
-
-        $eventSerializer->method("getPropertyKey")
-            ->willReturn('event_family');
 
         $eventSerializer->expects($this->exactly(2))
             ->method('serialize')
