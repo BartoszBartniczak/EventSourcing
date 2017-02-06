@@ -7,7 +7,6 @@
 namespace BartoszBartniczak\EventSourcing\Event\Serializer;
 
 use BartoszBartniczak\EventSourcing\Event\Event;
-use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\Serializer\Serializer as JMSSerializer;
 
 
@@ -20,19 +19,12 @@ class JMSJsonSerializer implements Serializer
     private $jmsSerializer;
 
     /**
-     * @var PropertyNamingStrategyInterface
-     */
-    private $namingStrategy;
-
-    /**
      * JMSJsonSerializer constructor.
      * @param JMSSerializer $jmsSerializer
-     * @param PropertyNamingStrategyInterface $namingStrategy
      */
-    public function __construct(JMSSerializer $jmsSerializer, PropertyNamingStrategyInterface $namingStrategy)
+    public function __construct(JMSSerializer $jmsSerializer)
     {
         $this->jmsSerializer = $jmsSerializer;
-        $this->namingStrategy = $namingStrategy;
     }
 
     /**
