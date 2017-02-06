@@ -12,6 +12,7 @@ use JMS\Serializer\Serializer as JMSSerializer;
 
 class JMSJsonSerializer implements Serializer
 {
+    use ExtractClassNameTrait;
 
     /**
      * @var JMSSerializer
@@ -44,19 +45,6 @@ class JMSJsonSerializer implements Serializer
     {
         $className = $this->tryToExtractClassName($data);
         return $this->jmsSerializer->deserialize($data, $className, 'json');
-    }
-
-    /**
-     * @param $data
-     * @return string
-     */
-    private function tryToExtractClassName($data): string
-    {
-        $data = json_decode($data, true);
-        if (!isset($data['name'])) {
-            throw new InvalidArgumentException('Cannot extract class name of the event');
-        }
-        return $data['name'];
     }
 
 }

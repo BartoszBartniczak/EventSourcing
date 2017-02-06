@@ -1,7 +1,8 @@
 {
   "name": "bartoszbartniczak/eventsourcing",
   "description": "EventSourcing pattern library written in PHP",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "license": "proprietary",
   "authors": [
     {
@@ -12,14 +13,17 @@
   "require": {
     "ramsey/uuid": "3.*",
     "psr/log": "^1.0",
-    "jms/serializer": "1.*",
     "symfony/yaml": "3.*",
     "bartoszbartniczak/array-object": "^1.0",
     "BartoszBartniczak/CQRS": "^1.0"
   },
   "require-dev": {
+    "jms/serializer": "1.*",
     "phpunit/phpunit": "5.*",
-    "bartoszbartniczak/test-case": "1.*"
+    "bartoszbartniczak/test-case": "1.*",
+    "symfony/serializer": "3.*",
+    "bartoszbartniczak/symfony-serializer-arrayobject-normalizer": "dev-master",
+    "bartoszbartniczak/symfony-serializer-arrayofobjects-normalizer": "dev-master"
   },
   "autoload": {
     "psr-4": {
