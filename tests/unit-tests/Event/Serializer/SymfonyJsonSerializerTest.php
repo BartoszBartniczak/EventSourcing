@@ -8,6 +8,7 @@ namespace BartoszBartniczak\EventSourcing\Event\Serializer;
 
 
 use BartoszBartniczak\EventSourcing\Event\Event;
+use PHPUnit\Framework\Assert;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -33,6 +34,7 @@ class SymfonyJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\SymfonyJsonSerializer::serialize
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\SymfonyJsonSerializer::getContextGroups
      */
     public function testSerialize()
     {
@@ -49,6 +51,8 @@ class SymfonyJsonSerializerTest extends \PHPUnit_Framework_TestCase
              */
             public function normalize($object, $format = null, array $context = array())
             {
+                Assert::assertTrue(isset($context['groups']));
+                Assert::assertEquals(['context_test'], $context['groups']);
                 return ['result'];
             }
 
@@ -62,13 +66,14 @@ class SymfonyJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
         }], [new JsonEncoder()]);
 
-        $symfonyJsonSerializer = new SymfonyJsonSerializer($symfonySerializer);
+        $symfonyJsonSerializer = new SymfonyJsonSerializer($symfonySerializer, ['context_test']);
         $result = $symfonyJsonSerializer->serialize($event);
         $this->assertSame('["result"]', $result);
     }
 
     /**
      * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\SymfonyJsonSerializer::deserialize
+     * @covers \BartoszBartniczak\EventSourcing\Event\Serializer\SymfonyJsonSerializer::getContextGroups
      */
     public function testDeserialize()
     {
@@ -99,6 +104,8 @@ class SymfonyJsonSerializerTest extends \PHPUnit_Framework_TestCase
              */
             public function denormalize($data, $class, $format = null, array $context = array())
             {
+                Assert::assertTrue(isset($context['groups']));
+                Assert::assertEquals(['context_test'], $context['groups']);
                 return $this->event;
             }
 
@@ -112,7 +119,7 @@ class SymfonyJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
         }], [new JsonEncoder()]);
 
-        $symfonyJsonSerializer = new SymfonyJsonSerializer($symfonySerializer);
+        $symfonyJsonSerializer = new SymfonyJsonSerializer($symfonySerializer, ['context_test']);
         $result = $symfonyJsonSerializer->deserialize('{"name":"Event"}');
         $this->assertSame($event, $result);
     }
