@@ -1,0 +1,6 @@
+elastic:
+  image: elasticsearch:latest
+  ports:
+    - "9200:9200"
+  volumes:
+    - ./docker/elasticsearch/data:/usr/share/elasticsearch/data

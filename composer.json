@@ -23,7 +23,9 @@
     "bartoszbartniczak/test-case": "1.*",
     "symfony/serializer": "3.*",
     "bartoszbartniczak/symfony-serializer-arrayobject-normalizer": "dev-master",
-    "bartoszbartniczak/symfony-serializer-arrayofobjects-normalizer": "dev-master"
+    "bartoszbartniczak/symfony-serializer-arrayofobjects-normalizer": "dev-master",
+    "ruflin/elastica": "5.*",
+    "bartoszbartniczak/naming-convention-converter": "1.*"
   },
   "autoload": {
     "psr-4": {
